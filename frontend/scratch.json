@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "title": "title",
+        "description": "Lorem",
+        "price": 1000
+    },
+    {
+        "id": "",
+        "customer_id": "",
+        "status": "",
+        "staus": ""
+    }
+]
