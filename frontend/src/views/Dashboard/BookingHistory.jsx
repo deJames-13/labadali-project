@@ -35,9 +35,10 @@ export default function BookingHistory() {
           feedback.
         </p>
       </div>
+      <div className="divider"></div>
 
       <div className=" flex flex-col-reverse space-y-6">
-        {bookings.length > 0 &&
+        {bookings.length > 0 ? (
           bookings.map((booking) => {
             return (
               <HistoryItem
@@ -51,7 +52,12 @@ export default function BookingHistory() {
                 laundriesData={booking.laundries}
               />
             );
-          })}
+          })
+        ) : (
+          <div className="relative">
+            <h1 className=" font-medium ">No bookings found.</h1>
+          </div>
+        )}
       </div>
     </div>
   );

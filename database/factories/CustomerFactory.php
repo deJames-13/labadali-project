@@ -23,6 +23,8 @@ class CustomerFactory extends Factory
             'city' => fake()->city(),
             'zip_code' => fake()->postcode(),
             'phone_number' => fake()->phoneNumber(),
+            'birthdate' => fake()->date(max: '2003-01-01'),
+            'age' => fake()->numberBetween(18, 40)
         ];
     }
 }

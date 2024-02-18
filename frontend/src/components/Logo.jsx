@@ -5,7 +5,7 @@ export default function Logo({ extendClass, color }) {
   return (
     <Link
       to={"/"}
-      className={`logo flex space-x-2 items-center animate__animated animate__fadeIn ${extendClass} ${color}`}
+      className={`logo flex space-x-2 justify-center items-center hover:animate-bounce  animate__animated animate__fadeIn ${extendClass} ${color}`}
     >
       <img
         className="w-20 inline-block"

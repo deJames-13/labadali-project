@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('zip_code');
             $table->string('image_path')->nullable();
             $table->string('phone_number');
+            $table->date('birthdate');
+            $table->integer('age');
             $table->timestamps();
         });
     }

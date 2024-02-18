@@ -26,13 +26,13 @@ export default function Sidebar({ page, onLogout }) {
                 isActive={page === "booking"}
               />
 
-              <Button
+              {/* <Button
                 text="Laundry Status"
                 icon={<i className="fa-solid fa-compass"></i>}
                 isLink={true}
                 link={"/status"}
                 isActive={page === "status"}
-              />
+              /> */}
               <Button
                 text="View History"
                 icon={<i className="fas fa-clock-rotate-left"></i>}

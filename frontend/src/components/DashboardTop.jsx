@@ -9,7 +9,7 @@ export default function DashboardTop() {
     <>
       <div className="w-full p-9 bg-primary ">
         <div
-          className={`container px-3 h-full flex justify-end md:justify-between items-center ${
+          className={`w-full px-3 h-full flex justify-end md:justify-between items-center ${
             page === "dashboard" ? "" : "lg:justify-end"
           }`}
         >

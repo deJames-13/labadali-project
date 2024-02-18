@@ -27,7 +27,7 @@ export default function BookingItem({
 
   return (
     <>
-      <div className="flex flex-col-reverse space-y-3 items-center lg:flex-row lg:space-y-0 lg:justify-between w-full animate__animated animate__fadeInDown">
+      <div className="w-full flex flex-col-reverse space-y-3 items-center md:flex-row md:space-y-0 md:justify-between  animate__animated animate__fadeInDown">
         <div className="w-full flex lg:justify-center items-center">
           <div className="w-full px-6 flex flex-col space-y-1 text-left">
             <span className="font-bold">{title}</span>
@@ -38,8 +38,9 @@ export default function BookingItem({
             </span>
           </div>
         </div>
+
         <div className="px-6 pb-3  w-full flex lg:justify-center items-center">
-          <div className="w-full flex space-x-6 lg:justify-center items-center text-center ">
+          <div className="w-full md:ml-6 flex space-x-3 md:justify-center items-center text-center ">
             {!isHistory && (
               <i
                 onClick={(e) => setQuantity(quantity > 1 ? quantity - 1 : 1)}
@@ -59,13 +60,16 @@ export default function BookingItem({
             )}
           </div>
         </div>
-        <div className="px-6 w-full flex lg:justify-center items-center">
+
+        <div className="px-6 w-full flex md:justify-center items-center">
           <span className="text-2xl font-bold">
             P {unitPrice ? unitPrice : price}
           </span>
         </div>
       </div>
+
       <div className="divider"></div>
+
       {isHistory && (
         <>
           {/* Inputs */}

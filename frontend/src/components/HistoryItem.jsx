@@ -20,7 +20,7 @@ export default function HistoryItem({
     <>
       {/* Order Info Card */}
       <div className="bg-secondary bg-opacity-20  p-3 rounded-lg border border-cbrown hover:bg-opacity-30 ease-in-out transition-all">
-        <div className="w-full flex flex-col space-y-6  items-center lg:space-y-0 lg:flex-row lg:justify-between">
+        <div className="w-full flex flex-col space-y-6  items-center md:space-y-0 md:flex-row md:justify-between">
           <div className="flex space-x-6 text-center">
             <div className="flex flex-col space-y-1">
               <h2 className="font-bold ">Booking No.</h2>
