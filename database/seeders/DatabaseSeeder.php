@@ -24,5 +24,11 @@ class DatabaseSeeder extends Seeder
             'first_name' => 'John',
             'last_name' => 'Doe',
         ]);
+
+        \App\Models\Admin::factory()->create([
+            'id' => $user->id,
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+        ]);
     }
 }

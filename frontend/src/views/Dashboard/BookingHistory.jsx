@@ -37,26 +37,25 @@ export default function BookingHistory() {
       </div>
       <div className="divider"></div>
 
-      <div className=" flex flex-col-reverse space-y-6">
+      <div className="flex flex-col-reverse">
         {bookings.length > 0 ? (
           bookings.map((booking) => {
             return (
-              <HistoryItem
-                key={booking.id}
-                bookingNumber={booking.id.toString().padStart(9, "0")}
-                datePlaced={new Date(booking.created_at).toLocaleDateString(
-                  "en-US",
-                  { year: "numeric", month: "long", day: "2-digit" }
-                )}
-                totalAmount={parseFloat(booking.total_price)}
-                laundriesData={booking.laundries}
-              />
+              <div key={booking.id} className="py-3">
+                <HistoryItem
+                  bookingNumber={booking.id.toString().padStart(9, "0")}
+                  datePlaced={new Date(booking.created_at).toLocaleDateString(
+                    "en-US",
+                    { year: "numeric", month: "long", day: "2-digit" }
+                  )}
+                  totalAmount={parseFloat(booking.total_price)}
+                  laundriesData={booking.laundries}
+                />
+              </div>
             );
           })
         ) : (
-          <div className="relative">
-            <h1 className=" font-medium ">No bookings found.</h1>
-          </div>
+          <h1 className=" font-medium ">No bookings found.</h1>
         )}
       </div>
     </div>

@@ -6,7 +6,12 @@ import { useNavigate } from "react-router-dom";
 import axiosClient from "../axios-client";
 import { useStateContext } from "../contexts/ContextProvider";
 import Modal from "./Modal";
-export default function BookingConfirmationForm({ id, selected, payload }) {
+export default function BookingConfirmationForm({
+  id,
+  selected,
+  payload,
+  setStep,
+}) {
   const { user } = useStateContext();
   const navigate = useNavigate();
   const handleBooking = (e) => {
@@ -75,7 +80,14 @@ export default function BookingConfirmationForm({ id, selected, payload }) {
       action={
         <>
           <form method="dialog">
-            <button className="btn">Cancel</button>
+            <button
+              onClick={(e) => {
+                setStep(2);
+              }}
+              className="btn"
+            >
+              Cancel
+            </button>
           </form>
 
           <button
@@ -95,4 +107,5 @@ BookingConfirmationForm.propTypes = {
   id: PropTypes.string,
   selected: PropTypes.array,
   payload: PropTypes.object,
+  setStep: PropTypes.func,
 };

@@ -15,15 +15,15 @@ export default function BookingItem({
   const [quantity, setQuantity] = useState(qty);
 
   useEffect(() => {
-    if (selected) {
+    if (!isHistory && selected) {
       setUnitPrice(quantity * price);
       const idx = selected.findIndex((laundry) => laundry.id == id);
       if (idx > -1) {
-        selected[idx].qty = quantity;
-        selected[idx].price = quantity * price;
+        selected[idx].quantity = quantity;
+        selected[idx].item_total = quantity * price;
       }
     }
-  }, [quantity, price, selected, id]);
+  }, [quantity, price, selected, id, isHistory]);
 
   return (
     <>
@@ -48,7 +48,6 @@ export default function BookingItem({
               ></i>
             )}
             <span className="font-bold text-xl">
-              {" "}
               {isHistory && "x"}
               {quantity}
             </span>

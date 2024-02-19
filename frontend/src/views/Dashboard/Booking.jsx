@@ -2,13 +2,15 @@
 import { useEffect, useState } from "react";
 import axiosClient from "../../axios-client";
 import BookingConfirmationForm from "../../components/BookingConfirmationForm";
-import BookingItem from "../../components/BookingItem";
+import BookingDetails from "../../components/BookingDetails";
 import BookingItemList from "../../components/BookingItemList";
+import BookingSelection from "../../components/BookingSelection";
 
 export default function Booking() {
   const [laundries, setLaundries] = useState([]);
   const [selected, setSelected] = useState([]);
   const [payload, setPayload] = useState({});
+  const [steps, setSteps] = useState(1);
 
   useEffect(() => {
     getLaundries();
@@ -20,8 +22,8 @@ export default function Booking() {
     const data = {
       laundries: selected.reduce((acc, laundry) => {
         const itemId = laundry.id;
-        const itemTotal = laundry.price;
-        const quantity = laundry.qty;
+        const itemTotal = laundry.item_total;
+        const quantity = laundry.quantity;
         total += parseInt(itemTotal);
 
         acc[itemId] = { item_total: itemTotal, quantity: quantity, id: itemId };
@@ -58,14 +60,14 @@ export default function Booking() {
               <i className="fas fa-shirt"></i>
             </div>
           </li>
-          <li className="step step-secondary after:!hidden">
+          <li className={`step after:!hidden ${steps > 1 && "step-secondary"}`}>
             <span className="text-sm font-bold my-3">Pick Up Details</span>
 
             <div className="step-icon">
               <i className="fas fa-info"></i>
             </div>
           </li>
-          <li className="step step-secondary after:!hidden">
+          <li className={`step after:!hidden ${steps > 2 && "step-secondary"}`}>
             <span className="text-sm font-bold my-3">Finish</span>
 
             <div className="step-icon">
@@ -75,6 +77,7 @@ export default function Booking() {
         </ul>
 
         <div className="my-6 py-6 pb-12 bg-lightPink border border-cbrown rounded-lg flex flex-col space-y-6">
+          {/* BRANCH */}
           <div className="p-6 flex flex-col space-y-3">
             <h2 className="text-xl font-bold uppercase">Branch</h2>
             <select
@@ -88,61 +91,37 @@ export default function Booking() {
 
           <div className="flex flex-col space-y-3 ">
             {/* Actions */}
-            {selected.length > 0 && (
-              <div className="w-full px-8 p-3 text-right">
-                <button
-                  onClick={onConfirm}
-                  className="btn btn-primary text-cbrown font-bold px-6"
-                >
-                  Next
-                </button>
+            {selected.length > 0 && steps > 0 && steps < 4 && (
+              <div className="w-full flex items-center justify-end">
+                {steps > 1 && (
+                  <div className="px-0-3 text-right">
+                    <button
+                      onClick={(e) => {
+                        setSteps(steps - 1);
+                      }}
+                      className="btn btn-primary text-cbrown font-bold px-6"
+                    >
+                      Back
+                    </button>
+                  </div>
+                )}
+                <div className="px-3 text-right">
+                  <button
+                    onClick={(e) => {
+                      setSteps(steps + 1);
+                      steps === 2 && onConfirm(e);
+                    }}
+                    className="btn btn-primary text-cbrown font-bold px-6"
+                  >
+                    {steps < 2 ? "Next" : "Finish"}
+                  </button>
+                </div>
               </div>
             )}
 
-            <div className="flex justify-between items-center w-full text-center bg-secondary">
-              <span className="w-full text-lg font-bold uppercase">
-                Services
-              </span>
-              <span className="hidden lg:block w-full text-lg font-bold uppercase">
-                Qty
-              </span>
-              <span className="hidden lg:block w-full text-lg font-bold uppercase">
-                Price
-              </span>
-            </div>
-
-            {/* Lists of Laundries */}
-            <div className="transition-all flex flex-col space-y-3">
-              {selected.length > 0 &&
-                selected.map((laundry) => {
-                  return (
-                    <BookingItem
-                      key={laundry.id}
-                      id={laundry.id}
-                      title={laundry.title}
-                      price={parseFloat(laundry.price)}
-                      description={laundry.description}
-                      selected={selected}
-                    />
-                  );
-                })}
-            </div>
-
-            <div className="px-12 py-8 w-full flex flex-col justify-center items-center gap-3 lg:flex-row">
-              <button
-                onClick={() =>
-                  document.getElementById("bookingItemList").showModal()
-                }
-                className="btn btn-outline btn-primary rounded-lg text-xl"
-              >
-                <i className="fas fa-plus"></i>
-              </button>
-
-              <span className="text-md font-medium">
-                <span>{selected.length === 0 && "No laundries found."}</span>{" "}
-                Click to select laundry items for booking.
-              </span>
-            </div>
+            {/* Selected Bookings */}
+            {steps === 1 && <BookingSelection selected={selected} />}
+            {steps > 1 && <BookingDetails selected={selected} />}
           </div>
         </div>
       </div>
@@ -156,13 +135,14 @@ export default function Booking() {
         setSelected={setSelected}
       />
       {/* Show Laundry Confirmation */}
-      {Object.keys(payload).length > 0 && (
+      {
         <BookingConfirmationForm
           id="bookingConfirmModal"
           selected={selected}
           payload={payload}
+          setStep={setSteps}
         />
-      )}
+      }
     </>
   );
 }

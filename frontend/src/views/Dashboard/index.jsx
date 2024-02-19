@@ -42,7 +42,9 @@ export default function Dashboard() {
             />
           </div>
           <div className="h-1/3 flex flex-col items-center">
-            <span className="text-xl font-bold">Book your laundry now!</span>
+            <span className="text-xl font-bold text-center">
+              Book your laundry now!
+            </span>
             <span className="text-sm font-bold text-gray-400 text-center">
               Schedule a pick-up and delivery time for your laundry!
             </span>
@@ -57,9 +59,9 @@ export default function Dashboard() {
             />
           </div>
           <div className="h-1/3 flex flex-col items-center">
-            <span className="text-xl font-bold">Set up your profile!</span>
+            <span className="text-xl font-bold">Contact Us!</span>
             <span className="text-sm font-bold text-gray-400 text-center">
-              Tell us something about you by providing basic information!
+              Provide us feedback to improve our service!
             </span>
           </div>
         </div>

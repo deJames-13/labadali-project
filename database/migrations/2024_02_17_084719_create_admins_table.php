@@ -12,7 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('admins', function (Blueprint $table) {
-            $table->id();
+            $table->foreignId('id')->primary()->constrained('users')->onDelete('cascade');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('address');
+            $table->string('city');
+            $table->string('region')->nullable();
+            $table->string('zip_code');
+            $table->string('image_path')->nullable();
+            $table->string('phone_number');
+            $table->date('birthdate');
+            $table->integer('age');
             $table->timestamps();
         });
     }
@@ -22,6 +32,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('admin_booking');
         Schema::dropIfExists('admins');
     }
 };

@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { Navigate, createBrowserRouter } from "react-router-dom";
+import AdminLayout from "./layouts/AdminLayout.jsx";
 import DefaultLayout from "./layouts/DefaultLayout.jsx";
 import GuestLayout from "./layouts/GuestLayout.jsx";
-
 // Dashboard
 import Dashboard from "./views/Dashboard";
 import Booking from "./views/Dashboard/Booking.jsx";
@@ -12,6 +12,7 @@ import Message from "./views/Dashboard/Message.jsx";
 import Profile from "./views/Dashboard/Profile.jsx";
 import Settings from "./views/Dashboard/Settings.jsx";
 
+import { Login as AdminLogin } from "./views/Admin/Login";
 import Login from "./views/Login.jsx";
 import NotFound from "./views/NotFound.jsx";
 import Signup from "./views/Signup.jsx";
@@ -72,7 +73,16 @@ const router = createBrowserRouter([
         path: "/signup",
         element: <Signup />,
       },
+      {
+        path: "/admin/login",
+        element: <AdminLogin />,
+      },
     ],
+  },
+  {
+    path: "/admin",
+    element: <AdminLayout />,
+    children: [],
   },
   {
     path: "*",

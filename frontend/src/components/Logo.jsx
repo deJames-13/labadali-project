@@ -9,7 +9,7 @@ export default function Logo({ extendClass, color }) {
     >
       <img
         className="w-20 inline-block"
-        src="img/logo-icon-transparent.png"
+        src="/img/logo-icon-transparent.png"
         alt=""
       />
       <span className="text-4xl uppercase font-bobbyjones">labadali</span>

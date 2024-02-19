@@ -49,8 +49,7 @@ export default function HistoryItem({
         </div>
         {showLaundries && (
           <>
-            <div className="divider"></div>
-            <div className="flex flex-col space-y-3">
+            <div className="flex flex-col-reverse space-y-3">
               {laundriesData.length > 0 &&
                 laundriesData.map((laundry) => {
                   return (
@@ -67,6 +66,7 @@ export default function HistoryItem({
                   );
                 })}
             </div>
+            <div className="divider"></div>
           </>
         )}
       </div>
