@@ -12,6 +12,14 @@ import Message from "./views/Dashboard/Message.jsx";
 import Profile from "./views/Dashboard/Profile.jsx";
 import Settings from "./views/Dashboard/Settings.jsx";
 
+// ADMIN
+import ManageBookings from "./views/Admin/Dashboard/ManageBookings.jsx";
+import ManageInventories from "./views/Admin/Dashboard/ManageInventories.jsx";
+import ManageUsers from "./views/Admin/Dashboard/ManageUsers.jsx";
+import AdminDashboard from "./views/Admin/Dashboard/index.jsx";
+
+// GUEST
+import ManageUser from "./views/Admin/Dashboard/ManageUsers.jsx";
 import { Login as AdminLogin } from "./views/Admin/Login";
 import Login from "./views/Login.jsx";
 import NotFound from "./views/NotFound.jsx";
@@ -82,7 +90,28 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: <AdminLayout />,
-    children: [],
+    children: [
+      {
+        path: "/admin",
+        element: <Navigate to="/admin/dashboard" />,
+      },
+      {
+        path: "/admin/dashboard",
+        element: <AdminDashboard />,
+      },
+      {
+        path: "/admin/manage/bookings",
+        element: <ManageBookings />,
+      },
+      {
+        path: "/admin/manage/users",
+        element: <ManageUsers />,
+      },
+      {
+        path: "/admin/manage/inventories",
+        element: <ManageInventories />,
+      },
+    ],
   },
   {
     path: "*",

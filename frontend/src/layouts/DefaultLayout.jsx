@@ -38,7 +38,7 @@ export default function DefaultLayout() {
       });
   };
   return user ? (
-    <div id="defaultLayout" className="">
+    <div id="defaultLayout">
       <div
         className={`max-h-screen overflow-auto drawer ${
           page === "dashboard" ? "" : "lg:drawer-open"

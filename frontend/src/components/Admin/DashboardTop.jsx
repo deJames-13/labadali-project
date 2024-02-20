@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
-import { useStateContext } from "../contexts/ContextProvider";
-import Logo from "./Logo";
+import { useStateContext } from "../../contexts/ContextProvider";
+import Logo from "../Logo";
 export default function DashboardTop() {
   const { user } = useStateContext();
   const location = useLocation();
@@ -23,7 +23,7 @@ export default function DashboardTop() {
           <div className="nav flex space-x-6 items-center max-h-24">
             <div className="text-cbrown font-medium flex space-x-3 items-center">
               <span>
-                Hi, &nbsp;
+                Hi, Admin &nbsp;
                 <span className="text-cpink font-bold">{user.username}</span>
               </span>
               <div className="avatar">
