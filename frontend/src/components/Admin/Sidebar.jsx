@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import Booking from "../../views/Dashboard/Booking";
 import Button from "../Button";
 import Logo from "../Logo";
 
@@ -28,17 +27,24 @@ export default function Sidebar({ page, onLogout }) {
               />
               <Button
                 text="Manage Bookings"
-                icon={<i className="fas fa-boxes"></i>}
+                icon={<i className="fas fa-book"></i>}
                 isLink={true}
                 link={"/admin/manage/bookings"}
-                isActive={page === "dashboard"}
+                isActive={page === "manage/bookings"}
               />
               <Button
                 text="Manage Users"
                 icon={<i className="fas fa-users"></i>}
                 isLink={true}
-                link={"/admin/manage/bookings"}
-                isActive={page === "dashboard"}
+                link={"/admin/manage/users"}
+                isActive={page === "manage/users"}
+              />
+              <Button
+                text="Manage Inventory"
+                icon={<i className="fas fa-boxes"></i>}
+                isLink={true}
+                link={"/admin/manage/inventories"}
+                isActive={page === "manage/inventories"}
               />
             </div>
 

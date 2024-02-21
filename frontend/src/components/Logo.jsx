@@ -12,7 +12,7 @@ export default function Logo({ extendClass, color }) {
         src="/img/logo-icon-transparent.png"
         alt=""
       />
-      <span className="text-4xl uppercase font-bobbyjones">labadali</span>
+      <span className=" text-4xl uppercase font-bobbyjones">labadali</span>
     </Link>
   );
 }

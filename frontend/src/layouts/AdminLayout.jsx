@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect } from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import axiosClient from "../axios-client";
 import DashboardTop from "../components/Admin/DashboardTop";
 import Sidebar from "../components/Admin/Sidebar";
@@ -9,6 +9,7 @@ import { useStateContext } from "../contexts/ContextProvider";
 
 export default function AdminLayout() {
   const { user, token, setUser } = useStateContext();
+  const location = useLocation();
   const page = location.pathname.split("/admin/")[1];
 
   // if (!token) {
@@ -36,7 +37,7 @@ export default function AdminLayout() {
         console.log(err);
       });
   };
-
+  console.log(page);
   return user ? (
     <div id="defaultLayout">
       <div
