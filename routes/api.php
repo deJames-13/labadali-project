@@ -25,6 +25,9 @@ Route::middleware('auth:sanctum')->group(function () {
         return new UserResource($request->user()->load('customer'));
     });
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::post('/users/{user}', [UserController::class, 'update']);
+
     Route::apiResource('/users', UserController::class);
     Route::apiResource('/laundries', LaundryController::class);
     Route::apiResource('/bookings', BookingController::class);

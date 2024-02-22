@@ -1,27 +1,31 @@
 import { useEffect, useState } from "react";
 import axiosClient from "../../axios-client";
 import HistoryItem from "../../components/HistoryItem";
+import { useStateContext } from "../../contexts/ContextProvider";
 
 export default function BookingHistory() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { user } = useStateContext();
 
   useEffect(() => {
+    const getBookings = () => {
+      setLoading(true);
+      axiosClient
+        .get("/bookings")
+        .then(({ data }) => {
+          const filtered = data.filter(
+            (booking) => booking.customer_id === user.id
+          );
+          setLoading(false);
+          setBookings(filtered);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
     getBookings();
-  }, []);
-
-  const getBookings = () => {
-    setLoading(true);
-    axiosClient
-      .get("/bookings")
-      .then(({ data }) => {
-        setLoading(false);
-        setBookings(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  }, [user]);
 
   return (
     <div>

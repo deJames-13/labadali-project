@@ -8,7 +8,7 @@ import Sidebar from "../components/Admin/Sidebar";
 import { useStateContext } from "../contexts/ContextProvider";
 
 export default function AdminLayout() {
-  const { user, token, setUser } = useStateContext();
+  const { user, token, setUser, setToken } = useStateContext();
   const location = useLocation();
   const page = location.pathname.split("/admin/")[1];
 

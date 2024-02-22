@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\User;
 use App\Models\Booking;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BookingResource;
 use App\Http\Requests\Booking\StoreRequest;
 use App\Http\Requests\Booking\UpdateRequest;
-use App\Http\Resources\BookingResource;
-use App\Models\Customer;
 
 class BookingController extends Controller
 {
@@ -17,8 +18,14 @@ class BookingController extends Controller
      */
     public function index()
     {
-        return BookingResource::collection(Booking::all()->load('laundries'));
+
+        // filter by user
+        // $bookings = Booking::where('customer_id', $user->id)->with('laundries')->get();
+        $bookings = Booking::all()->load('laundries');
+
+        return BookingResource::collection($bookings);
     }
+
 
     /**
      * Store a newly created resource in storage.

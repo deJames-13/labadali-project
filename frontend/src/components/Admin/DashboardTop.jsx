@@ -14,19 +14,22 @@ export default function DashboardTop() {
           }`}
         >
           <Logo
-            extendClass={`w-1/3  hidden md:block ${
+            extendClass={`w-1/3  hidden sm:block ${
               page === "dashboard" ? "" : "lg:hidden"
             }`}
             color="text-secondary"
           />
 
-          <div className="w-full nav flex space-x-6 items-center justify-end max-h-24">
-            <input
-              type="text"
-              className="hidden lg:block input input-bordered border-cbrown input-md w-1/3 bg-transparent "
-            />
+          <div className="lg:w-full nav flex space-x-6 items-center justify-end max-h-24">
+            <div className="hidden lg:flex w-1/2  justify-end px-6 items-center space-x-3 border rounded-full border-cbrown">
+              <input
+                type="text"
+                className="w-full hidden lg:block input input-ghost input-md bg-transparent focus:border-none focus:outline-none"
+              />
+              <i className="fas fa-magnifying-glass hidden lg:block"></i>
+            </div>
 
-            <div className="text-cbrown font-medium flex space-x-3 items-center">
+            <div className="min-w-sm text-cbrown font-medium flex space-x-3 items-center">
               <span>
                 Hi, Admin &nbsp;
                 <span className="text-cpink font-bold">{user.username}</span>
@@ -48,6 +51,14 @@ export default function DashboardTop() {
             </label>
           </div>
         </div>
+      </div>
+
+      <div className="my-6 w-[90%] lg:hidden flex justify-end px-6 items-center space-x-3 border rounded-full border-cbrown">
+        <input
+          type="text"
+          className="w-full input input-ghost input-md bg-transparent focus:border-none focus:outline-none"
+        />
+        <i className="fas fa-magnifying-glass "></i>
       </div>
     </>
   );

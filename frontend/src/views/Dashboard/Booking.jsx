@@ -5,16 +5,28 @@ import BookingConfirmationForm from "../../components/BookingConfirmationForm";
 import BookingDetails from "../../components/BookingDetails";
 import BookingItemList from "../../components/BookingItemList";
 import BookingSelection from "../../components/BookingSelection";
+import { useStateContext } from "../../contexts/ContextProvider";
 
 export default function Booking() {
   const [laundries, setLaundries] = useState([]);
   const [selected, setSelected] = useState([]);
   const [payload, setPayload] = useState({});
   const [steps, setSteps] = useState(1);
+  const { user } = useStateContext();
 
   useEffect(() => {
+    const getLaundries = () => {
+      axiosClient
+        .get("/laundries")
+        .then(({ data }) => {
+          setLaundries(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
     getLaundries();
-  }, []);
+  }, [user]);
 
   const onConfirm = (e) => {
     e.preventDefault();
@@ -36,16 +48,6 @@ export default function Booking() {
     document.getElementById("bookingConfirmModal").showModal();
   };
 
-  const getLaundries = () => {
-    axiosClient
-      .get("/laundries")
-      .then(({ data }) => {
-        setLaundries(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
   return (
     <>
       <div className="w-full brder flex flex-col space-y-6 justify-center">
