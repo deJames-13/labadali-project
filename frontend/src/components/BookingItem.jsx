@@ -9,7 +9,8 @@ export default function BookingItem({
   description,
   qty = 1,
   selected,
-  isHistory = false,
+  isHistory,
+  setIsChanged = () => {},
 }) {
   const [unitPrice, setUnitPrice] = useState(price * qty);
   const [quantity, setQuantity] = useState(qty);
@@ -22,8 +23,9 @@ export default function BookingItem({
         selected[idx].quantity = quantity;
         selected[idx].item_total = quantity * price;
       }
+      setIsChanged(true);
     }
-  }, [quantity, price, selected, id, isHistory]);
+  }, [quantity, price, selected, id, isHistory, setIsChanged]);
 
   return (
     <>
@@ -103,6 +105,9 @@ BookingItem.propTypes = {
   description: PropTypes.string,
   selected: PropTypes.array,
   isHistory: PropTypes.bool,
+  isChanged: PropTypes.bool,
+  setIsChanged: PropTypes.func,
+  setData: PropTypes.func,
 };
 BookingItem.defaultProps = {
   title: "Title",

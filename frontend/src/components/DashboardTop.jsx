@@ -28,7 +28,7 @@ export default function DashboardTop() {
               </span>
               <div className="avatar">
                 <div className="w-10 rounded-full ring ring-secondary ring-offset-base-100 ring-offset-2">
-                  <img src="/img/rizza-img" />
+                  <img src="/img/nouser.jpeg" />
                 </div>
               </div>
             </div>

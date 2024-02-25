@@ -36,7 +36,7 @@ export default function DashboardTop() {
               </span>
               <div className="avatar">
                 <div className="w-10 rounded-full ring ring-secondary ring-offset-base-100 ring-offset-2">
-                  <img src="/img/rizza-img" />
+                  <img src="/img/nouser.jpeg" />
                 </div>
               </div>
             </div>
@@ -51,14 +51,6 @@ export default function DashboardTop() {
             </label>
           </div>
         </div>
-      </div>
-
-      <div className="my-6 w-[90%] lg:hidden flex justify-end px-6 items-center space-x-3 border rounded-full border-cbrown">
-        <input
-          type="text"
-          className="w-full input input-ghost input-md bg-transparent focus:border-none focus:outline-none"
-        />
-        <i className="fas fa-magnifying-glass "></i>
       </div>
     </>
   );

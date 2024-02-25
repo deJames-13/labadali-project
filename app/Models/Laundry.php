@@ -9,8 +9,9 @@ class Laundry extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['quantity', 'item_total', 'booking_id', 'laundry_id'];
     public function bookings()
     {
-        $this->belongsToMany(Booking::class)->withPivot('quantity', 'item_total');
+        $this->belongsToMany(Booking::class, 'booking_laundry')->withPivot('quantity', 'item_total', 'booking_id', 'laundry_id');
     }
 }

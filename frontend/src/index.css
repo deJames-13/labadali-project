@@ -9,7 +9,9 @@
 /* width */
 ::-webkit-scrollbar {
   width: 5px;
+  height: 5px;
 }
+
 /* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
@@ -54,4 +56,17 @@ input:focus-within ~ label {
 
 .drawer-side {
   @apply fixed inset-0 z-40 bg-black bg-opacity-0;
+}
+
+table,
+th,
+tr,
+td {
+  @apply bg-transparent !important;
+  @apply border-0 !important;
+}
+
+tbody tr:hover {
+  @apply bg-secondary bg-opacity-50 !important;
+  @apply transition-all duration-300 scale-x-105 font-bold;
 }

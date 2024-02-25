@@ -1,19 +1,80 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axiosClient from "../axios-client";
 import BookingItem from "./BookingItem";
+import Modal from "./Modal";
 
-export default function HistoryItem({
-  bookingNumber,
-  datePlaced,
-  totalAmount,
-  laundriesData = [],
-}) {
+export default function HistoryItem({ booking, setBooking }) {
   const [showLaundries, setShowLaundries] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [isChange, setIsChanged] = useState(false);
+  const [laundriesData, setLaundriesData] = useState(booking.laundries);
+  const [totalAmount, setTotalAmount] = useState(
+    parseFloat(booking.total_price)
+  );
 
-  const handleShowLaundries = (e) => {
-    e.preventDefault();
+  const bookingNumber = booking.id.toString().padStart(9, "0");
+  const datePlaced = new Date(booking.created_at).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "2-digit",
+  });
+
+  const handleCancel = (e) => {
+    console.log(booking);
+
+    const data = {
+      ...booking,
+      status: "cancelled",
+      laundries: laundriesData.map((laundry) => ({
+        ...laundry,
+        laundry_id: laundry.id,
+      })),
+    };
+    axiosClient
+      .put("/bookings/" + booking.id, data)
+      .then(({ data }) => {
+        console.log(data);
+        setBooking(data);
+      })
+      .catch(({ err }) => {
+        console.log(err.data);
+      });
+  };
+
+  const handleEditSave = () => {
+    let total = 0;
+    booking.laundries.forEach((laundry) => {
+      total += parseFloat(laundry.price) * laundry.quantity;
+    });
+    setTotalAmount(total);
+
+    const data = {
+      ...booking,
+      total_price: total,
+      laundries: booking.laundries.map((laundry) => ({
+        ...laundry,
+        laundry_id: laundry.id,
+      })),
+    };
+
+    axiosClient
+      .put("/bookings/" + booking.id, data)
+      .then(({ data }) => {
+        setLaundriesData(data.laundries);
+        setIsEdit(false);
+        setIsChanged(false);
+      })
+      .catch(({ err }) => {
+        console.log(err.data);
+      });
+  };
+
+  const handleShowLaundries = () => {
     setShowLaundries(!showLaundries);
+    setIsEdit(false);
+    setIsChanged(false);
   };
 
   return (
@@ -38,17 +99,82 @@ export default function HistoryItem({
             </div>
           </div>
           <div className="flex flex-row space-x-3 ">
+            {showLaundries && (
+              <button
+                onClick={() => {
+                  setIsEdit(!isEdit);
+                  setIsChanged(!isEdit);
+                }}
+                className="btn btn-sm btn-primary px-6"
+              >
+                {isEdit ? "Cancel" : "Edit"}
+              </button>
+            )}
+
+            {isChange && (
+              <button
+                onClick={handleEditSave}
+                className="btn btn-sm btn-success px-6"
+              >
+                Save
+              </button>
+            )}
             <button
               onClick={handleShowLaundries}
               className="btn btn-sm btn-primary px-3"
             >
               View Laudries
             </button>
-            <button className="btn btn-sm btn-primary px-3">Summary</button>
+
+            {
+              /* Cancel Confirm Modal*/
+              booking.status === "pending" && (
+                <>
+                  <button
+                    onClick={() => {
+                      document
+                        .getElementById("cancelModal" + booking.id)
+                        .showModal();
+                    }}
+                    className="btn btn-sm btn-error px-3"
+                  >
+                    Cancel
+                  </button>
+                  <Modal
+                    id={"cancelModal" + booking.id}
+                    title={
+                      <h1 className="w-full text-left text-lg font-bold">
+                        Cancel Booking No.: {bookingNumber}
+                      </h1>
+                    }
+                    main={
+                      <>
+                        <h2 className="font-bold">
+                          Are you sure you want to cancel this booking?
+                        </h2>
+                      </>
+                    }
+                    action={
+                      <form method="dialog">
+                        <button className="btn">Close</button>
+                        <button
+                          onClick={handleCancel}
+                          className="btn btn-error"
+                        >
+                          Confirm
+                        </button>
+                      </form>
+                    }
+                    height={300}
+                  />
+                </>
+              )
+            }
           </div>
         </div>
         {showLaundries && (
-          <>
+          <div className="">
+            <div className="w-full text-right"></div>
             <div className="flex flex-col-reverse space-y-3">
               {laundriesData.length > 0 &&
                 laundriesData.map((laundry) => {
@@ -60,23 +186,32 @@ export default function HistoryItem({
                       price={parseFloat(laundry.price)}
                       qty={laundry.quantity}
                       description={laundry.description}
-                      laundries={laundriesData}
-                      isHistory={true}
+                      selected={booking.laundries}
+                      isHistory={true && !isEdit}
+                      setIsChanged={setIsChanged}
                     />
                   );
                 })}
             </div>
             <div className="divider"></div>
-          </>
+          </div>
         )}
       </div>
     </>
   );
 }
 
+// ...
+
 HistoryItem.propTypes = {
-  bookingNumber: PropTypes.string,
-  datePlaced: PropTypes.string,
-  totalAmount: PropTypes.number,
-  laundriesData: PropTypes.array,
+  setBooking: PropTypes.func.isRequired,
+  booking: PropTypes.shape({
+    created_at: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    total_price: PropTypes.string.isRequired,
+    laundries: PropTypes.array.isRequired,
+  }).isRequired,
 };
+
+// ...

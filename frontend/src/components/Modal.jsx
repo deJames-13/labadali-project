@@ -1,12 +1,14 @@
 import PropTypes from "prop-types";
-export default function Modal({ id, title, main, action }) {
+export default function Modal({ id, title, main, action, height = 400 }) {
   return (
     <>
       <dialog
         id={id}
         className="m-[0!important] modal max-h-screen overflow-auto"
       >
-        <div className="modal-box min-h-[400px] max-h-full flex flex-col justify-between">
+        <div
+          className={`modal-box min-h-[${height}px] max-h-full flex flex-col `}
+        >
           <div className="flex space-x-3 items-center justify-center">
             {title}
           </div>
@@ -24,4 +26,5 @@ Modal.propTypes = {
   title: PropTypes.element,
   main: PropTypes.element,
   action: PropTypes.element,
+  height: PropTypes.number,
 };

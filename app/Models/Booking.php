@@ -20,6 +20,7 @@ class Booking extends Model
     }
     public function laundries()
     {
-        return $this->belongsToMany(Laundry::class)->withPivot('quantity', 'item_total');
+        return $this->belongsToMany(Laundry::class, 'booking_laundry')
+            ->withPivot('quantity', 'item_total', 'booking_id', 'laundry_id');
     }
 }

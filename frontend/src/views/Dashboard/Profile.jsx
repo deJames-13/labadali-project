@@ -112,7 +112,7 @@ export default function Profile() {
             <h1 className="text-xl font-extrabold uppercase">Your Profile</h1>
             <div className="max-w-[120px] aspect-square p-2 border border-primary rounded-full">
               <img
-                src={userData.image_path ?? "/img/rizza-icon.png"}
+                src={userData.image_path ?? "/img/nouser.jpeg"}
                 alt=""
                 className="w-full min-w-[90px] object-cover aspect-square rounded-full "
               />

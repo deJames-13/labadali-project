@@ -38,7 +38,7 @@ export default function Booking() {
         const quantity = laundry.quantity;
         total += parseInt(itemTotal);
 
-        acc[itemId] = { item_total: itemTotal, quantity: quantity, id: itemId };
+        acc[itemId] = { item_total: itemTotal, quantity: quantity };
 
         return acc;
       }, {}),

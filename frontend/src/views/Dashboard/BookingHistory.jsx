@@ -6,13 +6,21 @@ import { useStateContext } from "../../contexts/ContextProvider";
 export default function BookingHistory() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState("pending");
+
   const { user } = useStateContext();
+  const statuses = ["pending", "ongoing", "finished", "delivered", "cancelled"];
 
   useEffect(() => {
     const getBookings = () => {
       setLoading(true);
       axiosClient
-        .get("/bookings")
+        .get(
+          "/bookings?user=" +
+            user.id +
+            "&_sort=created_at&_order=asc&_role=customer&_status=" +
+            status
+        )
         .then(({ data }) => {
           const filtered = data.filter(
             (booking) => booking.customer_id === user.id
@@ -25,7 +33,7 @@ export default function BookingHistory() {
         });
     };
     getBookings();
-  }, [user]);
+  }, [user, status]);
 
   return (
     <div>
@@ -39,6 +47,21 @@ export default function BookingHistory() {
           feedback.
         </p>
       </div>
+      <div className="flex space-x-3 items-center justify-end w-full">
+        {statuses.map((s) => {
+          return (
+            <button
+              key={s}
+              onClick={() => setStatus(s)}
+              className={`btn btn-xs uppercase ${
+                status === s ? "btn-primary" : "btn-ghost"
+              } `}
+            >
+              {s}
+            </button>
+          );
+        })}
+      </div>
       <div className="divider"></div>
 
       <div className="flex flex-col-reverse">
@@ -46,15 +69,7 @@ export default function BookingHistory() {
           bookings.map((booking) => {
             return (
               <div key={booking.id} className="py-3">
-                <HistoryItem
-                  bookingNumber={booking.id.toString().padStart(9, "0")}
-                  datePlaced={new Date(booking.created_at).toLocaleDateString(
-                    "en-US",
-                    { year: "numeric", month: "long", day: "2-digit" }
-                  )}
-                  totalAmount={parseFloat(booking.total_price)}
-                  laundriesData={booking.laundries}
-                />
+                <HistoryItem booking={booking} setBooking={setBookings} />
               </div>
             );
           })

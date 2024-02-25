@@ -24,10 +24,12 @@ class UpdateRequest extends FormRequest
     {
         return [
             'laundries' => 'array',
+            'laundries[*]' => ['array', Rule::exists('laundries', 'id')],
             'laundries.*.item_total' => 'numeric|min:0',
             'laundries.*.quantity' => 'integer|min:1',
-            'laundries.*' => ['array', Rule::exists('laundries', 'id')],
+            'laundries.*.laundry_id' => 'integer|min:1',
             'total_price' => 'numeric',
+            'status' => 'string'
         ];
     }
 }

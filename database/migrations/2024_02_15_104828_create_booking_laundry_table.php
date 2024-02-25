@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('booking_laundry', function (Blueprint $table) {
-            $table->unsignedBigInteger('id');
+            $table->id();
             $table->foreignId('booking_id')->constrained('bookings')->onDelete('cascade');
             $table->foreignId('laundry_id')->constrained('laundries')->onDelete('cascade');
             $table->decimal('item_total');
             $table->integer('quantity');
-            $table->primary(['booking_id', 'laundry_id']);
+            // $table->primary(['booking_id', 'laundry_id']);
         });
     }
 

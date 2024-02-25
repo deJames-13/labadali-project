@@ -17,13 +17,34 @@ class BookingController extends Controller
      * Display a listing of the resource.
      */
     public function index()
+
     {
+        $user_id = request('user');
+        $role = request('_role');
 
-        // filter by user
-        // $bookings = Booking::where('customer_id', $user->id)->with('laundries')->get();
-        $bookings = Booking::all()->load('laundries');
+        if ($user_id) {
+            $user = User::find($user_id);
+            if ($role == 'customer') {
 
-        return BookingResource::collection($bookings);
+                // query params
+                $order = request('_order') ?? 'asc';
+                $sort = request('_sort') ?? 'created_at';
+                $status = request('_status') ?? 'all';
+
+                $bookings = Booking::where('customer_id', $user_id)->orderBy($sort, $order);
+                if ($status != 'all') {
+                    $bookings = $bookings->where('status', $status);
+                }
+                $bookings = $bookings->get();
+
+
+                $bookings->load('laundries');
+                return BookingResource::collection($bookings);
+            } else {
+                $bookings = Booking::all()->load('laundries');
+                return BookingResource::collection($bookings);
+            }
+        }
     }
 
 
