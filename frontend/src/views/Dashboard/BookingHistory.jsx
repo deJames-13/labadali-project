@@ -23,7 +23,7 @@ export default function BookingHistory() {
         )
         .then(({ data }) => {
           setLoading(false);
-          setBookings(data);
+          setBookings(data.data ?? data);
         })
         .catch((error) => {
           console.log(error);

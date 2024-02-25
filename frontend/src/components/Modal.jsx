@@ -9,11 +9,13 @@ export default function Modal({ id, title, main, action, height = 400 }) {
         <div
           className={`modal-box min-h-[${height}px] max-h-full flex flex-col `}
         >
-          <div className="flex space-x-3 items-center justify-center">
+          <div className="w-full flex space-x-3 items-center justify-center">
             {title}
           </div>
           <div className="divider"></div>
-          <div className="h-full overflow-auto scrollbar-hide">{main}</div>
+          <div className="h-full w-full overflow-auto scrollbar-hide">
+            {main}
+          </div>
           <div className="modal-action">{action}</div>
         </div>
       </dialog>

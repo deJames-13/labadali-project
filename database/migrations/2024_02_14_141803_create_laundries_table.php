@@ -16,6 +16,10 @@ return new class extends Migration
             $table->string('title');
             $table->longText('description');
             $table->decimal('price');
+            $table->integer('max_kilo');
+            $table->integer('max_items')->nullable();
+            $table->integer('turnaround_day');
+            $table->string('image_path')->nullable();
             $table->timestamps();
         });
     }

@@ -9,7 +9,15 @@ class Laundry extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['quantity', 'item_total', 'booking_id', 'laundry_id'];
+    protected $fillable = [
+        'title',
+        'description',
+        'price',
+        'max_kilo',
+        'max_items',
+        'turnaround_day',
+        'image_path'
+    ];
     public function bookings()
     {
         $this->belongsToMany(Booking::class, 'booking_laundry')->withPivot('quantity', 'item_total', 'booking_id', 'laundry_id');

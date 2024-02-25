@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Laundry\StoreRequest;
+use App\Http\Requests\User\UpdateRequest;
 use App\Http\Resources\LaundryResource;
 use App\Models\Laundry;
 
@@ -21,9 +23,11 @@ class LaundryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $data = $request->validated();
+        $laundry = Laundry::create($data);
+        return response()->json(new LaundryResource($laundry), 201, ['message' => 'Laundry created successfully!']);
     }
 
     /**
@@ -37,7 +41,7 @@ class LaundryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRequest $request, string $id)
     {
         //
     }

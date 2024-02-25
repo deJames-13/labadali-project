@@ -68,5 +68,5 @@ td {
 
 tbody tr:hover {
   @apply bg-secondary bg-opacity-50 !important;
-  @apply transition-all duration-300 scale-x-105 font-bold;
+  @apply transition-all duration-300 scale-x-105 cursor-pointer font-bold;
 }

@@ -21,18 +21,22 @@ export default function DashboardTop() {
           />
 
           <div className="lg:w-full nav flex space-x-6 items-center justify-end max-h-24">
-            <div className="hidden lg:flex w-1/2  justify-end px-6 items-center space-x-3 border rounded-full border-cbrown">
-              <input
-                type="text"
-                className="w-full hidden lg:block input input-ghost input-md bg-transparent focus:border-none focus:outline-none"
-              />
-              <i className="fas fa-magnifying-glass hidden lg:block"></i>
-            </div>
+            {page === "dashboard" && (
+              <div className="hidden lg:flex w-1/2  justify-end px-6 items-center space-x-3 border rounded-full border-cbrown">
+                <input
+                  type="text"
+                  className="w-full hidden lg:block input input-ghost input-sm bg-transparent focus:border-none focus:outline-none"
+                />
+                <i className="fas fa-magnifying-glass hidden lg:block"></i>
+              </div>
+            )}
 
-            <div className="min-w-sm text-cbrown font-medium flex space-x-3 items-center">
-              <span>
-                Hi, Admin &nbsp;
-                <span className="text-cpink font-bold">{user.username}</span>
+            <div className="min-w-sm text-cbrown font-medium flex space-x-3 items-center justify-center">
+              <span className="flex flex-col">
+                <span className="text-xs font-bold">Hello, Admin!</span>
+                <span className="text-md text-secondary font-bold">
+                  {user.username}
+                </span>
               </span>
               <div className="avatar">
                 <div className="w-10 rounded-full ring ring-secondary ring-offset-base-100 ring-offset-2">
@@ -47,7 +51,7 @@ export default function DashboardTop() {
             </div>
             <label
               htmlFor="my-drawer-2"
-              className={`btn btn-primary drawer-button ${
+              className={`btn btn-xs sm:btn-md btn-primary drawer-button ${
                 page === "dashboard" ? "" : "lg:hidden"
               }`}
             >

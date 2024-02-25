@@ -48,7 +48,16 @@ class User extends Authenticatable
         return $this->hasOne(Customer::class, 'id');
     }
 
+    public function admin()
+    {
+        return $this->hasOne(Admin::class, 'id');
+    }
+
     public function isCustomer()
+    {
+        return $this->customer()->exists();
+    }
+    public function isAdmin()
     {
         return $this->customer()->exists();
     }

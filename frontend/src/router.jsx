@@ -7,7 +7,6 @@ import GuestLayout from "./layouts/GuestLayout.jsx";
 import Dashboard from "./views/Dashboard";
 import Booking from "./views/Dashboard/Booking.jsx";
 import BookingHistory from "./views/Dashboard/BookingHistory.jsx";
-import BookingStatus from "./views/Dashboard/BookingStatus.jsx";
 import Message from "./views/Dashboard/Message.jsx";
 import Profile from "./views/Dashboard/Profile.jsx";
 import Settings from "./views/Dashboard/Settings.jsx";
@@ -19,6 +18,8 @@ import ManageUsers from "./views/Admin/Dashboard/ManageUsers.jsx";
 import AdminDashboard from "./views/Admin/Dashboard/index.jsx";
 
 // GUEST
+import ManageLaundries from "./views/Admin/Dashboard/ManageLaundries.jsx";
+import ManageReports from "./views/Admin/Dashboard/ManageReports.jsx";
 import ManageUser from "./views/Admin/Dashboard/ManageUsers.jsx";
 import { Login as AdminLogin } from "./views/Admin/Login";
 import Login from "./views/Login.jsx";
@@ -38,10 +39,6 @@ const router = createBrowserRouter([
       {
         path: "/booking",
         element: <Booking />,
-      },
-      {
-        path: "/status",
-        element: <BookingStatus />,
       },
       {
         path: "/history",
@@ -110,6 +107,14 @@ const router = createBrowserRouter([
       {
         path: "/admin/manage/inventories",
         element: <ManageInventories />,
+      },
+      {
+        path: "/admin/manage/laundries",
+        element: <ManageLaundries />,
+      },
+      {
+        path: "/admin/manage/reports",
+        element: <ManageReports />,
       },
     ],
   },

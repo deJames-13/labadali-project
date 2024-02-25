@@ -19,7 +19,11 @@ class LaundryFactory extends Factory
         return [
             'title' => fake()->word(),
             'description' => fake()->sentence(),
-            'price' => fake()->numberBetween(1, 1000)
+            'price' => fake()->numberBetween(1, 1000),
+            'max_kilo' => fake()->numberBetween(1, 100),
+            'max_items' => fake()->numberBetween(1, 100),
+            'turnaround_day' => fake()->numberBetween(1, 100),
+            'image_path' => 'https://picsum.photos/640/480?random=' . fake()->numberBetween(1, 1000),
         ];
     }
 }

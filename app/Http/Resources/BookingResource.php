@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
+use App\Http\Resources\CustomerResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class BookingResource extends JsonResource
@@ -19,9 +20,10 @@ class BookingResource extends JsonResource
             'customer_id' => $this->customer_id,
             'status' => $this->status,
             'total_price' => $this->total_price,
+            'customer' => new CustomerResource($this->whenLoaded('customer')),
             'laundries' => LaundryResource::collection($this->whenLoaded('laundries')),
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            'updated_at' => $this->updated_at,
         ];
     }
 }

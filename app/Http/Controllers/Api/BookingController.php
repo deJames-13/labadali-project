@@ -19,31 +19,31 @@ class BookingController extends Controller
     public function index()
 
     {
+        $MAX_PAGES = 10;
+
         $user_id = request('user');
         $role = request('_role');
+        // query params
+        $order = request('_order') ?? 'asc';
+        $sort = request('_sort') ?? 'created_at';
+        $status = request('_status') ?? 'all';
+        $page = request('_page') ?? 1;
 
         if ($user_id) {
             $user = User::find($user_id);
             if ($role == 'customer') {
-
-                // query params
-                $order = request('_order') ?? 'asc';
-                $sort = request('_sort') ?? 'created_at';
-                $status = request('_status') ?? 'all';
-
                 $bookings = Booking::where('customer_id', $user_id)->orderBy($sort, $order);
                 if ($status != 'all') {
                     $bookings = $bookings->where('status', $status);
                 }
-                $bookings = $bookings->get();
-
-
-                $bookings->load('laundries');
-                return BookingResource::collection($bookings);
-            } else {
-                $bookings = Booking::all()->load('laundries');
+                $bookings = $bookings->paginate($MAX_PAGES);
                 return BookingResource::collection($bookings);
             }
+        } else {
+            $bookings = Booking::paginate(20);
+            $bookings->load('customer');
+            $bookings->load('laundries');
+            return BookingResource::collection($bookings);
         }
     }
 

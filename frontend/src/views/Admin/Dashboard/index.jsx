@@ -2,16 +2,20 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen flex flex-col space-y-6">
       {/* Banner */}
-      <div>
+      <div className="relative drop-shadow-lg text-center">
         <h1 className="text-2xl md:text-6xl font-extrabold uppercase tracking-wider">
           Welcome to{" "}
           <span className="text-3xl md:text-7xl font-bobbyjones text-primary uppercase">
             labadali!
           </span>
         </h1>
-        <p className="lg:text-xl text-gray-500 font-bold px-2">
-          We’ve assembled the link to get you started
-        </p>
+
+        <h1 className="absolute inset-0 -z-1 left-1 text-2xl text-secondary md:text-6xl font-extrabold uppercase tracking-wider">
+          Welcome to{" "}
+          <span className="text-3xl md:text-7xl font-bobbyjones text-secondary uppercase">
+            labadali!
+          </span>
+        </h1>
       </div>
       {/* Quick Links */}
       <div className="flex flex-col space-y-12 lg:space-y-0 lg:flex-row lg:space-x-3 p-6 bg-primary bg-opacity-25 rounded-lg shadow-md">

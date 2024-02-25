@@ -5,6 +5,7 @@ import Modal from "../../components/Modal";
 import { useStateContext } from "../../contexts/ContextProvider";
 export default function Profile() {
   const [isEdit, setIsEdit] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { user, setUser } = useStateContext();
   const [data, setData] = useState(user.customer);
 
@@ -26,28 +27,30 @@ export default function Profile() {
 
   const onSaveProfile = (e) => {
     e.preventDefault();
-    console.log("Sending: ", userData);
+    setLoading(true);
 
+    // console.log("Sending: ", userData);
+    // FORM OBJECT
     let reqForm = new FormData();
-
     const config = {
       headers: {
         "Content-type": "multipart/form-data",
       },
     };
-
     const path = user.customer ? `/users/${userData.id}/` : "/users/";
-
     Object.keys(userData).forEach((key) => {
       reqForm.append(key, userData[key]);
     });
     userData.data && reqForm.append("_method", "PUT");
+    // END FORM OBJECT
+
     axiosClient
       .post(path, reqForm, config)
       .then((response) => {
-        console.log("Received: ", response.data);
+        // console.log("Received: ", response.data);
 
         setUser(response.data);
+        setLoading(false);
         setIsEdit(false);
       })
       .catch((err) => {
@@ -106,6 +109,11 @@ export default function Profile() {
 
   return (
     <>
+      {loading && (
+        <div className="fixed inset-0 w-screen h-screen z-99 bg-gray-700 bg-opacity-50 grid place-items-center">
+          <div className="loading loading-lg"></div>
+        </div>
+      )}
       {user && !user.customer && (
         <div className="alert bg-red-400 mb-4">
           <div className="flex space-x-4 items-center">

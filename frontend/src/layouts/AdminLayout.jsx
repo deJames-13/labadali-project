@@ -37,7 +37,6 @@ export default function AdminLayout() {
         console.log(err);
       });
   };
-  console.log(page);
   return user ? (
     <div id="defaultLayout">
       <div

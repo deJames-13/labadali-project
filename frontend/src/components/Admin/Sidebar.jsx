@@ -39,12 +39,26 @@ export default function Sidebar({ page, onLogout }) {
                 link={"/admin/manage/users"}
                 isActive={page === "manage/users"}
               />
-              <Button
+              {/* <Button
                 text="Manage Inventory"
                 icon={<i className="fas fa-boxes"></i>}
                 isLink={true}
                 link={"/admin/manage/inventories"}
                 isActive={page === "manage/inventories"}
+              /> */}
+              <Button
+                text="Manage Laundries"
+                icon={<i className="fas fa-boxes"></i>}
+                isLink={true}
+                link={"/admin/manage/laundries"}
+                isActive={page === "manage/laundries"}
+              />
+              <Button
+                text="Reports"
+                icon={<i className="fas fa-file-signature"></i>}
+                isLink={true}
+                link={"/admin/manage/reports"}
+                isActive={page === "manage/reports"}
               />
             </div>
 
