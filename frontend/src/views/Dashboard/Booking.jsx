@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 import axiosClient from "../../axios-client";
 import BookingConfirmationForm from "../../components/BookingConfirmationForm";
 import BookingDetails from "../../components/BookingDetails";
@@ -13,6 +15,10 @@ export default function Booking() {
   const [payload, setPayload] = useState({});
   const [steps, setSteps] = useState(1);
   const { user } = useStateContext();
+
+  if (user && !user.customer) {
+    return <Navigate to="/profile" />;
+  }
 
   useEffect(() => {
     const getLaundries = () => {

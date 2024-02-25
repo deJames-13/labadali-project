@@ -22,11 +22,8 @@ export default function BookingHistory() {
             status
         )
         .then(({ data }) => {
-          const filtered = data.filter(
-            (booking) => booking.customer_id === user.id
-          );
           setLoading(false);
-          setBookings(filtered);
+          setBookings(data);
         })
         .catch((error) => {
           console.log(error);

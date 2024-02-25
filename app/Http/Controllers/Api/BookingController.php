@@ -90,7 +90,10 @@ class BookingController extends Controller
         $data = $request->validated();
         $booking->update($data);
         if ($data['laundries']) {
-            $booking->laundries()->sync($data['laundries']);
+
+            $laundryIds = array_column($data['laundries'], 'laundry_id');
+            $laundryData = array_combine($laundryIds, $data['laundries']);
+            $booking->laundries()->sync($laundryData);
         }
         $booking->load('laundries');
         return response(new BookingResource($booking), 201);

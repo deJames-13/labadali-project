@@ -37,6 +37,7 @@ export default function DefaultLayout() {
         console.log(err);
       });
   };
+
   return user ? (
     <div id="defaultLayout">
       <div

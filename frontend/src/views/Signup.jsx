@@ -41,18 +41,17 @@ export default function Signup() {
             Create Account
           </h1>
 
+          <span className="lg:w-1/2 text-xl font-bold text-textSecondary text-center">
+            Fill your information below or register with your social account.
+          </span>
+
           {errors && (
-            <div className="alert">
+            <div className="alert max-w-lg bg-red-400">
               {Object.keys(errors).map((key) => (
                 <p key={key}>{errors[key][0]}</p>
               ))}
             </div>
           )}
-
-          <span className="lg:w-1/2 text-xl font-bold text-textSecondary text-center">
-            Fill your information below or register with your social account.
-          </span>
-
           <form
             onSubmit={onSubmit}
             className="py-3 w-full flex flex-col justify-center items-center space-y-6"

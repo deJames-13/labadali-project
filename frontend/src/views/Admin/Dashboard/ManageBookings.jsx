@@ -1,4 +1,36 @@
+/* eslint-disable no-unused-vars */
+import { useEffect, useState } from "react";
+import axiosClient from "../../../axios-client";
+import { useStateContext } from "../../../contexts/ContextProvider";
+
 export default function ManageBookings() {
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState("pending");
+
+  const { user } = useStateContext();
+
+  useEffect(() => {
+    const getBookings = () => {
+      setLoading(true);
+      axiosClient
+        .get(
+          "/bookings?user=" +
+            user.id +
+            "&_sort=created_at&_order=asc&_role=customer&_status=" +
+            status
+        )
+        .then(({ data }) => {
+          setLoading(false);
+          setBookings(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    getBookings();
+  }, [user, status]);
+
   return (
     <div className="h-screen min-h-screen flex flex-col space-y-2">
       <div className="flex flex-col space-y-2 lg:flex-row lg:space-y-0 lg:justify-between lg:items-center">

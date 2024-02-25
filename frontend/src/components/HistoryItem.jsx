@@ -6,6 +6,7 @@ import BookingItem from "./BookingItem";
 import Modal from "./Modal";
 
 export default function HistoryItem({ booking, setBooking }) {
+  const [loading, setLoading] = useState(false);
   const [showLaundries, setShowLaundries] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [isChange, setIsChanged] = useState(false);
@@ -22,8 +23,6 @@ export default function HistoryItem({ booking, setBooking }) {
   });
 
   const handleCancel = (e) => {
-    console.log(booking);
-
     const data = {
       ...booking,
       status: "cancelled",
@@ -35,7 +34,6 @@ export default function HistoryItem({ booking, setBooking }) {
     axiosClient
       .put("/bookings/" + booking.id, data)
       .then(({ data }) => {
-        console.log(data);
         setBooking(data);
       })
       .catch(({ err }) => {
@@ -58,13 +56,16 @@ export default function HistoryItem({ booking, setBooking }) {
         laundry_id: laundry.id,
       })),
     };
-
+    // console.log("Sending: ", data);
+    setLoading(true);
     axiosClient
       .put("/bookings/" + booking.id, data)
       .then(({ data }) => {
+        // console.log("Received: ", data);
         setLaundriesData(data.laundries);
         setIsEdit(false);
         setIsChanged(false);
+        setLoading(false);
       })
       .catch(({ err }) => {
         console.log(err.data);
@@ -79,6 +80,11 @@ export default function HistoryItem({ booking, setBooking }) {
 
   return (
     <>
+      {loading && (
+        <div className="fixed inset-0 w-screen h-screen z-99 bg-gray-700 bg-opacity-50 grid place-items-center">
+          <div className="loading loading-lg"></div>
+        </div>
+      )}
       {/* Order Info Card */}
       <div className="bg-secondary bg-opacity-20  p-3 rounded-lg border border-cbrown hover:bg-opacity-30 ease-in-out transition-all">
         <div className="w-full flex flex-col space-y-6  items-center md:space-y-0 md:flex-row md:justify-between">

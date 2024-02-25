@@ -106,6 +106,17 @@ export default function Profile() {
 
   return (
     <>
+      {user && !user.customer && (
+        <div className="alert bg-red-400 mb-4">
+          <div className="flex space-x-4 items-center">
+            <i className="fas fa-warning"></i>
+            <h1 className="font-bold">
+              You have&apos;nt configured your profile
+            </h1>
+          </div>
+          <span>Please fill up the form below.</span>
+        </div>
+      )}
       <form encType="multipart/form-data" onSubmit={onSaveProfile}>
         <div className="rounded-lg flex flex-col space-y-3 py-6 sm:px-6 border border-cbrown bg-secondary bg-opacity-30 text-center">
           <div className="flex flex-col space-y-3 justify-center items-center">
