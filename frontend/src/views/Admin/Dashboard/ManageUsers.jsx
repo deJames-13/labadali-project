@@ -28,7 +28,7 @@ export default function ManageUsers() {
     <div className="min-h-screen flex flex-col space-y-2">
       <div className="flex flex-col space-y-2 lg:flex-row lg:space-y-0 lg:justify-between lg:items-center">
         <div className="flex space-x-3 uppercase font-bold text-2xl  items-center">
-          <i className="fas fa-book"></i>
+          <i className="fas fa-users"></i>
           <h1>
             User Accounts{" "}
             {loading && <span className="loading loading-dots"></span>}{" "}
