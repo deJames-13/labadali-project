@@ -69,7 +69,9 @@ class UserController extends Controller
             $path = $image->storeAs('customers', $fileName, 'public');
             $customerData['image_path'] = "http://localhost:8000/storage/" . $path;
         }
+
         $user->customer()->create($customerData);
+
         return response($user->load('customer'));
     }
 

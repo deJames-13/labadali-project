@@ -18,6 +18,7 @@ class Booking extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+
     public function laundries()
     {
         return $this->belongsToMany(Laundry::class, 'booking_laundry')
