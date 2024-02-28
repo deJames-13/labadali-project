@@ -32,11 +32,13 @@ class BookingController extends Controller
         if ($user_id) {
             $user = User::find($user_id);
             if ($role == 'customer') {
+
                 $bookings = Booking::where('customer_id', $user_id)->orderBy($sort, $order);
                 if ($status != 'all') {
                     $bookings = $bookings->where('status', $status);
                 }
                 $bookings = $bookings->paginate($MAX_PAGES);
+
                 return BookingResource::collection($bookings);
             }
         } else {

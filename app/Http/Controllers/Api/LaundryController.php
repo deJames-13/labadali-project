@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Laundry\StoreRequest;
-use App\Http\Requests\User\UpdateRequest;
+use App\Http\Requests\Laundry\UpdateRequest;
 use App\Http\Resources\LaundryResource;
 use App\Models\Laundry;
 
@@ -17,7 +17,15 @@ class LaundryController extends Controller
      */
     public function index()
     {
-        return LaundryResource::collection(Laundry::all());
+        // query params
+        $order = request('_order') ?? 'asc';
+        $sort = request('_sort') ?? 'updated_at';
+
+        $laundries = Laundry::orderBy($sort, $order)->get();
+
+
+
+        return LaundryResource::collection($laundries);
     }
 
     /**
@@ -33,24 +41,27 @@ class LaundryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Laundry $laundry)
     {
-        //
+        return response(new LaundryResource($laundry));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequest $request, string $id)
+    public function update(UpdateRequest $request, Laundry $laundry)
     {
-        //
+        $data = $request->validated();
+        $laundry->update($data);
+        return response(new LaundryResource($laundry), 200, ['message' => 'Laundry updated successfully!']);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Laundry $laundry)
     {
-        //
+        $laundry->delete();
+        return response()->json(['message' => 'Laundry deleted successfully!'], 200);
     }
 }

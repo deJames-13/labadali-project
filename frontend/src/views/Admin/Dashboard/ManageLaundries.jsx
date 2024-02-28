@@ -2,32 +2,51 @@
 import { useEffect, useState } from "react";
 import axiosClient from "../../../axios-client";
 import AddLaundry from "../../../components/Admin/AddLaundry";
+import ViewLaundry from "../../../components/Admin/ViewLaundry";
+import Modal from "../../../components/Modal";
 import { useStateContext } from "../../../contexts/ContextProvider";
 
 export default function ManageLaundries() {
+  const [selected, setSelected] = useState({});
   const [laundries, setLaundries] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showLaundry, setShowLaundry] = useState(false);
   const { user } = useStateContext();
 
   useEffect(() => {
     getLaundries();
-  }, [user]);
+
+    showLaundry && document.getElementById("view-laundry-modal").showModal();
+  }, [user, showLaundry]);
   const getLaundries = () => {
     setLoading(true);
     axiosClient
       .get("/laundries")
       .then(({ data }) => {
-        setLaundries(data);
+        setLaundries(data.reverse());
         setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
   // Control Modals
   const toggleAddLaundry = () => {
     document.getElementById("add-laundry-modal").showModal();
+  };
+  const handleSelect = (id) => {
+    setSelected(laundries.filter((l) => l.id === id)[0]);
+  };
+
+  const viewLaundry = (id) => {
+    setShowLaundry(true);
+  };
+
+  const handleDelete = (id) => {
+    document.getElementById("delete-laundry-modal").showModal();
+  };
+  const onDelete = (id) => {
+    document.getElementById("delete-laundry-modal").showModal();
   };
 
   return (
@@ -51,7 +70,7 @@ export default function ManageLaundries() {
       </div>
 
       <div className="flex space-x-3 justify-between font-bold items-center">
-        <h2>Selected Item: </h2>
+        <h2>Selected Item: {selected.id ?? "_"}</h2>
         <button onClick={toggleAddLaundry} className="btn btn-sm bg-green-400">
           <i className="fas fa-plus"></i>
           Add New
@@ -75,7 +94,13 @@ export default function ManageLaundries() {
             {laundries &&
               laundries.map((laundry, index) => {
                 return (
-                  <tr key={index} className="">
+                  <tr
+                    key={index}
+                    onClick={(e) => {
+                      handleSelect(laundry.id);
+                    }}
+                    onDoubleClick={viewLaundry}
+                  >
                     <th>{laundry.id}</th>
                     <td>
                       <div className="flex space-x-2">
@@ -103,10 +128,16 @@ export default function ManageLaundries() {
                     <td>{laundry.max_items}</td>
                     <td>{laundry.turnaround_day}</td>
                     <th className="h-12 flex justify-center items-center space-x-3">
-                      <button className="btn btn-primary btn-xs">
+                      <button
+                        onClick={viewLaundry}
+                        className="btn btn-primary btn-xs"
+                      >
                         <i className="fas fa-pen"></i>
                       </button>
-                      <button className="btn btn-xs btn-error">
+                      <button
+                        onClick={handleDelete}
+                        className="btn btn-xs btn-error"
+                      >
                         <i className="fas fa-trash"></i>
                       </button>
                     </th>
@@ -119,7 +150,47 @@ export default function ManageLaundries() {
 
       {
         /* MODALS */
-        <AddLaundry setLaundries={setLaundries} />
+        <>
+          <AddLaundry setLaundries={setLaundries} />
+          {showLaundry && (
+            <ViewLaundry
+              setShowLaundry={setShowLaundry}
+              data={selected}
+              setLaundries={setLaundries}
+            />
+          )}
+
+          <Modal
+            id="delete-laundry-modal"
+            title={
+              <h1 className="font-bold text-lg w-full text-left flex items-center space-x-3">
+                <i className="fas fa-shirt"></i>
+                <span>
+                  Delete Laundry {selected.id ?? "_ "}
+                  {loading && <span className="loading loading-ring"></span>}
+                </span>
+              </h1>
+            }
+            main={
+              <h2 className="font-medium">
+                Are you sure you want to delete laundry with title:{" "}
+                <span className="font-bold italic">{selected.title}</span> ?
+              </h2>
+            }
+            action={
+              <>
+                <form method="dialog">
+                  <div className="flex items-center space-x-3">
+                    <button className="btn">Cancel</button>
+                    <button onClick={onDelete} className="btn btn-error">
+                      Confirm
+                    </button>
+                  </div>
+                </form>
+              </>
+            }
+          />
+        </>
       }
     </div>
   );

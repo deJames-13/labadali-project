@@ -27,12 +27,19 @@ export default function AddLaundry({ setLaundries }) {
       .post("/laundries", data)
       .then(({ data }) => {
         // console.log("Received", data);
-        setLaundries((prev) => [...prev, data]);
+        setLaundries((prev) => [data, ...prev]);
       })
       .catch((err) => {
         console.log(err);
       });
     document.getElementById("add-laundry-modal").close();
+    // clear values
+    title.current.value = "";
+    description.current.value = "";
+    price.current.value = "";
+    max_kilo.current.value = "";
+    max_items.current.value = "";
+    turnaround_day.current.value = "";
   };
 
   return (
