@@ -50,7 +50,7 @@ export default function ManageLaundries() {
   };
 
   return (
-    <div className=" min-h-screen flex flex-col space-y-6">
+    <div className="h-screen min-h-screen flex flex-col space-y-6">
       <div className="flex flex-col space-y-2 lg:flex-row lg:space-y-0 lg:justify-between lg:items-center">
         <div className="flex space-x-3 uppercase font-bold text-2xl  items-center">
           <i className="fas fa-shirt"></i>
@@ -77,10 +77,10 @@ export default function ManageLaundries() {
         </button>
       </div>
 
-      <div className="overflow-x-auto h-3/4 rounded-lg shadow-lg p-1 lg:p-6 bg-secondary bg-opacity-20">
+      <div className="overflow-x-auto max-h-3/5 rounded-lg shadow-lg p-1 lg:p-6 bg-secondary bg-opacity-20">
         <table className="table table-xs table-pin-rows table-pin-cols ">
-          <thead className="border-b-2 border-cbrown uppercase mb-4">
-            <tr className="">
+          <thead className="">
+            <tr className="border-b-2 border-cbrown uppercase mb-4">
               <th>ID</th>
               <td>Title</td>
               <td>Price</td>

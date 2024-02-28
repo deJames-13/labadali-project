@@ -1,12 +1,15 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import axiosClient from "../../../axios-client";
+import ViewBooking from "../../../components/Admin/ViewBooking";
+import BookingDetails from "../../../components/BookingDetails";
 import { useStateContext } from "../../../contexts/ContextProvider";
 
 export default function ManageBookings() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("pending");
+  const [selected, setSelected] = useState({});
   const { user } = useStateContext();
 
   useEffect(() => {
@@ -18,13 +21,20 @@ export default function ManageBookings() {
     axiosClient
       .get("/bookings")
       .then(({ data }) => {
-        console.log(data);
         setLoading(false);
         setBookings(data.data ?? data);
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const handleSelect = (id) => {
+    setSelected(bookings.filter((book) => book.id == id)[0]);
+  };
+
+  const viewBooking = () => {
+    document.getElementById("view-booking").showModal();
   };
 
   return (
@@ -47,7 +57,7 @@ export default function ManageBookings() {
       </div>
 
       <div className="flex space-x-3 font-bold items-center">
-        <h2>Selected Item: </h2>
+        <h2>Selected Item: {selected.id ?? "_"}</h2>
       </div>
 
       {/* Table */}
@@ -79,7 +89,11 @@ export default function ManageBookings() {
                   book.customer &&
                   `${book.customer.first_name} ${book.customer.last_name}`;
                 return (
-                  <tr key={index}>
+                  <tr
+                    key={index}
+                    onClick={(e) => handleSelect(book.id)}
+                    onDoubleClick={viewBooking}
+                  >
                     <td>{index + 1}</td>
                     <td className="link hover:text-blue-900 link-hover">
                       {full_name}
@@ -88,11 +102,11 @@ export default function ManageBookings() {
                     <td>{book.status}</td>
                     <td>{date}</td>
                     <th className="flex justify-center items-center space-x-3">
-                      <button className="btn btn-xs btn-gray-400">
+                      <button
+                        onClick={selected.id && viewBooking}
+                        className="btn btn-xs btn-gray-400"
+                      >
                         details
-                      </button>
-                      <button className="btn btn-primary btn-xs">
-                        <i className="fas fa-pen"></i>
                       </button>
                     </th>
                   </tr>
@@ -101,6 +115,11 @@ export default function ManageBookings() {
           </tbody>
         </table>
       </div>
+
+      {
+        /*MODALS*/
+        <>{selected.id && <ViewBooking data={selected} />}</>
+      }
     </div>
   );
 }

@@ -182,7 +182,8 @@ export default function HistoryItem({ booking, setBooking }) {
           <div className="">
             <div className="w-full text-right"></div>
             <div className="flex flex-col-reverse space-y-3">
-              {laundriesData.length > 0 &&
+              {laundriesData &&
+                laundriesData.length > 0 &&
                 laundriesData.map((laundry) => {
                   return (
                     <BookingItem

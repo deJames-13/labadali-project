@@ -38,6 +38,7 @@ class BookingController extends Controller
                     $bookings = $bookings->where('status', $status);
                 }
                 $bookings = $bookings->paginate($MAX_PAGES);
+                $bookings->load('laundries');
 
                 return BookingResource::collection($bookings);
             }

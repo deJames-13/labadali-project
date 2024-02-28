@@ -7,7 +7,7 @@ export default function Modal({ id, title, main, action, height = 400 }) {
         className="m-[0!important] modal max-h-screen overflow-auto"
       >
         <div
-          className={`modal-box min-h-[${height}px] max-h-full flex flex-col `}
+          className={`modal-box min-h-[${height}px] max-h-full flex flex-col max-w-xl`}
         >
           <div className="w-full flex space-x-3 items-center justify-center">
             {title}
