@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 export default function AdminDashboard() {
   return (
     <div className="min-h-screen flex flex-col space-y-6">
@@ -37,27 +38,27 @@ export default function AdminDashboard() {
               Manage Services
             </h2>
 
-            <a
-              href=""
+            <Link
+              to="/admin/manage/bookings"
               className="link link-cbrown hover:text-primary link-hover"
             >
               <i className="fas fa-book p-2"></i>
               Bookings
-            </a>
-            <a
-              href=""
+            </Link>
+            <Link
+              to="/admin/manage/laundries"
               className="link link-cbrown hover:text-primary link-hover"
             >
               <i className="fas fa-boxes p-2"></i>
-              Inventories
-            </a>
-            <a
-              href=""
+              Laundries
+            </Link>
+            <Link
+              to="/admin/manage/users"
               className="link link-cbrown hover:text-primary link-hover"
             >
               <i className="fas fa-users p-2"></i>
               Users
-            </a>
+            </Link>
           </div>
 
           <div className="flex flex-col space-y-1">
@@ -65,27 +66,27 @@ export default function AdminDashboard() {
               More Actions
             </h2>
 
-            <a
-              href=""
+            <Link
+              to="/admin/"
               className="link link-cbrown hover:text-primary link-hover"
             >
               <i className="fas fa-user p-2"></i>
               Profile
-            </a>
-            <a
-              href=""
+            </Link>
+            <Link
+              to="/admin/"
               className="link link-cbrown hover:text-primary link-hover"
             >
               <i className="fas fa-gear p-2"></i>
               Setting
-            </a>
-            <a
-              href=""
+            </Link>
+            <Link
+              to="/admin/"
               className="link link-cbrown hover:text-primary link-hover"
             >
               <i className="fas fa-arrow-right-from-bracket p-2"></i>
               Logout
-            </a>
+            </Link>
           </div>
         </div>
       </div>
