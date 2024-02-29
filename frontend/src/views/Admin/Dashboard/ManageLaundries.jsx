@@ -45,8 +45,19 @@ export default function ManageLaundries() {
   const handleDelete = (id) => {
     document.getElementById("delete-laundry-modal").showModal();
   };
-  const onDelete = (id) => {
-    document.getElementById("delete-laundry-modal").showModal();
+  const onDelete = () => {
+    setLoading(true);
+    axiosClient
+      .delete("/laundries/" + selected.id)
+      .then(({ data }) => {
+        console.log(data);
+        getLaundries();
+        setLoading(false);
+        document.getElementById("delete-laundry-modal").close();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (

@@ -60,6 +60,13 @@ export default function Sidebar({ page, onLogout }) {
                 link={"/admin/manage/reports"}
                 isActive={page === "manage/reports"}
               />
+              <Button
+                text="Messages"
+                icon={<i className="fas fa-message"></i>}
+                isLink={true}
+                link={"/admin/messages"}
+                isActive={page === "messages"}
+              />
             </div>
 
             <div className="w-full flex flex-col space-y-3 items-center">

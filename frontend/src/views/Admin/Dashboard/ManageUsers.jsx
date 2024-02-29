@@ -25,7 +25,7 @@ export default function ManageUsers() {
       });
   };
   return (
-    <div className="min-h-screen flex flex-col space-y-2">
+    <div className="h-screen min-h-screen flex flex-col space-y-2">
       <div className="flex flex-col space-y-2 lg:flex-row lg:space-y-0 lg:justify-between lg:items-center">
         <div className="flex space-x-3 uppercase font-bold text-2xl  items-center">
           <i className="fas fa-users"></i>
@@ -48,7 +48,7 @@ export default function ManageUsers() {
         <h2>Selected Item: </h2>
       </div>
 
-      <div className="overflow-x-auto h-3/4 rounded-lg shadow-lg p-1 lg:p-6 bg-secondary bg-opacity-20">
+      <div className="overflow-x-auto max-h-3/4 rounded-lg shadow-lg p-1 lg:p-6 bg-secondary bg-opacity-20">
         {/* Table */}
         <table className="table">
           {/* head */}
