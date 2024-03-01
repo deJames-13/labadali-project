@@ -2,12 +2,13 @@
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\LaundryController;
-use App\Http\Resources\UserResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,9 +21,15 @@ use App\Http\Resources\UserResource;
 |
 */
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('jwt.auth')->group(function () {
     Route::get('/user', function (Request $request) {
-        return new UserResource($request->user()->load('customer'));
+        $user = JWTAuth::parseToken()->authenticate();
+        if ($request['_role'] == 'admin') {
+            $user->load('admin');
+        } {
+            $user->load('customer');
+        }
+        return new UserResource($user);
     });
     Route::post('/logout', [AuthController::class, 'logout']);
 

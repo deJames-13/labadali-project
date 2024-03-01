@@ -50,10 +50,10 @@ export default function ManageLaundries() {
     axiosClient
       .delete("/laundries/" + selected.id)
       .then(({ data }) => {
-        console.log(data);
         getLaundries();
         setLoading(false);
         document.getElementById("delete-laundry-modal").close();
+        setSelected({});
       })
       .catch((err) => {
         console.log(err);
@@ -102,7 +102,7 @@ export default function ManageLaundries() {
             </tr>
           </thead>
           <tbody>
-            {laundries &&
+            {laundries.length > 0 &&
               laundries.map((laundry, index) => {
                 return (
                   <tr
@@ -157,6 +157,20 @@ export default function ManageLaundries() {
               })}
           </tbody>
         </table>
+        {!laundries.length > 0 && (
+          <div className="py-6 w-full space-x-4 flex justify-center items-center">
+            <button
+              onClick={toggleAddLaundry}
+              id="addfirst"
+              className="aspect-square btn btn-sm btn-primary rounded-lg"
+            >
+              <i className="fas fa-plus"></i>
+            </button>
+            <label htmlFor="addfirst" className="label">
+              No laundries found. Click + to add new laundry.
+            </label>
+          </div>
+        )}
       </div>
 
       {

@@ -14,10 +14,14 @@ export default function DefaultLayout() {
   if (!token) {
     return <Navigate to="/login" />;
   }
+  const payload = JSON.parse(atob(token.split(".")[1]));
+  if (payload.role != "customer") {
+    return <Navigate to="/login" />;
+  }
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     axiosClient
-      .get("/user")
+      .get("/user?_role=customer")
       .then(({ data }) => {
         setUser(data);
       })

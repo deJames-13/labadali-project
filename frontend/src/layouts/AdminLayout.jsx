@@ -12,12 +12,17 @@ export default function AdminLayout() {
   const location = useLocation();
   const page = location.pathname.split("/admin/")[1];
 
-  // if (!token) {
-  //   return <Navigate to={"/admin/login"} />;
-  // }
+  if (!token) {
+    return <Navigate to={"/admin/login"} />;
+  }
+  const payload = JSON.parse(atob(token.split(".")[1]));
+  if (payload.role != "admin") {
+    return <Navigate to="/login" />;
+  }
+
   useEffect(() => {
     axiosClient
-      .get("/user")
+      .get("/user?_role=admin")
       .then(({ data }) => {
         setUser(data);
       })

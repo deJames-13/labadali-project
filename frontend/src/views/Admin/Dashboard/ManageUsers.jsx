@@ -113,6 +113,19 @@ export default function ManageUsers() {
               })}
           </tbody>
         </table>
+        {!users.length > 0 && (
+          <div className="py-6 w-full space-x-4 flex justify-center items-center">
+            <button
+              id="addfirst"
+              className="aspect-square btn btn-sm btn-primary rounded-lg"
+            >
+              <i className="fas fa-plus"></i>
+            </button>
+            <label htmlFor="addfirst" className="label">
+              No users found. Click + to create new user.
+            </label>
+          </div>
+        )}
       </div>
     </div>
   );

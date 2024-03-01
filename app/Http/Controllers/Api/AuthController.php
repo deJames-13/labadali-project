@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Requests\LoginRequest;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SignupRequest;
 
@@ -20,7 +22,8 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
-        $token = $user->createToken('main')->plainTextToken;
+        /** @var User $user */
+        $token = JWTAuth::fromUser($user);
         return response(compact('user', 'token'), 201);
     }
     public function login(LoginRequest $request)
@@ -29,16 +32,24 @@ class AuthController extends Controller
         if (!auth()->attempt($data)) {
             return response(['message' => 'Invalid credentials. Please try again.', 'status' => 'error'], 201);
         }
-        /** @var user $user */
         $user = auth()->user();
-        $token = $user->createToken('main')->plainTextToken;
+        if ($request['role'] === 'admin') {
+            $user->load('admin');
+            $user->setRole('admin');
+        } else {
+            $user->load('customer');
+        }
+
+        /** @var User $user */
+        $token = JWTAuth::fromUser($user);
         return response(compact('user', 'token'), 201);
     }
     public function logout(Request $request)
     {
         /** @var user $user */
-        $user = $request->user();
-        $user->tokens()->delete();
+        // $user = $request->user();
+        // $user->tokens()->delete();
+        JWTAuth::invalidate(JWTAuth::getToken());
         return response(['message' => 'Logged out successfully'], 200);
     }
 }

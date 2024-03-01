@@ -4,6 +4,7 @@ const StateContext = createContext({
   user: null,
   token: null,
   notification: null,
+  role: null,
   setUser: () => {},
   setToken: () => {},
   setNotification: () => {},
@@ -12,10 +13,15 @@ const StateContext = createContext({
 // eslint-disable-next-line react/prop-types
 export const ContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [role, _setRole] = useState(localStorage.getItem("USERTYPE"));
   const [notification, _setNotification] = useState(null);
   const [token, _setToken] = useState(localStorage.getItem("ACCESS_TOKEN"));
+
   const setToken = (token) => {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    _setRole(payload.role);
     _setToken(token);
+
     if (token) {
       localStorage.setItem("ACCESS_TOKEN", token);
     } else {
@@ -36,6 +42,7 @@ export const ContextProvider = ({ children }) => {
         user,
         token,
         notification,
+        role,
         setUser,
         setToken,
         setNotification,

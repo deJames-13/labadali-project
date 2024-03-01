@@ -32,6 +32,28 @@ import Welcome from "./views/Welcome.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <GuestLayout />,
+    children: [
+      {
+        path: "/welcome",
+        element: <Welcome />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/signup",
+        element: <Signup />,
+      },
+      {
+        path: "/admin/login",
+        element: <AdminLogin />,
+      },
+    ],
+  },
+  {
+    path: "/",
     element: <DefaultLayout />,
     children: [
       {
@@ -61,28 +83,6 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <Dashboard />,
-      },
-    ],
-  },
-  {
-    path: "/",
-    element: <GuestLayout />,
-    children: [
-      {
-        path: "/welcome",
-        element: <Welcome />,
-      },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/signup",
-        element: <Signup />,
-      },
-      {
-        path: "/admin/login",
-        element: <AdminLogin />,
       },
     ],
   },
