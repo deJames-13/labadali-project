@@ -20,8 +20,21 @@ class LaundryController extends Controller
         // query params
         $order = request('_order') ?? 'asc';
         $sort = request('_sort') ?? 'updated_at';
+        $search = request('_search') ?? null;
+        $searchBy = request('_searchBy') ?? null;
 
-        $laundries = Laundry::orderBy($sort, $order)->get();
+        $query = Laundry::query();
+        if ($search && $searchBy) {
+
+            $query
+                ->where("$searchBy", 'like', "%{$search}%");
+        } else if ($search) {
+            // query search
+            $query
+                ->where('title', 'like', "%{$search}%")
+                ->orWhere('description', 'like', "%{$search}%");
+        }
+        $laundries = $query->orderBy($sort, $order)->get();
 
 
 

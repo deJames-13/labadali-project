@@ -11,17 +11,20 @@ export default function ManageLaundries() {
   const [laundries, setLaundries] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showLaundry, setShowLaundry] = useState(false);
+  const [search, setSearch] = useState(null);
   const { user } = useStateContext();
 
   useEffect(() => {
-    getLaundries();
+    const s = search ? `_search=${search}` : "";
+    const query = `${s}`; // add & for each query
+    getLaundries(query);
 
     showLaundry && document.getElementById("view-laundry-modal").showModal();
-  }, [user, showLaundry]);
-  const getLaundries = () => {
+  }, [user, showLaundry, search]);
+  const getLaundries = (query) => {
     setLoading(true);
     axiosClient
-      .get("/laundries")
+      .get("/laundries" + `${"?" + query ?? ""}`)
       .then(({ data }) => {
         setLaundries(data.reverse());
         setLoading(false);
@@ -60,6 +63,12 @@ export default function ManageLaundries() {
       });
   };
 
+  const onSearch = (e) => {
+    e.preventDefault();
+    const q = e.target.value;
+    setSearch(q);
+  };
+
   return (
     <div className="h-screen min-h-screen flex flex-col space-y-6">
       <div className="flex flex-col space-y-2 lg:flex-row lg:space-y-0 lg:justify-between lg:items-center">
@@ -73,6 +82,7 @@ export default function ManageLaundries() {
 
         <div className="lg:max-w-sm flex justify-end px-6 items-center space-x-3 border rounded-full border-cbrown">
           <input
+            onChange={onSearch}
             type="text"
             className="w-full input input-sm input-ghost input-md bg-transparent focus:border-none focus:outline-none"
           />
@@ -115,7 +125,7 @@ export default function ManageLaundries() {
                     <th>{laundry.id}</th>
                     <td>
                       <div className="flex space-x-2">
-                        <div className="mask mask-squircle w-12 h-12">
+                        <div className="mask mask-squircle min-w-12 w-12 h-12 hidden sm:block">
                           <img
                             src={
                               laundry.image_path ??
@@ -125,7 +135,7 @@ export default function ManageLaundries() {
                                 laundry.title
                             }
                             alt={laundry.title}
-                            className="object-cover w-full h-full rounded-lg"
+                            className="object-cover aspect-square rounded-lg"
                           />
                         </div>
                         <div className="flex flex-col">

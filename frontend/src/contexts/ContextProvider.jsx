@@ -29,11 +29,11 @@ export const ContextProvider = ({ children }) => {
     }
   };
 
-  const setNotification = (message) => {
+  const setNotification = (message, duration) => {
     _setNotification({ message, time: new Date() });
     setTimeout(() => {
       _setNotification(null);
-    }, 5000);
+    }, duration ?? 3000);
   };
 
   return (

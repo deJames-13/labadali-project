@@ -1,10 +1,11 @@
+/* eslint-disable no-unused-vars */
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import axiosClient from "../axios-client";
 import { useStateContext } from "../contexts/ContextProvider";
 
 export default function Login() {
-  const { setUser, setToken } = useStateContext();
+  const { setUser, setToken, setNotification } = useStateContext();
   const [errors, setErrors] = useState(null);
   const username = useRef();
   const password = useRef();
