@@ -8,7 +8,8 @@ import { useStateContext } from "../contexts/ContextProvider";
 import Dashboard from "../views/Dashboard/index";
 
 export default function DefaultLayout() {
-  const { user, token, setUser, setToken } = useStateContext();
+  const { user, token, notification, setUser, setToken, setNotification } =
+    useStateContext();
   const location = useLocation();
   const page = location.pathname.split("/")[1];
   if (!token) {
@@ -34,8 +35,11 @@ export default function DefaultLayout() {
     e.preventDefault();
     axiosClient
       .post("/logout")
-      .then(() => {
-        setUser({}), setToken(null);
+      .then(({ data }) => {
+        setToken(null);
+        setUser({});
+        setNotification("Logged out successfully!", 3000, "primary");
+        return <Navigate to="/login" />;
       })
       .catch((err) => {
         console.log(err);
@@ -44,6 +48,17 @@ export default function DefaultLayout() {
 
   return user ? (
     <div id="defaultLayout">
+      {notification && (
+        <>
+          <div className="z-10 toast">
+            {notification.message.split("\n").map((m, i) => (
+              <div key={i} className={`alert bg-${notification.bg}`}>
+                <span>{m}</span>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
       <div
         className={`max-h-screen overflow-auto drawer ${
           page === "dashboard" ? "" : "lg:drawer-open"

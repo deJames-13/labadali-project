@@ -8,7 +8,8 @@ import Sidebar from "../components/Admin/Sidebar";
 import { useStateContext } from "../contexts/ContextProvider";
 
 export default function AdminLayout() {
-  const { user, token, setUser, setToken } = useStateContext();
+  const { user, token, setUser, setToken, notification, setNotification } =
+    useStateContext();
   const location = useLocation();
   const page = location.pathname.split("/admin/")[1];
 
@@ -16,6 +17,7 @@ export default function AdminLayout() {
     return <Navigate to={"/admin/login"} />;
   }
   const payload = JSON.parse(atob(token.split(".")[1]));
+
   if (payload.role != "admin") {
     return <Navigate to="/login" />;
   }
@@ -36,14 +38,33 @@ export default function AdminLayout() {
     axiosClient
       .post("/logout")
       .then(() => {
-        setUser({}), setToken(null);
+        setToken(null);
+        setUser({});
+        setNotification("Logged out successfully!", 3000, "primary");
+        return <Navigate to="/admin/login" />;
       })
       .catch((err) => {
         console.log(err);
       });
   };
   return user ? (
-    <div id="defaultLayout">
+    <div id="adminLayout">
+      {notification && (
+        <>
+          <div className="toast">
+            {notification.message.split("\n").map((m, i) => (
+              <>
+                <div
+                  key={i}
+                  className={`alert bg-${notification.bg} animate__animated animate__fadeInRight`}
+                >
+                  <span>{m}</span>
+                </div>
+              </>
+            ))}
+          </div>
+        </>
+      )}
       <div
         className={`max-h-screen overflow-auto drawer ${
           page === "dashboard" ? "" : "lg:drawer-open"

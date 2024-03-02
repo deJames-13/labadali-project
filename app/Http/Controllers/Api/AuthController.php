@@ -16,7 +16,6 @@ class AuthController extends Controller
     public function signup(SignupRequest $request)
     {
         $data = $request->validated();
-
         /** @var user $user */
         $user = User::create([
             'username' => $data['username'],
@@ -31,7 +30,7 @@ class AuthController extends Controller
     {
         $data = $request->validated();
         if (!auth()->attempt($data)) {
-            return response(['message' => 'Invalid credentials. Please try again.', 'status' => 'error'], 201);
+            return response(['message' => 'Invalid credentials. Please try again.', 'status' => 'error'], 422);
         }
         $user = auth()->user();
         if ($request['role'] === 'admin') {

@@ -4,11 +4,11 @@ import Header from "../components/Header";
 import { useStateContext } from "../contexts/ContextProvider";
 
 export default function GuestLayout() {
-  const { token, role, notification } = useStateContext();
+  const { token, notification } = useStateContext();
   const loc = useLocation();
   if (token) {
     const payload = JSON.parse(atob(token.split(".")[1]));
-    console.log(payload.role == "customer");
+
     return payload.role == "admin" ? (
       <Navigate to="/admin" />
     ) : (
@@ -18,12 +18,20 @@ export default function GuestLayout() {
   return (
     <>
       {notification && (
-        <div
-          role="alert"
-          className="fixed bottom-0 right-0 m-4 bg-cbrown text-white p-4 rounded-md"
-        >
-          {notification.message}
-        </div>
+        <>
+          <div className="toast z-10">
+            {notification.message.split("\n").map((m, i) => (
+              <>
+                <div
+                  key={i}
+                  className={`alert bg-${notification.bg} animate__animated animate__fadeInRight`}
+                >
+                  <span>{m}</span>
+                </div>
+              </>
+            ))}
+          </div>
+        </>
       )}
       {loc.pathname.split("/")[1] !== "admin" && <Header />}
       <Outlet />

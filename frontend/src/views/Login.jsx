@@ -6,7 +6,6 @@ import { useStateContext } from "../contexts/ContextProvider";
 
 export default function Login() {
   const { setUser, setToken, setNotification } = useStateContext();
-  const [errors, setErrors] = useState(null);
   const username = useRef();
   const password = useRef();
 
@@ -21,11 +20,15 @@ export default function Login() {
       .then(({ data }) => {
         setUser(data.user);
         setToken(data.token);
+        setNotification("Logged in successfully!", 3000, "green-400");
       })
       .catch((error) => {
         const e = error.response;
         if (e && e.status === 422) {
-          setErrors(e.data.errors);
+          const errors = e.data.errors
+            ? Object.values(e.data.errors).join("\n")
+            : e.data.message;
+          setNotification(errors, 5000, "red-400");
         }
       });
   };
@@ -46,14 +49,6 @@ export default function Login() {
             onSubmit={onSubmit}
             className="py-3 w-full flex flex-col justify-center items-center space-y-6"
           >
-            {errors && (
-              <div role="alert" className="alert">
-                {Object.keys(errors).map((key) => (
-                  <p key={key}>{errors[key][0]}</p>
-                ))}
-              </div>
-            )}
-
             <input
               ref={username}
               name="username"

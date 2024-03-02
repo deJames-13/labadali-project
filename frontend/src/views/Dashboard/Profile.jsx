@@ -6,7 +6,7 @@ import { useStateContext } from "../../contexts/ContextProvider";
 export default function Profile() {
   const [isEdit, setIsEdit] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { user, setUser } = useStateContext();
+  const { user, setUser, setNotification } = useStateContext();
   const [data, setData] = useState(user.customer);
 
   const street1 = useRef();
@@ -54,7 +54,16 @@ export default function Profile() {
         setIsEdit(false);
       })
       .catch((err) => {
-        console.log(err);
+        const e = err.response;
+        if (e && e.status === 422) {
+          console.log(e);
+          const errors =
+            e.data.message ?? Object.values(e.data.errors).join("\n");
+          setNotification(e.data.message, 5000, "red-400");
+          setIsEdit(!isEdit);
+          setUserData(prevData);
+          setLoading(false);
+        }
       });
   };
 

@@ -18,19 +18,18 @@ export const ContextProvider = ({ children }) => {
   const [token, _setToken] = useState(localStorage.getItem("ACCESS_TOKEN"));
 
   const setToken = (token) => {
-    const payload = JSON.parse(atob(token.split(".")[1]));
-    _setRole(payload.role);
     _setToken(token);
-
     if (token) {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      _setRole(payload.role);
       localStorage.setItem("ACCESS_TOKEN", token);
     } else {
       localStorage.removeItem("ACCESS_TOKEN");
     }
   };
 
-  const setNotification = (message, duration) => {
-    _setNotification({ message, time: new Date() });
+  const setNotification = (message, duration, bg) => {
+    _setNotification({ message, time: new Date(), bg });
     setTimeout(() => {
       _setNotification(null);
     }, duration ?? 3000);

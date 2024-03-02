@@ -1,11 +1,11 @@
+/* eslint-disable no-unused-vars */
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import axiosClient from "../axios-client";
 import { useStateContext } from "../contexts/ContextProvider";
 
 export default function Signup() {
-  const { setUser, setToken } = useStateContext();
-  const [errors, setErrors] = useState(null);
+  const { setUser, setToken, setNotification } = useStateContext();
   const username = useRef();
   const email = useRef();
   const password = useRef();
@@ -28,7 +28,10 @@ export default function Signup() {
       .catch((error) => {
         const e = error.response;
         if (e && e.status === 422) {
-          setErrors(e.data.errors);
+          const errors = e.data.errors
+            ? Object.values(e.data.errors).join("\n")
+            : e.data.message;
+          setNotification(errors, 5000, "error");
         }
       });
   };
@@ -45,13 +48,6 @@ export default function Signup() {
             Fill your information below or register with your social account.
           </span>
 
-          {errors && (
-            <div className="alert max-w-lg bg-red-400">
-              {Object.keys(errors).map((key) => (
-                <p key={key}>{errors[key][0]}</p>
-              ))}
-            </div>
-          )}
           <form
             onSubmit={onSubmit}
             className="py-3 w-full flex flex-col justify-center items-center space-y-6"

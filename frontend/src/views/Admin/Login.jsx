@@ -5,8 +5,7 @@ import axiosClient from "../../axios-client";
 import { useStateContext } from "../../contexts/ContextProvider";
 
 export function Login() {
-  const { setUser, setToken } = useStateContext();
-  const [errors, setErrors] = useState(null);
+  const { setUser, setToken, setNotification } = useStateContext();
   const email = useRef();
   const password = useRef();
   const username = useRef();
@@ -24,25 +23,29 @@ export function Login() {
       .then(({ data }) => {
         setUser(data.user);
         setToken(data.token);
+        setNotification("Logged in successfully!", 3000, "green-400");
         return <Navigate to="/admin" />;
       })
       .catch((error) => {
         const e = error.response;
         if (e && e.status === 422) {
-          setErrors(e.data.errors);
+          const errors = e.data.errors
+            ? Object.values(e.data.errors).join("\n")
+            : e.data.message;
+          setNotification(errors, 5000, "red-400");
         }
       });
   };
 
   return (
-    <main className="relative min-h-screen grid place-items-center overflow-hidden">
+    <main className="relative z-5 min-h-screen grid place-items-center overflow-hidden">
       <img
         src="/img/s3.webp"
         alt=""
         className="absolute -top-1/3 w-full -z-10"
       />
 
-      <div className="z-10 bg-white my-12 p-6 shadow-[20px_20px_50px_0px_#1a202caa] rounded-lg flex flex-col justify-center items-center space-y-3">
+      <div className=" bg-white bg-opacity-30 my-12 p-6 shadow-[20px_20px_50px_0px_#1a202caa] rounded-lg flex flex-col justify-center items-center space-y-3">
         <div className="logo flex space-x-2 items-center">
           <img
             className="w-20 inline-block"
