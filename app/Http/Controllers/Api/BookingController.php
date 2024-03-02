@@ -43,7 +43,10 @@ class BookingController extends Controller
                 return BookingResource::collection($bookings);
             }
         } else {
-            $bookings = Booking::paginate(20);
+            $bookings = Booking::orderBy($sort, $order)->paginate(20);
+            if ($status != 'all') {
+                $bookings = $bookings->where('status', $status);
+            }
             $bookings->load('customer');
             $bookings->load('laundries');
             return BookingResource::collection($bookings);

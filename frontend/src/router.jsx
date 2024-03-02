@@ -13,11 +13,11 @@ import Settings from "./views/Dashboard/Settings.jsx";
 
 // ADMIN
 import { Message as AdminMessage } from "./components/Admin/Message.jsx";
+import AdminDashboard from "./views/Admin/Dashboard/AdminDashboard.jsx";
 import ManageBookings from "./views/Admin/Dashboard/ManageBookings.jsx";
 import ManageInventories from "./views/Admin/Dashboard/ManageInventories.jsx";
 import ManageUsers from "./views/Admin/Dashboard/ManageUsers.jsx";
 import Messages from "./views/Admin/Dashboard/Messages.jsx";
-import AdminDashboard from "./views/Admin/Dashboard/index.jsx";
 
 // GUEST
 import ManageLaundries from "./views/Admin/Dashboard/ManageLaundries.jsx";

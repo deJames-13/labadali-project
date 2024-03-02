@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import { debounce } from "lodash";
 import { useEffect, useState } from "react";
 import axiosClient from "../../../axios-client";
 import AddLaundry from "../../../components/Admin/AddLaundry";
@@ -16,11 +17,12 @@ export default function ManageLaundries() {
 
   useEffect(() => {
     const s = search ? `_search=${search}` : "";
-    const query = `${s}`; // add & for each query
+    const query = `${s}`;
     getLaundries(query);
 
     showLaundry && document.getElementById("view-laundry-modal").showModal();
   }, [user, showLaundry, search]);
+
   const getLaundries = (query) => {
     setLoading(true);
     axiosClient
@@ -33,6 +35,7 @@ export default function ManageLaundries() {
         console.log(err);
       });
   };
+
   // Control Modals
   const toggleAddLaundry = () => {
     document.getElementById("add-laundry-modal").showModal();
@@ -63,12 +66,11 @@ export default function ManageLaundries() {
       });
   };
 
-  const onSearch = (e) => {
+  const onSearch = debounce((e) => {
     e.preventDefault();
     const q = e.target.value;
     setSearch(q);
-  };
-
+  }, 500);
   return (
     <div className="h-screen min-h-screen flex flex-col space-y-6">
       <div className="flex flex-col space-y-2 lg:flex-row lg:space-y-0 lg:justify-between lg:items-center">
@@ -167,7 +169,7 @@ export default function ManageLaundries() {
               })}
           </tbody>
         </table>
-        {!laundries.length > 0 && (
+        {!laundries.length > 0 && !loading && !search && (
           <div className="py-6 w-full space-x-4 flex justify-center items-center">
             <button
               onClick={toggleAddLaundry}

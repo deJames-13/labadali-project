@@ -86,5 +86,4 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->admin()->exists();
     }
-    // TODO: Admin Relationship
 }

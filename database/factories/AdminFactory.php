@@ -22,6 +22,7 @@ class AdminFactory extends Factory
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
             'address' => fake()->address(),
+            'position' => fake()->company(),
             'city' => fake()->city(),
             'zip_code' => fake()->postcode(),
             'phone_number' => fake()->phoneNumber(),

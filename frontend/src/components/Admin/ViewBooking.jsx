@@ -1,17 +1,18 @@
 /* eslint-disable no-unused-vars */
 import { PropTypes } from "prop-types";
 import { useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import axiosClient from "../../axios-client";
 import Modal from "../Modal";
 
 ViewBooking.propTypes = {
   data: PropTypes.object.isRequired,
+  newStatus: PropTypes.func.isRequired,
 };
-
-export default function ViewBooking({ data }) {
+export default function ViewBooking({ data, newStatus }) {
   const [status, setStatus] = useState(data.status);
   const [booking, setBooking] = useState(data);
-  console.log(data.status);
+
   const handleClose = (e) => {
     setStatus(booking.status);
   };
@@ -29,6 +30,7 @@ export default function ViewBooking({ data }) {
       .put("/bookings/" + booking.id, data)
       .then(({ data }) => {
         setBooking(data);
+        newStatus(data.status);
       })
       .catch(({ err }) => {
         console.log(err.data);

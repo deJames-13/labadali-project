@@ -50,15 +50,11 @@ export default function ManageUsers() {
 
       <div className="overflow-x-auto max-h-3/4 rounded-lg shadow-lg p-1 lg:p-6 bg-secondary bg-opacity-20">
         {/* Table */}
-        <table className="table">
+        <table className="table table-xs table-pin-rows table-pin-cols">
           {/* head */}
           <thead>
             <tr>
-              <th>
-                <label>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </th>
+              <th>ID</th>
               <th>Name</th>
               <th>Email</th>
               <th>Phone Number</th>
@@ -72,11 +68,7 @@ export default function ManageUsers() {
                   u.admin && (
                     <>
                       <tr>
-                        <th>
-                          <label>
-                            <input type="checkbox" className="checkbox" />
-                          </label>
-                        </th>
+                        <th> {u.admin.id}</th>
                         <td>
                           <div className="flex items-center gap-3">
                             <div className="avatar">
@@ -97,7 +89,7 @@ export default function ManageUsers() {
                           {u.email}
                           <br />
                           <span className="badge badge-ghost badge-sm">
-                            Desktop Support Technician
+                            {u.admin.position}
                           </span>
                         </td>
                         <td>{u.admin.phone_number}</td>
@@ -113,7 +105,7 @@ export default function ManageUsers() {
               })}
           </tbody>
         </table>
-        {!users.length > 0 && (
+        {!users.length > 0 && !loading && (
           <div className="py-6 w-full space-x-4 flex justify-center items-center">
             <button
               id="addfirst"

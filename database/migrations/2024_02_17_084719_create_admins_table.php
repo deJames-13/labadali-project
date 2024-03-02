@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('address');
+            $table->string('position');
             $table->string('city');
             $table->string('region')->nullable();
             $table->string('zip_code');
