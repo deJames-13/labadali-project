@@ -67,20 +67,24 @@ export function Message({ ...customer }) {
     <div className="h-screen min-h-screen max-h-screen ">
       <div className="h-full bg-secondary bg-opacity-30 rounded-t-lg shadow-xl flex flex-col justify-between">
         {/* TOP */}
-        <div className="flex space-x-3 items-center p-4 px-6 bg-primary border-b-2 border-b-cbrown rounded-t-lg">
-          <div className="avatar online">
-            <div className="w-10 ">
-              <img src="/img/logo-icon-transparent.png" />
+        <div className="flex space-x-3 justify-between items-center p-4 px-6 bg-primary border-b-2 border-b-cbrown rounded-t-lg">
+          <div className="flex space-x-2 items-center">
+            <div className="avatar online">
+              <div className="w-10 ">
+                <img src="/img/logo-icon-transparent.png" />
+              </div>
             </div>
+            <h1 className="text-xl font-bold uppercase text-cbrown flex items-center">
+              LabaDali Chat
+              {/* LOADING */}
+              {loading && (
+                <span className="mx-1 loading loading-sm loading-ring"></span>
+              )}
+            </h1>
           </div>
-          <h1 className="text-xl font-bold uppercase text-cbrown flex items-center">
-            LabaDali Chat
-            {/* LOADING */}
-            {loading && (
-              <span className="mx-1 loading loading-sm loading-ring"></span>
-            )}
-          </h1>
-          <i className="fas fa-dots"></i>
+          <button className="btn btn-ghost">
+            <i className="fas fa-bars"></i>
+          </button>
         </div>
 
         {/* BODY */}

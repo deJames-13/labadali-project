@@ -15,6 +15,7 @@ class Laundry extends Model
         'price',
         'max_kilo',
         'max_items',
+        'max_qty',
         'turnaround_day',
         'image_path'
     ];

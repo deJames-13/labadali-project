@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('price');
             $table->integer('max_kilo');
             $table->integer('max_items')->nullable();
+            $table->integer('max_qty')->default(3);
             $table->integer('turnaround_day');
             $table->string('image_path')->nullable();
             $table->timestamps();

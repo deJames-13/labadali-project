@@ -86,6 +86,20 @@ class MessageController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $customer = Customer::find($id);
+
+        if ($customer) {
+            Message::where('sender_id', $id)
+                ->where('sender_type', Customer::class)
+                ->delete();
+
+            return response()->json([
+                'message' => 'Messages deleted successfully',
+            ], 200);
+        } else {
+            return response()->json([
+                'error' => 'Customer not found',
+            ], 404);
+        }
     }
 }

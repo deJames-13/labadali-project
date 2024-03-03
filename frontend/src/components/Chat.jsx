@@ -12,12 +12,7 @@ export default function Chat({ id, received, avatar, name, time, message }) {
   return (
     <>
       {/* Received */}
-      <div
-        key={id}
-        className={`animated__animate animated__fadeIn chat chat-${
-          received ? "start" : "end"
-        }`}
-      >
+      <div key={id} className={`chat chat-${received ? "start" : "end"}`}>
         {avatar && (
           <div className="chat-image avatar">
             <div className="w-10 rounded-full ring">

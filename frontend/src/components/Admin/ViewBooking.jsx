@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { PropTypes } from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import axiosClient from "../../axios-client";
 import Modal from "../Modal";
@@ -10,12 +10,17 @@ ViewBooking.propTypes = {
   newStatus: PropTypes.func.isRequired,
 };
 export default function ViewBooking({ data, newStatus }) {
-  const [status, setStatus] = useState(data.status);
+  const [status, setStatus] = useState("");
   const [booking, setBooking] = useState(data);
-
+  useEffect(() => {
+    setBooking(data);
+    booking.status && setStatus(booking.status);
+    return () => {};
+  }, [booking, data]);
   const handleClose = (e) => {
     setStatus(booking.status);
   };
+  console.log(data);
   const handleSave = (e) => {
     const data = {
       ...booking,
@@ -159,6 +164,7 @@ export default function ViewBooking({ data, newStatus }) {
                   <span className="label-text font-bold text-xs">
                     Cancelled
                   </span>
+
                   <input
                     onChange={(e) => setStatus(e.target.value)}
                     type="radio"

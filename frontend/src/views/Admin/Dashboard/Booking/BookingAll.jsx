@@ -4,26 +4,37 @@ import { useEffect, useState } from "react";
 import axiosClient from "../../../../axios-client";
 import ViewBooking from "../../../../components/Admin/ViewBooking";
 import BookingDetails from "../../../../components/BookingDetails";
+import Pagination from "../../../../components/Pagination";
 import { useStateContext } from "../../../../contexts/ContextProvider";
 
 export default function BookingAll() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState(null);
+  const [status, setStatus] = useState("all");
   const [selected, setSelected] = useState({});
   const [search, setSearch] = useState(null);
+  const [links, setLinks] = useState(null);
+  const [page, setPage] = useState(1);
   const { user } = useStateContext();
+  const statuses = [
+    "all",
+    "pending",
+    "ongoing",
+    "finished",
+    "delivered",
+    "cancelled",
+  ];
 
   useEffect(() => {
     const queries = [
+      page && `page=${page}`,
       search && `_search=${search}`,
       status && `_status=${status}`,
     ];
     const query = queries.join("&");
-    console.log(query);
 
     getBookings(query);
-  }, [status, search]);
+  }, [status, search, page]);
 
   const getBookings = (query) => {
     setLoading(true);
@@ -32,6 +43,7 @@ export default function BookingAll() {
       .then(({ data }) => {
         setLoading(false);
         setBookings(data.data ?? data);
+        setLinks(data.links ?? null);
       })
       .catch((error) => {
         console.log(error);
@@ -72,12 +84,32 @@ export default function BookingAll() {
           </div>
         </div>
 
-        <div className="flex space-x-3 font-bold items-center">
+        <div className="py-4 flex space-x-3 font-bold items-center justify-between">
           <h2>Selected Item: {selected.id ?? "_"}</h2>
+
+          <Pagination setPage={setPage} {...links} />
         </div>
+        <div className="flex space-x-3 font-bold items-center justify-between"></div>
 
         {/* Table */}
-        <div className="overflow-x-auto h-3/4 rounded-lg shadow-lg p-1 lg:p-6 bg-secondary bg-opacity-20">
+        <div role="tablist" className="tabs tabs-lifted w-1/2">
+          {/* map statuses */}
+          {statuses.map((s, i) => (
+            <a
+              role="tab"
+              key={i}
+              onClick={(e) => setStatus(s)}
+              className={`tab ${
+                status == s
+                  ? "tab-active  [--tab-bg:pink] bg-opacity-40"
+                  : "btn-gray-400"
+              }`}
+            >
+              {s}
+            </a>
+          ))}
+        </div>
+        <div className="overflow-x-auto my-[0!important] h-3/4 rounded-tr-lg  rounded-b-lg shadow-lg px-1 lg:p-6 mx-0 bg-pink-400 bg-opacity-40">
           <table className="table table-xs table-pin-rows table-pin-cols">
             <thead className="border-b-2 border-cbrown uppercase mb-4">
               <tr className="">
@@ -110,7 +142,7 @@ export default function BookingAll() {
                       onClick={(e) => handleSelect(book.id)}
                       onDoubleClick={viewBooking}
                     >
-                      <td>{index + 1}</td>
+                      <td>{book.id}</td>
                       <td className="link hover:text-blue-900 link-hover">
                         {full_name}
                       </td>

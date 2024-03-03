@@ -10,6 +10,9 @@ export default function BookingItem({
   qty = 1,
   selected,
   isHistory,
+  max_items,
+  max_qty,
+  max_kilo,
   setIsChanged = () => {},
 }) {
   const [unitPrice, setUnitPrice] = useState(price * qty);
@@ -20,23 +23,36 @@ export default function BookingItem({
       setUnitPrice(quantity * price);
       const idx = selected.findIndex((laundry) => laundry.id == id);
       if (idx > -1) {
+        // max is max_qty
+        if (quantity > (selected[idx].max_qty ?? 3)) {
+          setQuantity(selected[idx].max_qty ?? 3);
+        }
+        // min is 1
+        if (quantity < 1) {
+          setQuantity(1);
+        }
         selected[idx].quantity = quantity;
         selected[idx].item_total = quantity * price;
       }
       setIsChanged(true);
     }
   }, [quantity, price, selected, id, isHistory, setIsChanged]);
-
   return (
     <>
       <div className="w-full flex flex-col-reverse space-y-3 items-center md:flex-row md:space-y-0 md:justify-between  animate__animated animate__fadeInDown">
         <div className="w-full flex lg:justify-center items-center">
           <div className="w-full px-6 flex flex-col space-y-1 text-left">
-            <span className="font-bold">{title}</span>
-            <span className="font-sm">
+            <span className="font-bold text-sm">{title}</span>
+            <span className="font-medium text-xs">
               P {price}
               <br />
               {description}
+              <br />
+              Max Items: {max_items}
+              <br />
+              Max Qty: {max_qty}
+              <br />
+              Max Kilo: {max_kilo}
             </span>
           </div>
         </div>
@@ -102,6 +118,9 @@ BookingItem.propTypes = {
   title: PropTypes.string,
   price: PropTypes.number,
   qty: PropTypes.number,
+  max_items: PropTypes.number,
+  max_qty: PropTypes.number,
+  max_kilo: PropTypes.number,
   description: PropTypes.string,
   selected: PropTypes.array,
   isHistory: PropTypes.bool,
