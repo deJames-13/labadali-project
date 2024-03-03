@@ -12,4 +12,12 @@ class Admin extends Model
     {
         return $this->belongsTo(User::class, 'id');
     }
+    public function messages()
+    {
+        return $this->morphMany(Message::class, 'sender');
+    }
+    public function received()
+    {
+        return $this->morphMany(Message::class, 'recipient');
+    }
 }

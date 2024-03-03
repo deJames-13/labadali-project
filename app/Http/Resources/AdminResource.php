@@ -14,6 +14,21 @@ class AdminResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'address' => $this->address,
+            'position' => $this->position,
+            'city' => $this->city,
+            'region' => $this->region,
+            'zip_code' => $this->zip_code,
+            'image_path' => $this->image_path,
+            'phone_number' => $this->phone_number,
+            'birthdate' => $this->birthdate,
+            'age' => $this->age,
+            // messages
+            'messages' => MessageResource::collection($this->whenLoaded('messages')),
+        ];
     }
 }

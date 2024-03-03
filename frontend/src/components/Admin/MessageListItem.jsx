@@ -1,9 +1,14 @@
+/* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 MessageListItem.propTypes = {
   id: PropTypes.number,
 };
-export default function MessageListItem({ id }) {
+export default function MessageListItem({ id, ...customer }) {
+  const messageTime = customer.messages[0].created_at
+    .split("T")[1]
+    .split(".")[0];
   return (
     <Link to={"/admin/message/" + id}>
       {/* Message Item */}
@@ -21,17 +26,19 @@ export default function MessageListItem({ id }) {
         />
         <div className="h-full w-3/4">
           <div className="flex space-x-2 items-center">
-            <h4 className="text-md font-bold">John Doe</h4>
-            <span className="text-xs font-light text-gray-700 "> 6m ago</span>
+            <h4 className="text-md font-bold">
+              {customer.first_name + " " + customer.last_name}
+            </h4>
+            <span className="text-xs font-light text-gray-700 ">
+              {" "}
+              {messageTime}
+            </span>
 
-            <div className="badge badge-primary badge-xs"></div>
+            {/* <div className="badge badge-primary badge-xs"></div> */}
           </div>
 
           <p className="text-sm text-gray-700 h-5 text-ellipsis truncate">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita
-            exercitationem officiis ducimus atque temporibus quis suscipit non
-            recusandae labore earum quae, culpa fugit blanditiis vero voluptatem
-            nesciunt error commodi ab.
+            {customer.messages[0].content}
           </p>
         </div>
       </div>

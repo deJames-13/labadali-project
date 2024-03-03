@@ -24,8 +24,11 @@ class CustomerResource extends JsonResource
             'region' => $this->region,
             'zip_code' => $this->zip_code,
             'image_path' => $this->image_path,
-            'phone_number' => $this->phone_number
-
+            'phone_number' => $this->phone_number,
+            'birthdate' => $this->birthdate,
+            'age' => $this->age,
+            // messages
+            'messages' => MessageResource::collection($this->whenLoaded('messages')),
         ];
     }
 }

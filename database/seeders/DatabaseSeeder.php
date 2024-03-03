@@ -3,7 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use Faker\Factory;
+use App\Models\Message;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Testing\Fakes\Fake;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,13 +25,13 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        \App\Models\Customer::factory()->create([
+        $customer = \App\Models\Customer::factory()->create([
             'id' => $user->id,
             'first_name' => 'John',
             'last_name' => 'Doe',
         ]);
 
-        \App\Models\Admin::factory()->create([
+        $admin = \App\Models\Admin::factory()->create([
             'id' => $user->id,
             'first_name' => 'John',
             'last_name' => 'Doe',

@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\LaundryController;
+use App\Http\Controllers\Api\MessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,7 @@ Route::middleware('jwt.auth')->group(function () {
     Route::apiResource('/users', UserController::class);
     Route::apiResource('/laundries', LaundryController::class);
     Route::apiResource('/bookings', BookingController::class);
+    Route::apiResource('/messages', MessageController::class);
 });
 
 Route::post('/signup', [AuthController::class, 'signup']);

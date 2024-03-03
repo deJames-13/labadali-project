@@ -13,7 +13,7 @@ export default function Sidebar({ page, onLogout }) {
         ></label>
 
         <div className="menu p-6 bg-base-200 min-h-full overflow-auto scrollbar-hide">
-          <div className="h-full nav flex flex-col space-y-20 items-center justify-between ">
+          <div className="h-screen nav flex flex-col space-y-20 items-center justify-between ">
             <div className="w-full flex flex-col space-y-3 items-center justify-start">
               <Logo />
               <div className="divider"></div>
@@ -77,13 +77,13 @@ export default function Sidebar({ page, onLogout }) {
                 link={"/profile"}
                 isActive={page === "profile"}
               />
-              <Button
+              {/* <Button
                 text="Settings"
                 icon={<i className="fa fa-gear"></i>}
                 isLink={true}
                 link={"/settings"}
                 isActive={page === "settings"}
-              />
+              /> */}
 
               <Button
                 onClick={onLogout}

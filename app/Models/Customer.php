@@ -32,4 +32,13 @@ class Customer extends Model
     {
         return $this->hasMany(Booking::class);
     }
+
+    public function messages()
+    {
+        return $this->morphMany(Message::class, 'sender');
+    }
+    public function received()
+    {
+        return $this->morphMany(Message::class, 'recipient');
+    }
 }
