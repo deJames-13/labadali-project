@@ -14,6 +14,7 @@ export default function BookingAll() {
   const [selected, setSelected] = useState({});
   const [search, setSearch] = useState(null);
   const [links, setLinks] = useState(null);
+  const [max_page, setMaxPage] = useState(20);
   const [page, setPage] = useState(1);
   const { user } = useStateContext();
   const statuses = [
@@ -27,6 +28,7 @@ export default function BookingAll() {
 
   useEffect(() => {
     const queries = [
+      max_page && `_max_page=${max_page}`,
       page && `page=${page}`,
       search && `_search=${search}`,
       status && `_status=${status}`,
@@ -34,7 +36,7 @@ export default function BookingAll() {
     const query = queries.join("&");
 
     getBookings(query);
-  }, [status, search, page]);
+  }, [status, search, page, max_page]);
 
   const getBookings = (query) => {
     setLoading(true);
@@ -98,7 +100,10 @@ export default function BookingAll() {
             <a
               role="tab"
               key={i}
-              onClick={(e) => setStatus(s)}
+              onClick={(e) => {
+                setStatus(s);
+                setPage(null);
+              }}
               className={`tab ${
                 status == s
                   ? "tab-active  [--tab-bg:pink] bg-opacity-40"

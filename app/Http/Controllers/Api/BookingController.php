@@ -19,7 +19,6 @@ class BookingController extends Controller
     public function index()
 
     {
-        $MAX_PAGES = 10;
 
         $user_id = request('user');
         $role = request('_role');
@@ -28,6 +27,7 @@ class BookingController extends Controller
         $sort = request('_sort') ?? 'created_at';
         $status = request('_status') ?? 'all';
         $page = request('_page') ?? 1;
+        $MAX_PAGES = request('_max_page') ?? 20;
 
         if ($user_id) {
             $user = User::find($user_id);
@@ -43,12 +43,14 @@ class BookingController extends Controller
                 return BookingResource::collection($bookings);
             }
         } else {
-            $bookings = Booking::orderBy($sort, $order)->paginate(20);
+            $bookings = Booking::orderBy($sort, $order);
+
             if ($status != 'all') {
                 $bookings = $bookings->where('status', $status);
             }
-            $bookings->load('customer');
-            $bookings->load('laundries');
+
+            $bookings = $bookings->with(['customer', 'laundries'])->paginate($MAX_PAGES);
+
             return BookingResource::collection($bookings);
         }
     }

@@ -74,7 +74,7 @@ export default function AdminLayout() {
         <div className="drawer-content flex flex-col items-center ">
           <DashboardTop />
 
-          <div className="main-section w-full p-6 lg:p-12">
+          <div className="main-section w-full p-6">
             <Outlet />
           </div>
         </div>

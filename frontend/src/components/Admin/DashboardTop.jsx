@@ -7,7 +7,7 @@ export default function DashboardTop() {
   const page = location.pathname.split("/admin/")[1];
   return (
     <>
-      <div className="w-full p-9 bg-primary ">
+      <div className="w-full p-9 bg-primary">
         <div
           className={`w-full px-3 h-full flex space-x-6 justify-end md:justify-between items-center ${
             page === "dashboard" ? "" : "lg:justify-end"

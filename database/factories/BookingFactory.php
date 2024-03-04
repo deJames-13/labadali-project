@@ -16,10 +16,12 @@ class BookingFactory extends Factory
 
     public function definition()
     {
+        // $statuses = ['ongoing', 'finished', 'delivered'];
+        $statuses = ['pending', 'ongoing', 'finished', 'delivered', 'cancelled'];
         $customers = Customer::all();
         return [
             'customer_id' => $customers->random()->id,
-            'status' => $this->faker->randomElement(['pending', 'ongoing', 'finished', 'delivered', 'cancelled']),
+            'status' => $this->faker->randomElement($statuses),
             'total_price' => $this->faker->randomFloat(2, 100, 1000),
         ];
     }

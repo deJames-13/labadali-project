@@ -4,8 +4,6 @@ import BookingAll from "./Booking/BookingAll";
 export default function ManageBookings() {
   return (
     <>
-      {/* Tabs */}
-
       {/* Booking table */}
       <BookingAll />
     </>
