@@ -192,8 +192,8 @@ export default function ManageLaundries() {
           {showLaundry && (
             <ViewLaundry
               setShowLaundry={setShowLaundry}
-              data={selected}
               setLaundries={setLaundries}
+              data={selected}
             />
           )}
 

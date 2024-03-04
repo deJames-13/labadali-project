@@ -13,6 +13,7 @@ import Settings from "./views/Dashboard/Settings.jsx";
 
 // ADMIN
 import { Message as AdminMessage } from "./components/Admin/Message.jsx";
+import { Dashboard as AdminHome } from "./views/Admin/Dashboard/";
 import AdminDashboard from "./views/Admin/Dashboard/AdminDashboard.jsx";
 import ManageBookings from "./views/Admin/Dashboard/ManageBookings.jsx";
 import ManageInventories from "./views/Admin/Dashboard/ManageInventories.jsx";
@@ -96,7 +97,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/admin",
-        element: <Navigate to="/admin/dashboard" />,
+        element: <AdminHome />,
       },
       {
         path: "/admin/dashboard",

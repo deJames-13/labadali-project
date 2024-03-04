@@ -48,26 +48,24 @@ export default function AdminLayout() {
       });
   };
   return user ? (
-    <div id="adminLayout">
+    <div key="adminLayout" id="adminLayout" className="relative">
       {notification && (
-        <>
+        <div key={notification.time} className="z-99">
           <div className="toast">
             {notification.message.split("\n").map((m, i) => (
-              <>
-                <div
-                  key={i}
-                  className={`alert bg-${notification.bg} animate__animated animate__fadeInRight`}
-                >
-                  <span>{m}</span>
-                </div>
-              </>
+              <div
+                key={i}
+                className={`alert bg-${notification.bg} animate__animated animate__fadeInRight`}
+              >
+                <span>{m}</span>
+              </div>
             ))}
           </div>
-        </>
+        </div>
       )}
       <div
         className={`max-h-screen overflow-auto drawer ${
-          page === "dashboard" ? "" : "lg:drawer-open"
+          page && "lg:drawer-open"
         }`}
       >
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />

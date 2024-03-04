@@ -1,11 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { debounce } from "lodash";
 import { useEffect, useState } from "react";
-import axiosClient from "../../../../axios-client";
-import ViewBooking from "../../../../components/Admin/ViewBooking";
-import BookingDetails from "../../../../components/BookingDetails";
-import Pagination from "../../../../components/Pagination";
-import { useStateContext } from "../../../../contexts/ContextProvider";
+import axiosClient from "../../../axios-client";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import Pagination from "../../Pagination";
+import ViewBooking from "../ViewBooking";
 
 export default function BookingAll() {
   const [bookings, setBookings] = useState([]);
@@ -115,7 +114,10 @@ export default function BookingAll() {
           ))}
         </div>
         <div className="overflow-x-auto my-[0!important] h-3/4 rounded-tr-lg  rounded-b-lg shadow-lg px-1 lg:p-6 mx-0 bg-pink-400 bg-opacity-40">
-          <table className="table table-xs table-pin-rows table-pin-cols">
+          <table
+            className="table table-xs tabimport Pagination from '../../Pagination';
+le-pin-rows table-pin-cols"
+          >
             <thead className="border-b-2 border-cbrown uppercase mb-4">
               <tr className="">
                 <th>Id</th>

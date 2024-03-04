@@ -4,9 +4,9 @@ import axiosClient from "../../axios-client";
 import Modal from "../../components/Modal";
 import { useStateContext } from "../../contexts/ContextProvider";
 export default function Profile() {
+  const { user, setUser, setNotification } = useStateContext();
   const [isEdit, setIsEdit] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { user, setUser, setNotification } = useStateContext();
   const [data, setData] = useState(user.customer);
 
   const street1 = useRef();
@@ -37,7 +37,7 @@ export default function Profile() {
         "Content-type": "multipart/form-data",
       },
     };
-    const path = user.customer ? `/users/${userData.id}/` : "/users/";
+    const path = `/users/${userData.id}/`;
     Object.keys(userData).forEach((key) => {
       reqForm.append(key, userData[key]);
     });

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
-import axiosClient from "../../axios-client";
+import axiosClient from "../../../axios-client";
 import BookingBarChart from "./BookingBarChart";
 import BookingLineChart from "./BookingLineChart";
 import BookingPieChart from "./BookingPieChart";

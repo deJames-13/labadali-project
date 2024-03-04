@@ -26,7 +26,7 @@ export default function Messages() {
       });
   };
   return (
-    <div className="h-screen min-h-screen flex flex-col space-y-6">
+    <div className="h-screen min-h-screen flex flex-col space-y-6 ">
       <div className="flex flex-col space-y-2 lg:flex-row lg:space-y-0 lg:justify-between lg:items-center">
         <div className="flex space-x-3 uppercase font-bold text-2xl  items-center">
           <i className="fas fa-message"></i>
@@ -37,7 +37,7 @@ export default function Messages() {
         </div>
       </div>
       <div className="divider"></div>
-      <div className="py-8 h-3/4 min-h-3/4 flex flex-col space-y-3 border border-cbrown p-3 rounded-lg bg-secondary bg-opacity-20 shadow-lg">
+      <div className="overflow-y-auto py-8 h-3/4 min-h-3/4 flex flex-col space-y-3 border border-cbrown p-3 rounded-lg bg-secondary bg-opacity-20 shadow-lg">
         {messages.customers &&
           messages.customers.map((message, index) => (
             <MessageListItem key={index} {...message} />

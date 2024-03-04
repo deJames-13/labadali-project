@@ -4,7 +4,7 @@ export default function Modal({ id, title, main, action, height = 400 }) {
     <>
       <dialog
         id={id}
-        className="m-[0!important] modal max-h-screen overflow-auto"
+        className="m-[0!important] modal max-h-screen overflow-auto z-50"
       >
         <div
           className={`modal-box min-h-[${height}px] max-h-full flex flex-col max-w-xl`}

@@ -2,7 +2,7 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import axiosClient from "../axios-client";
-import BookingItem from "./BookingItem";
+import BookingItem from "./Booking/BookingItem";
 import Modal from "./Modal";
 
 export default function HistoryItem({ booking, setBooking }) {

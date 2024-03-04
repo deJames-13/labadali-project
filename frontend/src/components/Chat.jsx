@@ -10,9 +10,9 @@ Chat.propTypes = {
 
 export default function Chat({ id, received, avatar, name, time, message }) {
   return (
-    <>
+    <div>
       {/* Received */}
-      <div key={id} className={`chat chat-${received ? "start" : "end"}`}>
+      <div key={id} className={`chat ${received ? "chat-start" : "chat-end"}`}>
         {avatar && (
           <div className="chat-image avatar">
             <div className="w-10 rounded-full ring">
@@ -47,6 +47,6 @@ export default function Chat({ id, received, avatar, name, time, message }) {
           {message}
         </div>
       </div>
-    </>
+    </div>
   );
 }

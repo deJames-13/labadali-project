@@ -10,27 +10,15 @@ export default function DashboardTop() {
       <div className="w-full p-9 bg-primary">
         <div
           className={`w-full px-3 h-full flex space-x-6 justify-end md:justify-between items-center ${
-            page === "dashboard" ? "" : "lg:justify-end"
+            page && "lg:justify-end"
           }`}
         >
           <Logo
-            extendClass={`w-1/3  hidden sm:block ${
-              page === "dashboard" ? "" : "lg:hidden"
-            }`}
+            extendClass={`w-1/3  hidden sm:block ${page && "lg:hidden"}`}
             color="text-secondary"
           />
 
           <div className="lg:w-full nav flex space-x-6 items-center justify-end max-h-24">
-            {page === "dashboard" && (
-              <div className="hidden lg:flex w-1/2  justify-end px-6 items-center space-x-3 border rounded-full border-cbrown">
-                <input
-                  type="text"
-                  className="w-full hidden lg:block input input-ghost input-sm bg-transparent focus:border-none focus:outline-none"
-                />
-                <i className="fas fa-magnifying-glass hidden lg:block"></i>
-              </div>
-            )}
-
             <div className="min-w-sm text-cbrown font-medium flex space-x-3 items-center justify-center">
               <span className="flex flex-col">
                 <span className="text-xs font-bold">Hello, Admin!</span>

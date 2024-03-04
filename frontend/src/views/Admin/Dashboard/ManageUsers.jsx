@@ -9,10 +9,13 @@ export default function ManageUsers() {
   const [loading, setLoading] = useState(false);
   const { user } = useStateContext();
   const [selected, setSelected] = useState(null);
+  const [showUser, setShowUser] = useState(false);
 
   useEffect(() => {
     getUsers();
-  }, [user]);
+
+    showUser && document.getElementById("view-user-modal").showModal();
+  }, [user, showUser]);
   const getUsers = () => {
     setLoading(true);
     axiosClient
@@ -24,10 +27,6 @@ export default function ManageUsers() {
       .catch((err) => {
         console.log(err);
       });
-  };
-
-  const toggleDetails = () => {
-    document.getElementById("view-user-modal").showModal();
   };
 
   return (
@@ -78,7 +77,9 @@ export default function ManageUsers() {
                         onClick={(e) => {
                           setSelected(u);
                         }}
-                        onDoubleClick={toggleDetails}
+                        onDoubleClick={(e) => {
+                          setShowUser(true);
+                        }}
                       >
                         <th> {u.admin.id}</th>
                         <td>
@@ -107,7 +108,9 @@ export default function ManageUsers() {
                         <td>{u.admin.phone_number}</td>
                         <th>
                           <button
-                            onClick={toggleDetails}
+                            onClick={(e) => {
+                              setShowUser(true);
+                            }}
                             className="btn btn-ghost btn-xs"
                           >
                             details
@@ -136,7 +139,7 @@ export default function ManageUsers() {
       </div>
 
       {/* MODALS */}
-      {<>{selected && <ViewUser {...selected} />}</>}
+      {<>{showUser && <ViewUser setShowUser={setShowUser} {...selected} />}</>}
     </>
   );
 }

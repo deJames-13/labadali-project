@@ -33,7 +33,8 @@ class StoreRequest extends FormRequest
             'birthdate' => 'required|date',
             'age' => 'required|integer|min:0',
             'image' => 'nullable',
-            'role' => 'string',
+            'role' => 'sometimes|string',
+            'position' => 'sometimes|string',
             'phone_number' => 'string',
         ];
     }

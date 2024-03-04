@@ -8,8 +8,7 @@ import {
   Tooltip,
 } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import TitleCard from "../../../../../../dashwind/src/components/Cards/TitleCard";
-import Subtitle from "../../../../../../dashwind/src/components/Typography/Subtitle";
+import TitleCard from "../../Cards/TitleCard";
 ChartJS.register(ArcElement, Tooltip, Legend, Tooltip, Filler, Legend);
 
 function DoughnutChart() {

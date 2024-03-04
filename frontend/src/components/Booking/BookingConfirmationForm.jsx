@@ -3,9 +3,9 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axiosClient from "../axios-client";
-import { useStateContext } from "../contexts/ContextProvider";
-import Modal from "./Modal";
+import axiosClient from "../../axios-client";
+import { useStateContext } from "../../contexts/ContextProvider";
+import Modal from "../Modal";
 export default function BookingConfirmationForm({
   id,
   selected,

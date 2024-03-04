@@ -1,5 +1,4 @@
-import TitleCard from "../../../../../../dashwind/src/components/Cards/TitleCard";
-
+import TitleCard from "../../Cards/TitleCard";
 const userSourceData = [
   { source: "Facebook Ads", count: "26,345", conversionPercent: 10.2 },
   { source: "Google Ads", count: "21,341", conversionPercent: 11.7 },

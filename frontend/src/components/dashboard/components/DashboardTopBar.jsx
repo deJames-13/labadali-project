@@ -7,7 +7,6 @@ import ShareIcon from "@heroicons/react/24/outline/ShareIcon";
 import { default as PropTypes } from "prop-types";
 import { useState } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
-import SelectBox from "../../../../../../dashwind/src/components/Input/SelectBox";
 
 const periodOptions = [
   { name: "Today", value: "TODAY" },
@@ -44,15 +43,6 @@ function DashboardTopBar({ updateDashboardPeriod }) {
           showShortcuts={true}
           primaryColor={"white"}
         />
-        {/* <SelectBox 
-                options={periodOptions}
-                labelTitle="Period"
-                placeholder="Select date range"
-                containerStyle="w-72"
-                labelStyle="hidden"
-                defaultValue="TODAY"
-                updateFormValue={updateSelectBoxValue}
-            /> */}
       </div>
       <div className="text-right ">
         <button className="btn btn-ghost btn-sm normal-case">

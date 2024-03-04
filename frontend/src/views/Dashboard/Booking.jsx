@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import axiosClient from "../../axios-client";
-import BookingConfirmationForm from "../../components/BookingConfirmationForm";
-import BookingDetails from "../../components/BookingDetails";
-import BookingItemList from "../../components/BookingItemList";
-import BookingSelection from "../../components/BookingSelection";
+import BookingConfirmationForm from "../../components/Booking/BookingConfirmationForm";
+import BookingDetails from "../../components/Booking/BookingDetails";
+import BookingItemList from "../../components/Booking/BookingItemList";
+import BookingSelection from "../../components/Booking/BookingSelection";
 import { useStateContext } from "../../contexts/ContextProvider";
 
 export default function Booking() {

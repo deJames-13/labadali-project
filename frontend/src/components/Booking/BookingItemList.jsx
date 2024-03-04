@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
 import { useState } from "react";
-import Modal from "./Modal";
+import Modal from "../Modal";
 export default function BookingItemList({
   id,
   laundries,

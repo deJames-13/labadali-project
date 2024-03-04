@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { useStateContext } from "../contexts/ContextProvider";
+import { useStateContext } from "../../contexts/ContextProvider";
 export default function BookingDetails({ selected }) {
   const { user } = useStateContext();
   const dateNow = new Date().toISOString().split("T")[0];

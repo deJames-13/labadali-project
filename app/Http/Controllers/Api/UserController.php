@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Http\Requests\User\StoreRequest;
 use App\Http\Requests\User\UpdateRequest;
-use App\Http\Resources\UserResource;
 
 class UserController extends Controller
 {
@@ -89,6 +89,7 @@ class UserController extends Controller
             'city',
             'region',
             'zip_code',
+            'position',
             'birthdate',
             'phone_number',
             'age'
@@ -124,31 +125,36 @@ class UserController extends Controller
     public function update(UpdateRequest $request, User $user)
     {
         $userData = $request->only('username', 'email');
-        $user->update($userData);
+        $data = $request->only(
+            'first_name',
+            'last_name',
+            'address',
+            'city',
+            'region',
+            'zip_code',
+            'birthdate',
+            'age',
+            'position',
+        );
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $fileName = $image->getClientOriginalName();
+            $fileName =   date('His') . '_' . $fileName;
+            $path = $image->storeAs($user->isCustomer() ? 'customers' : 'admins', $fileName, 'public');
+            $data['image_path'] = "http://localhost:8000/storage/" . $path;
+        }
+
         if ($user->isCustomer()) {
             $user->load('customer');
-            $customerData = $request->only(
-                'first_name',
-                'last_name',
-                'address',
-                'city',
-                'region',
-                'zip_code',
-                'birthdate',
-                'age'
-            );
-
-            if ($request->hasFile('image')) {
-                $image = $request->file('image');
-                $fileName = $image->getClientOriginalName();
-                $fileName =   date('His') . '_' . $fileName;
-
-                $path = $image->storeAs('customers', $fileName, 'public');
-                $customerData['image_path'] = "http://localhost:8000/storage/" . $path;
-            }
-            $user->customer()->update($customerData);
+            $user->customer()->update($data);
+        } else {
+            $user->load('admin');
+            $user->admin()->update($data);
         }
-        return new UserResource($user->load('customer'));
+
+        $user->update($userData);
+        return new UserResource($user->load($user->isCustomer() ? 'customer' : 'admin'));
     }
 
     /**

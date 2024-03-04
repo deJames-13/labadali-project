@@ -1,15 +1,13 @@
 /* eslint-disable no-unused-vars */
 import AmountStats from "./components/AmountStats";
 import DashboardStats from "./components/DashboardStats";
-import PageStats from "./components/PageStats";
+// import PageStats from "./components/PageStats";
 
 import CircleStackIcon from "@heroicons/react/24/outline/CircleStackIcon";
 import CreditCardIcon from "@heroicons/react/24/outline/CreditCardIcon";
 import UserGroupIcon from "@heroicons/react/24/outline/UserGroupIcon";
 import UsersIcon from "@heroicons/react/24/outline/UsersIcon";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { showNotification } from "../../../../../dashwind/src/features/common/headerSlice";
 import BarChart from "./components/BarChart";
 import DashboardTopBar from "./components/DashboardTopBar";
 import DoughnutChart from "./components/DoughnutChart";
@@ -44,22 +42,10 @@ const statsData = [
 ];
 
 function Dashboard() {
-  const dispatch = useDispatch();
-
-  const updateDashboardPeriod = (newRange) => {
-    // Dashboard range changed, write code to refresh your values
-    dispatch(
-      showNotification({
-        message: `Period updated to ${newRange.startDate} to ${newRange.endDate}`,
-        status: 1,
-      })
-    );
-  };
-
   return (
     <>
       {/** ---------------------- Select Period Content ------------------------- */}
-      <DashboardTopBar updateDashboardPeriod={updateDashboardPeriod} />
+      <DashboardTopBar updateDashboardPeriod={() => {}} />
 
       {/** ---------------------- Different stats content 1 ------------------------- */}
       <div className="grid lg:grid-cols-4 mt-2 md:grid-cols-2 grid-cols-1 gap-6">

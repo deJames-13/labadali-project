@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import TitleCard from "../../../../../../dashwind/src/components/Cards/TitleCard";
+import TitleCard from "../../Cards/TitleCard";
 
 ChartJS.register(
   CategoryScale,

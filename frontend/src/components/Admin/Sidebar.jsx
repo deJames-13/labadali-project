@@ -22,7 +22,7 @@ export default function Sidebar({ page, onLogout }) {
                 text="Dashboard"
                 icon={<i className="fas fa-compass"></i>}
                 isLink={true}
-                link={"/admin/"}
+                link={"/admin/dashboard"}
                 isActive={page === "dashboard"}
               />
               <Button
@@ -54,7 +54,7 @@ export default function Sidebar({ page, onLogout }) {
                 isActive={page === "manage/laundries"}
               />
               <Button
-                text="Reports"
+                text="Charts"
                 icon={<i className="fas fa-file-signature"></i>}
                 isLink={true}
                 link={"/admin/manage/reports"}

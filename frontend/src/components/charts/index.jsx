@@ -6,7 +6,6 @@ import LineChart from "./components/LineChart";
 import PieChart from "./components/PieChart";
 import ScatterChart from "./components/ScatterChart";
 import StackBarChart from "./components/StackBarChart";
-
 function Charts() {
   const [dateValue, setDateValue] = useState({
     startDate: new Date(),
@@ -32,6 +31,7 @@ function Charts() {
         primaryColor={"white"}
       />
       {/** ---------------------- Different charts ------------------------- */}
+
       <div className="grid lg:grid-cols-2 mt-0 grid-cols-1 gap-6">
         <StackBarChart />
         <BarChart />
