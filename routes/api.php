@@ -25,7 +25,7 @@ use App\Http\Controllers\FeedbackController;
 */
 
 Route::middleware('jwt.auth')->group(function () {
-    Route::get('/user', function (Request $request) {
+    Route::get('user', function (Request $request) {
         $user = JWTAuth::parseToken()->authenticate();
         if ($request['_role'] == 'admin') {
             $user->load('admin');
@@ -34,26 +34,26 @@ Route::middleware('jwt.auth')->group(function () {
         }
         return new UserResource($user);
     });
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::post('/users/{user}', [UserController::class, 'update']);
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('users/{user}', [UserController::class, 'update']);
 
 
 
-    Route::apiResource('/users', UserController::class);
-    Route::apiResource('/laundries', LaundryController::class);
-    Route::apiResource('/bookings', BookingController::class);
-    Route::apiResource('/messages', MessageController::class);
-    Route::apiResource('/feedbacks', FeedbackController::class);
+    Route::apiResource('users', UserController::class);
+    Route::apiResource('laundries', LaundryController::class);
+    Route::apiResource('bookings', BookingController::class);
+    Route::apiResource('messages', MessageController::class);
+    Route::apiResource('feedbacks', FeedbackController::class);
 });
 // CHARTS
 Route::prefix('charts')->group(function () {
-    Route::get('/topLaundries', [ChartsController::class, 'topLaundries']);
-    Route::get('/topCustomers', [ChartsController::class, 'topCustomers']);
-    Route::get('/monthlyRevenue', [ChartsController::class, 'monthlyRevenue']);
-    Route::get('/weeklyRevenue', [ChartsController::class, 'weeklyRevenue']);
-    Route::get('/bookingStatus', [ChartsController::class, 'bookingStatus']);
-    Route::get('/revenueByLaundryType', [ChartsController::class, 'revenueByLaundryType']);
-    Route::get('/monthlyBookings', [ChartsController::class, 'monthlyBookings']);
+    Route::get('topLaundries', [ChartsController::class, 'topLaundries']);
+    Route::get('topCustomers', [ChartsController::class, 'topCustomers']);
+    Route::get('monthlyRevenue', [ChartsController::class, 'monthlyRevenue']);
+    Route::get('weeklyRevenue', [ChartsController::class, 'weeklyRevenue']);
+    Route::get('bookingStatus', [ChartsController::class, 'bookingStatus']);
+    Route::get('revenueByLaundryType', [ChartsController::class, 'revenueByLaundryType']);
+    Route::get('monthlyBookings', [ChartsController::class, 'monthlyBookings']);
 });
-Route::post('/signup', [AuthController::class, 'signup']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('signup', [AuthController::class, 'signup']);
+Route::post('login', [AuthController::class, 'login']);
