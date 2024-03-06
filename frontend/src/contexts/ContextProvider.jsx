@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { createContext, useContext, useState } from "react";
 
 const StateContext = createContext({
@@ -5,9 +6,11 @@ const StateContext = createContext({
   token: null,
   notification: null,
   role: null,
+  errors: null,
   setUser: () => {},
   setToken: () => {},
   setNotification: () => {},
+  setErrors: () => {},
 });
 
 // eslint-disable-next-line react/prop-types
@@ -15,6 +18,7 @@ export const ContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [role, _setRole] = useState(localStorage.getItem("USERTYPE"));
   const [notification, _setNotification] = useState(null);
+  const [errors, _setErrors] = useState(null);
   const [token, _setToken] = useState(localStorage.getItem("ACCESS_TOKEN"));
 
   const setToken = (token) => {
@@ -35,6 +39,13 @@ export const ContextProvider = ({ children }) => {
     }, duration ?? 3000);
   };
 
+  const setErrors = (message, duration, bg, position) => {
+    _setErrors({ message, time: new Date(), bg, position });
+    setTimeout(() => {
+      _setErrors(null);
+    }, duration ?? 3000);
+  };
+
   return (
     <StateContext.Provider
       value={{
@@ -42,9 +53,11 @@ export const ContextProvider = ({ children }) => {
         token,
         notification,
         role,
+        errors,
         setUser,
         setToken,
         setNotification,
+        setErrors,
       }}
     >
       {children}

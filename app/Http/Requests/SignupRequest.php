@@ -29,7 +29,7 @@ class SignupRequest extends FormRequest
                 'required',
                 'confirmed',
                 'max:15',
-                Password::min(8)->letters()->numbers()->symbols()
+                Password::min(8)->letters()
             ],
         ];
     }

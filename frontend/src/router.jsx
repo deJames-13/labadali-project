@@ -10,6 +10,7 @@ import BookingHistory from "./views/Dashboard/BookingHistory.jsx";
 import Message from "./views/Dashboard/Message.jsx";
 import Profile from "./views/Dashboard/Profile.jsx";
 import Settings from "./views/Dashboard/Settings.jsx";
+import Laundries from "./views/Laundries/index.jsx";
 
 // ADMIN
 import { Message as AdminMessage } from "./components/Admin/Message.jsx";
@@ -23,8 +24,9 @@ import Messages from "./views/Admin/Dashboard/Messages.jsx";
 // GUEST
 import ManageLaundries from "./views/Admin/Dashboard/ManageLaundries.jsx";
 import ManageReports from "./views/Admin/Dashboard/ManageReports.jsx";
-import ManageUser from "./views/Admin/Dashboard/ManageUsers.jsx";
 import { Login as AdminLogin } from "./views/Admin/Login";
+import LaundryAll from "./views/Laundries/components/LaundryAll.jsx";
+import LaundryItem from "./views/Laundries/components/LaundryItem.jsx";
 import Login from "./views/Login.jsx";
 import NotFound from "./views/NotFound.jsx";
 import Signup from "./views/Signup.jsx";
@@ -64,6 +66,20 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Navigate to="/dashboard" />,
+      },
+      {
+        path: "/laundries",
+        element: <Laundries />,
+        children: [
+          {
+            path: "/laundries",
+            element: <LaundryAll />,
+          },
+          {
+            path: "/laundries/:id",
+            element: <LaundryItem />,
+          },
+        ],
       },
       {
         path: "/booking",

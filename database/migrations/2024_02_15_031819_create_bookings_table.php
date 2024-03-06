@@ -19,7 +19,7 @@ return new class extends Migration
             $table->decimal('total_price');
 
             // TODO delivered by
-            // TODO delivered at
+
 
 
             $table->timestamps();

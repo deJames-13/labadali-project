@@ -9,6 +9,8 @@ ViewBooking.propTypes = {
   data: PropTypes.object.isRequired,
   newStatus: PropTypes.func.isRequired,
 };
+
+const statuses = ["pending", "ongoing", "finished", "delivered", "cancelled"];
 export default function ViewBooking({ data, newStatus }) {
   const [status, setStatus] = useState("");
   const [booking, setBooking] = useState(data);
@@ -20,7 +22,6 @@ export default function ViewBooking({ data, newStatus }) {
   const handleClose = (e) => {
     setStatus(booking.status);
   };
-  console.log(data);
   const handleSave = (e) => {
     const data = {
       ...booking,
@@ -41,6 +42,12 @@ export default function ViewBooking({ data, newStatus }) {
         console.log(err.data);
       });
   };
+
+  const onStatusSet = (e) => {
+    e.preventDefault();
+    setStatus(e.target.value);
+  };
+
   return (
     <Modal
       id={"view-booking"}
@@ -97,83 +104,30 @@ export default function ViewBooking({ data, newStatus }) {
       }
       action={
         <>
-          <form method="dialog" className="flex flex-col  space-y-2">
-            <h4 className="font-bold uppercase text-md">Set Status</h4>
-            <div className="flex space-x-1 items-center justify-center">
-              {/* pending */}
-              <div className="form-control">
-                <label className="label cursor-pointer flex-row space-x-3 items-center justify-center ">
-                  <span className="label-text font-bold text-xs">Pending</span>
-                  <input
-                    onChange={(e) => setStatus(e.target.value)}
-                    type="radio"
-                    name="radio-status"
-                    value="pending"
-                    className="radio checked:bg-gray-500"
-                    checked={status === "pending"}
-                  />
-                </label>
-              </div>
-              {/* ongoing */}
-              <div className="form-control">
-                <label className="label cursor-pointer flex-row space-x-3 items-center justify-center">
-                  <span className="label-text font-bold text-xs">Ongoing</span>
-                  <input
-                    onChange={(e) => setStatus(e.target.value)}
-                    type="radio"
-                    name="radio-status"
-                    value="ongoing"
-                    className="radio checked:bg-yellow-500"
-                    checked={status === "ongoing"}
-                  />
-                </label>
-              </div>
-              {/* finished */}
-              <div className="form-control">
-                <label className="label cursor-pointer flex-row space-x-3 items-center justify-center">
-                  <span className="label-text font-bold text-xs">Finished</span>
-                  <input
-                    onChange={(e) => setStatus(e.target.value)}
-                    type="radio"
-                    name="radio-status"
-                    value="finished"
-                    className="radio checked:bg-green-500"
-                    checked={status === "finished"}
-                  />
-                </label>
-              </div>
-              {/* delivered */}
-              <div className="form-control">
-                <label className="label cursor-pointer flex-row space-x-3 items-center justify-center">
-                  <span className="label-text font-bold text-xs">
-                    Delivered
-                  </span>
-                  <input
-                    onChange={(e) => setStatus(e.target.value)}
-                    type="radio"
-                    name="radio-status"
-                    value="delivered"
-                    className="radio checked:bg-secondary"
-                    checked={status === "delivered"}
-                  />
-                </label>
-              </div>
-              {/* cancelled */}
-              <div className="form-control">
-                <label className="label cursor-pointer flex-row space-x-3 items-center justify-center">
-                  <span className="label-text font-bold text-xs">
-                    Cancelled
-                  </span>
-
-                  <input
-                    onChange={(e) => setStatus(e.target.value)}
-                    type="radio"
-                    name="radio-status"
-                    value="cancelled"
-                    className="radio checked:bg-red-500"
-                    checked={status === "cancelled"}
-                  />
-                </label>
+          <form method="dialog" className="w-full flex flex-col gap-3">
+            <div>
+              <h4 className="mx-2 font-extrabold uppercase">Set Status</h4>
+              <div
+                role="tablist"
+                className="tabs tabs-boxed flex  bg-secondary bg-opacity-50"
+              >
+                {/* STATUSES */}
+                {statuses.map((s, i) => {
+                  return (
+                    <div key={i} className="w-full form-control">
+                      <button
+                        value={s}
+                        onClick={onStatusSet}
+                        role="tab"
+                        className={`tab font-bold uppercase ${
+                          status === s ? "border border-cbrown" : ""
+                        }`}
+                      >
+                        {s}
+                      </button>
+                    </div>
+                  );
+                })}
               </div>
             </div>
             <div className="flex space-x-2 items-end justify-end">
@@ -183,7 +137,7 @@ export default function ViewBooking({ data, newStatus }) {
               <button
                 onClick={handleSave}
                 tabIndex={1}
-                className="btn btn-sm btn-success"
+                className="btn btn-sm  btn-success"
               >
                 Save
               </button>

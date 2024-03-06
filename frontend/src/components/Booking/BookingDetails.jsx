@@ -150,6 +150,63 @@ export default function BookingDetails({ selected }) {
           * By default it is set to your address
         </p>
       </div>
+
+      {/* Payment Details */}
+      <div className="px-4 flex flex-col space-y-2">
+        <span className="font-medium text-sm">Select preferred payment:</span>
+
+        <div className="flex gap-4 flex-wrap">
+          <div className="form-control space-x-2">
+            <label className="label cursor-pointer">
+              <input
+                type="radio"
+                name="radio-10"
+                className="radio border border-cbrown checked:bg-red-500"
+                checked
+              />
+              <span className="label-text ml-4 font-bold">COD</span>
+            </label>
+          </div>
+          <div className="form-control space-x-2">
+            <label className="label cursor-pointer">
+              <input
+                type="radio"
+                name="radio-10"
+                className="radio border border-cbrown checked:bg-red-500"
+                disabled
+              />
+              <span className="label-text ml-4 font-bold">GCash</span>
+            </label>
+          </div>
+          <div className="form-control space-x-2">
+            <label className="label cursor-pointer">
+              <input
+                type="radio"
+                name="radio-10"
+                className="radio border border-cbrown checked:bg-red-500"
+                disabled
+              />
+              <span className="label-text ml-4 font-bold">PayMaya</span>
+            </label>
+          </div>
+          <div className="form-control space-x-2">
+            <label className="label cursor-pointer">
+              <input
+                type="radio"
+                name="radio-10"
+                className="radio border border-cbrown checked:bg-red-500"
+                disabled
+              />
+              <span className="label-text ml-4 font-bold">PayPal</span>
+            </label>
+          </div>
+        </div>
+        <p className="text-xs font-light text-gray-800 ">
+          * For now we only support{" "}
+          <span className="italic">COD (Cash On Delivery)</span> for our
+          laundries
+        </p>
+      </div>
     </div>
   );
 }

@@ -23,7 +23,13 @@ ChartJS.register(
   Legend
 );
 
-function LineChart() {
+import PropTypes from "prop-types";
+LineChart.propTypes = {
+  customData: PropTypes.any,
+};
+function LineChart({ customData }) {
+  const l = customData && customData.labels && customData.labels;
+  const d = customData && customData.dataSets && [customData.dataSets];
   const options = {
     responsive: true,
     plugins: {
@@ -33,33 +39,29 @@ function LineChart() {
     },
   };
 
-  const labels = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-  ];
+  const labels = l
+    ? l
+    : ["January", "February", "March", "April", "May", "June", "July"];
 
   const data = {
     labels,
-    datasets: [
-      {
-        fill: true,
-        label: "MAU",
-        data: labels.map(() => {
-          return Math.random() * 100 + 500;
-        }),
-        borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
-      },
-    ],
+    datasets: d
+      ? d
+      : [
+          {
+            fill: true,
+            label: "LabaDali",
+            data: labels.map(() => {
+              return Math.random() * 100 + 500;
+            }),
+            borderColor: "rgb(53, 162, 235)",
+            backgroundColor: "rgba(53, 162, 235, 0.5)",
+          },
+        ],
   };
-
+  console.log(customData);
   return (
-    <TitleCard title={"Montly Active Users (in K)"}>
+    <TitleCard title={"Daily Revenue"}>
       <Line data={data} options={options} />
     </TitleCard>
   );

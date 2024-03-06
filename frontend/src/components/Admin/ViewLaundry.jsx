@@ -22,11 +22,11 @@ export default function ViewLaundry({ data, setLaundries, setShowLaundry }) {
       ...laundry,
       updated_at: new Date().toISOString,
     };
-    console.log("Received", payload);
+    // console.log("Received", payload);
     axiosClient
       .put("/laundries/" + laundry.id, payload)
       .then(({ data }) => {
-        console.log("Received", data);
+        // console.log("Received", data);
         setLaundry(data);
         setLaundries((prev) => prev.map((p) => (p.id === data.id ? data : p)));
         setLoading(false);
@@ -41,6 +41,12 @@ export default function ViewLaundry({ data, setLaundries, setShowLaundry }) {
     setShowLaundry(false);
   };
 
+  let modal = document.getElementById("view-laundry-modal");
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+      setShowLaundry(false);
+    }
+  });
   return (
     <Modal
       id="view-laundry-modal"

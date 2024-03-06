@@ -148,6 +148,9 @@ le-pin-rows table-pin-cols"
                       key={index}
                       onClick={(e) => handleSelect(book.id)}
                       onDoubleClick={viewBooking}
+                      className={`${
+                        selected.id === book.id ? "font-bold bg-secondary" : ""
+                      }`}
                     >
                       <td>{book.id}</td>
                       <td className="link hover:text-blue-900 link-hover">

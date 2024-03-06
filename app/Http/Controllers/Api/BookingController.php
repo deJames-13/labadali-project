@@ -13,9 +13,7 @@ use App\Http\Requests\Booking\UpdateRequest;
 
 class BookingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
 
     {
@@ -27,6 +25,8 @@ class BookingController extends Controller
         $sort = request('_sort') ?? 'created_at';
         $status = request('_status') ?? 'all';
         $page = request('_page') ?? 1;
+        $search = request('_search') ?? '';
+
         $MAX_PAGES = request('_max_page') ?? 20;
 
         if ($user_id) {
@@ -49,6 +49,13 @@ class BookingController extends Controller
                 $bookings = $bookings->where('status', $status);
             }
 
+
+            // add scopeSearch
+            if ($search) {
+                $bookings = $bookings->search($search);
+            }
+
+
             $bookings = $bookings->with(['customer', 'laundries'])->paginate($MAX_PAGES);
 
             return BookingResource::collection($bookings);
@@ -56,9 +63,7 @@ class BookingController extends Controller
     }
 
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
@@ -82,17 +87,13 @@ class BookingController extends Controller
         return response(new BookingResource($booking), 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(Booking $booking)
     {
         return new BookingResource($booking->load('laundries'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(UpdateRequest $request, Booking $booking)
     {
         $data = $request->validated();
@@ -107,9 +108,6 @@ class BookingController extends Controller
         return response(new BookingResource($booking), 201);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Booking $booking)
     {
         $booking->delete();

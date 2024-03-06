@@ -66,7 +66,11 @@ export default function BookingHistory() {
           bookings.map((booking) => {
             return (
               <div key={booking.id} className="py-3">
-                <HistoryItem booking={booking} setBooking={setBookings} />
+                <HistoryItem
+                  booking={booking}
+                  setBooking={setBookings}
+                  setStatus={setStatus}
+                />
               </div>
             );
           })

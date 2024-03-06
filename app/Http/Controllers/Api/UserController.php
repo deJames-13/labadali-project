@@ -31,23 +31,20 @@ class UserController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $role = $request->only('role')['role'];
+        $_role = request('_role') ??  $request['_role'] ?? 'admin';
 
-        if ($role == 'customer') {
-            $this->store_customer($request);
+        if ($_role == 'customer') {
+            return $this->store_customer($request);
         };
-        if ($role == 'admin') {
-            $this->store_admin($request);
+        if ($_role == 'admin') {
+            return $this->store_admin($request);
         };
-
-
-        return response($request);
     }
     private function store_customer($request)
     {
         $userData = $request->only('username', 'email');
 
-        $user = User::where('username', $userData['username'])->first();
+        $user = User::where('id', $request['id'])->first();
         $user->update($userData);
 
         $customerData = $request->only(
@@ -71,16 +68,28 @@ class UserController extends Controller
         }
 
         $user->customer()->create($customerData);
-
-        return response($user->load('customer'));
+        $user->load('customer');
+        return response(new UserResource($user));
     }
 
     private function store_admin($request)
     {
         $userData = $request->only('username', 'email');
 
+
         $user = User::where('username', $userData['username'])->first();
-        $user->update($userData);
+        if ($user) {
+            $user->update($userData);
+        } else {
+            $data = $request->only('username', 'email', 'password');
+            $user = User::create([
+                'username' => $data['username'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+            ]);
+        }
+
+
 
         $adminData = $request->only(
             'first_name',
@@ -103,7 +112,8 @@ class UserController extends Controller
             $adminData['image_path'] = "http://localhost:8000/storage/" . $path;
         }
         $user->admin()->create($adminData);
-        return response($user->load('admin'));
+        $user->load('admin');
+        return response(new UserResource($user));
     }
 
 
@@ -124,7 +134,12 @@ class UserController extends Controller
      */
     public function update(UpdateRequest $request, User $user)
     {
+
+        $_role = request('_role') ??  $request['_role'] ?? 'admin';
+
         $userData = $request->only('username', 'email');
+        $user->update($userData);
+
         $data = $request->only(
             'first_name',
             'last_name',
@@ -145,23 +160,22 @@ class UserController extends Controller
             $data['image_path'] = "http://localhost:8000/storage/" . $path;
         }
 
-        if ($user->isCustomer()) {
+        if ($_role === 'customer') {
             $user->load('customer');
-            $user->customer()->update($data);
         } else {
             $user->load('admin');
             $user->admin()->update($data);
         }
 
-        $user->update($userData);
-        return new UserResource($user->load($user->isCustomer() ? 'customer' : 'admin'));
+        return new UserResource($user);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return response(['message' => 'Removed Succesfully'], 201);
     }
 }

@@ -101,13 +101,6 @@ export function Login() {
             placeholder="Email"
           />
 
-          <a
-            href="#"
-            className="w-full max-w-xl text-center text-textSecondary font-medium underline"
-          >
-            Forgot Password?
-          </a>
-
           <button onClick={onSubmit} className="btn btn-secondary ">
             Log In
           </button>

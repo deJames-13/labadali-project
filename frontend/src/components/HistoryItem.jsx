@@ -1,19 +1,28 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axiosClient from "../axios-client";
 import BookingItem from "./Booking/BookingItem";
+import Feedback from "./Feedback";
 import Modal from "./Modal";
 
-export default function HistoryItem({ booking, setBooking }) {
+export default function HistoryItem({ booking, setBooking, setStatus }) {
   const [loading, setLoading] = useState(false);
   const [showLaundries, setShowLaundries] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [isChange, setIsChanged] = useState(false);
+  const [isShowFeedback, setIsShowFeedback] = useState(false);
   const [laundriesData, setLaundriesData] = useState(booking.laundries);
+  const navTo = useNavigate();
   const [totalAmount, setTotalAmount] = useState(
     parseFloat(booking.total_price)
   );
+
+  useEffect(() => {
+    isShowFeedback &&
+      document.getElementById("create-feedback-modal").showModal();
+  }, [isShowFeedback]);
 
   const bookingNumber = booking.id.toString().padStart(9, "0");
   const datePlaced = new Date(booking.created_at).toLocaleDateString("en-US", {
@@ -35,6 +44,7 @@ export default function HistoryItem({ booking, setBooking }) {
       .put("/bookings/" + booking.id, data)
       .then(({ data }) => {
         setBooking(data);
+        setStatus("cancelled");
       })
       .catch(({ err }) => {
         console.log(err.data);
@@ -78,6 +88,11 @@ export default function HistoryItem({ booking, setBooking }) {
     setIsChanged(false);
   };
 
+  const onBookAgain = (e) => {
+    e.preventDefault();
+    navTo("/booking", { state: { book_again: true, booking } });
+  };
+
   return (
     <>
       {loading && (
@@ -105,7 +120,7 @@ export default function HistoryItem({ booking, setBooking }) {
             </div>
           </div>
           <div className="flex flex-row space-x-3 ">
-            {showLaundries && (
+            {booking.status === "pending" && showLaundries && (
               <button
                 onClick={() => {
                   setIsEdit(!isEdit);
@@ -117,7 +132,7 @@ export default function HistoryItem({ booking, setBooking }) {
               </button>
             )}
 
-            {isChange && (
+            {booking.status === "pending" && isChange && (
               <button
                 onClick={handleEditSave}
                 className="btn btn-sm btn-success px-6"
@@ -131,6 +146,23 @@ export default function HistoryItem({ booking, setBooking }) {
             >
               View Laudries
             </button>
+            {booking.status === "delivered" && (
+              <button
+                onClick={(e) => setIsShowFeedback(true)}
+                className="btn btn-sm btn-primary px-3"
+              >
+                Send Feedback
+              </button>
+            )}
+            {(booking.status === "cancelled" ||
+              booking.status === "delivered") && (
+              <button
+                onClick={onBookAgain}
+                className="btn btn-sm btn-secondary px-3"
+              >
+                Book Again
+              </button>
+            )}
 
             {
               /* Cancel Confirm Modal*/
@@ -214,6 +246,13 @@ export default function HistoryItem({ booking, setBooking }) {
           </div>
         )}
       </div>
+      {isShowFeedback && (
+        <Feedback
+          id="create-feedback-modal"
+          bookingId={booking.id}
+          toggle={setIsShowFeedback}
+        />
+      )}
     </>
   );
 }
@@ -222,6 +261,7 @@ export default function HistoryItem({ booking, setBooking }) {
 
 HistoryItem.propTypes = {
   setBooking: PropTypes.func.isRequired,
+  setStatus: PropTypes.func.isRequired,
   booking: PropTypes.shape({
     created_at: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,

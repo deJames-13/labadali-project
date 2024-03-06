@@ -8,4 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Feedback extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'booking_id',
+        'title',
+        'body',
+        'rating',
+        'is_published',
+    ];
+
+    protected $table = 'feedbacks';
+    public function booking()
+    {
+        return $this->belongsTo(Booking::class);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\User;
 
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest
@@ -36,6 +37,12 @@ class StoreRequest extends FormRequest
             'role' => 'sometimes|string',
             'position' => 'sometimes|string',
             'phone_number' => 'string',
+            'password' => [
+                'sometimes',
+                'confirmed',
+                'max:15',
+                Password::min(8)->letters()->numbers()->symbols()
+            ],
         ];
     }
 }

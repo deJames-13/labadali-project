@@ -10,6 +10,7 @@ export default function ManageUsers() {
   const { user } = useStateContext();
   const [selected, setSelected] = useState(null);
   const [showUser, setShowUser] = useState(false);
+  const [isAdd, setIsAdd] = useState(false);
 
   useEffect(() => {
     getUsers();
@@ -50,8 +51,17 @@ export default function ManageUsers() {
           </div>
         </div>
 
-        <div className="flex space-x-3 font-bold items-center">
+        <div className="flex space-x-3 justify-between font-bold items-center">
           <h2>Selected Item: {selected && selected.id}</h2>
+          <button
+            onClick={(e) => {
+              setIsAdd(true);
+              setShowUser(true);
+            }}
+            className="btn btn-success btn-sm"
+          >
+            <i className="fas fa-plus"></i> Add User
+          </button>
         </div>
 
         <div className="overflow-x-auto max-h-3/4 rounded-lg shadow-lg p-1 lg:p-6 bg-secondary bg-opacity-20">
@@ -139,7 +149,18 @@ export default function ManageUsers() {
       </div>
 
       {/* MODALS */}
-      {<>{showUser && <ViewUser setShowUser={setShowUser} {...selected} />}</>}
+      {
+        <>
+          {(showUser || isAdd) && (
+            <ViewUser
+              isAdd={isAdd}
+              setIsAdd={setIsAdd}
+              setShowUser={setShowUser}
+              {...selected}
+            />
+          )}
+        </>
+      }
     </>
   );
 }

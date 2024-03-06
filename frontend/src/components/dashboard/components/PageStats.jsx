@@ -1,12 +1,10 @@
-import BoltIcon from "@heroicons/react/24/outline/BoltIcon";
-import HeartIcon from "@heroicons/react/24/outline/HeartIcon";
-
+export default PageStats;
 function PageStats() {
   return (
     <div className="stats bg-base-100 shadow">
       <div className="stat">
         <div className="stat-figure invisible md:visible">
-          <HeartIcon className="w-8 h-8" />
+          {/* <HeartIcon className="w-8 h-8" /> */}
         </div>
         <div className="stat-title">Total Likes</div>
         <div className="stat-value">25.6K</div>
@@ -15,7 +13,7 @@ function PageStats() {
 
       <div className="stat">
         <div className="stat-figure invisible md:visible">
-          <BoltIcon className="w-8 h-8" />
+          {/* <BoltIcon className="w-8 h-8" /> */}
         </div>
         <div className="stat-title">Page Views</div>
         <div className="stat-value">2.6M</div>
@@ -24,5 +22,3 @@ function PageStats() {
     </div>
   );
 }
-
-export default PageStats;

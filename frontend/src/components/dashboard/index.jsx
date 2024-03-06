@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
 import AmountStats from "./components/AmountStats";
 import DashboardStats from "./components/DashboardStats";
-// import PageStats from "./components/PageStats";
 
 import CircleStackIcon from "@heroicons/react/24/outline/CircleStackIcon";
 import CreditCardIcon from "@heroicons/react/24/outline/CreditCardIcon";
 import UserGroupIcon from "@heroicons/react/24/outline/UserGroupIcon";
 import UsersIcon from "@heroicons/react/24/outline/UsersIcon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axiosClient from "../../axios-client";
 import BarChart from "./components/BarChart";
 import DashboardTopBar from "./components/DashboardTopBar";
 import DoughnutChart from "./components/DoughnutChart";
@@ -42,6 +42,28 @@ const statsData = [
 ];
 
 function Dashboard() {
+  const [charts, setCharts] = useState({
+    weeklyRevenue: null,
+    topCustomers: null,
+    revenueByLaundryType: null,
+    bookingStatus: null,
+  });
+  useEffect(() => {
+    getChart("weeklyRevenue");
+    getChart("topCustomers");
+    getChart("revenueByLaundryType");
+    getChart("bookingStatus");
+  }, []);
+  const getChart = (path) => {
+    axiosClient
+      .get(`/charts/${path}`)
+      .then(({ data }) => {
+        setCharts((prev) => ({ ...prev, [path]: data }));
+      })
+      .catch((err) => {
+        console.error(`Error fetching data from ${path}: `, err);
+      });
+  };
   return (
     <>
       {/** ---------------------- Select Period Content ------------------------- */}
@@ -56,22 +78,20 @@ function Dashboard() {
 
       {/** ---------------------- Different charts ------------------------- */}
       <div className="grid lg:grid-cols-2 mt-4 grid-cols-1 gap-6">
-        <LineChart />
-        <BarChart />
-      </div>
-
-      {/** ---------------------- Different stats content 2 ------------------------- */}
-
-      <div className="grid lg:grid-cols-2 mt-10 grid-cols-1 gap-6">
-        <AmountStats />
-        {/* <PageStats /> */}
+        <LineChart customData={charts.weeklyRevenue} />
+        <BarChart customData={charts.revenueByLaundryType} />
       </div>
 
       {/** ---------------------- User source channels table  ------------------------- */}
 
       <div className="grid lg:grid-cols-2 mt-4 grid-cols-1 gap-6">
+        <DoughnutChart customData={charts.bookingStatus} />
+      </div>
+      {/** ---------------------- Different stats content 2 ------------------------- */}
+
+      <div className="grid lg:grid-cols-2 mt-10 grid-cols-1 gap-6">
+        <AmountStats />
         <UserChannels />
-        <DoughnutChart />
       </div>
     </>
   );

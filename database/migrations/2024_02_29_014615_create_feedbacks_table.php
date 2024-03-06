@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('feedback', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('booking_id')->constrained('bookings')->onDelete('cascade');
-            $table->string('title');
+
+        Schema::create('feedbacks', function (Blueprint $table) {
+            $table->foreignId('booking_id')->primary()->constrained('bookings')->onDelete('cascade');
+            $table->string('title')->nullable();
             $table->string('body');
+            $table->integer('rating')->nullable();
+            $table->boolean('is_published')->default(false);
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('feedback');
+        Schema::dropIfExists('feedbacks');
     }
 };

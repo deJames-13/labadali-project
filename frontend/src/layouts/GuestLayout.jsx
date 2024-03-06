@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+import Alert from "../components/Alert";
 import Header from "../components/Header";
 import { useStateContext } from "../contexts/ContextProvider";
 
@@ -16,25 +17,10 @@ export default function GuestLayout() {
     );
   }
   return (
-    <>
-      {notification && (
-        <>
-          <div className="toast z-10">
-            {notification.message.split("\n").map((m, i) => (
-              <>
-                <div
-                  key={i}
-                  className={`alert bg-${notification.bg} animate__animated animate__fadeInRight`}
-                >
-                  <span>{m}</span>
-                </div>
-              </>
-            ))}
-          </div>
-        </>
-      )}
+    <div>
+      {notification && <Alert alert={notification} />}
       {loc.pathname.split("/")[1] !== "admin" && <Header />}
       <Outlet />
-    </>
+    </div>
   );
 }

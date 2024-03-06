@@ -47,8 +47,12 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         /** @var user $user */
-        // $user = $request->user();
-        // $user->tokens()->delete();
+        $user = $request->user();
+        $user->tokens()->delete();
+
+
+
+
         JWTAuth::invalidate(JWTAuth::getToken());
         return response(['message' => 'Logged out successfully'], 200);
     }

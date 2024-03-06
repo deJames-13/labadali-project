@@ -16,8 +16,10 @@ class CustomerFactory extends Factory
      */
     public function definition(): array
     {
+        $user = \App\Models\User::factory()->create();
+
         return [
-            'id' => \App\Models\User::factory()->create()->id,
+            'id' => $user->id,
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
             'address' => fake()->address(),
@@ -25,7 +27,11 @@ class CustomerFactory extends Factory
             'zip_code' => fake()->postcode(),
             'phone_number' => fake()->phoneNumber(),
             'birthdate' => fake()->date(max: '2003-01-01'),
-            'age' => fake()->numberBetween(18, 40)
+            'age' => fake()->numberBetween(18, 40),
+            'created_at' => $user->created_at,
+            'updated_at' => $user->updated_at,
+
+
         ];
     }
 }

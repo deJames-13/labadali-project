@@ -19,7 +19,14 @@ ChartJS.register(
   Legend
 );
 
-function StackBarChart() {
+import PropTypes from "prop-types";
+StackBarChart.propTypes = {
+  customData: PropTypes.any,
+};
+function StackBarChart({ customData }) {
+  const l = customData && customData.labels && customData.labels;
+  const d = customData && customData.dataSets && [customData.dataSets];
+
   const options = {
     responsive: true,
     scales: {
@@ -32,45 +39,26 @@ function StackBarChart() {
     },
   };
 
-  const labels = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-  ];
+  const labels = l
+    ? l
+    : ["January", "February", "March", "April", "May", "June", "July"];
 
   const data = {
     labels,
-    datasets: [
-      {
-        label: "Store 1",
-        data: labels.map(() => {
-          return Math.random() * 1000 + 500;
-        }),
-        backgroundColor: "rgba(255, 99, 132, 1)",
-      },
-      {
-        label: "Store 2",
-        data: labels.map(() => {
-          return Math.random() * 1000 + 500;
-        }),
-        backgroundColor: "rgba(53, 162, 235, 1)",
-      },
-      {
-        label: "Store 3",
-        data: labels.map(() => {
-          return Math.random() * 1000 + 500;
-        }),
-        backgroundColor: "rgba(235, 162, 235, 1)",
-      },
-    ],
+    datasets: d
+      ? d
+      : [
+          {
+            label: "Store 1",
+            data: labels.map(() => {
+              return Math.random() * 1000 + 500;
+            }),
+            backgroundColor: "rgba(255, 99, 132, 1)",
+          },
+        ],
   };
-
   return (
-    <TitleCard title={"Sales"} topMargin="mt-2">
+    <TitleCard title={"Revenue"} topMargin="mt-2">
       <Bar options={options} data={data} />
     </TitleCard>
   );

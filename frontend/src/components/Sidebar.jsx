@@ -19,6 +19,14 @@ export default function Sidebar({ page, onLogout }) {
               <div className="divider"></div>
 
               <Button
+                text="Laundries"
+                icon={<i className="fas fa-shirt" />}
+                isLink={true}
+                link={"/laundries"}
+                isActive={page === "laundries"}
+              />
+
+              <Button
                 text="Book Laundry"
                 icon={<i className="fas fa-box"></i>}
                 isLink={true}

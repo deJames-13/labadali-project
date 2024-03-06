@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('deliveries', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('booking_id')->constrained('bookings')->onDelete('cascade');
-            $table->string('shipping_type');
-            $table->decimal('shipping_cost');
+            $table->foreignId('booking_id')->primary()->constrained('bookings')->onDelete('cascade');
+            // standard:50, express:100, priority:200
+            $table->string('shipping_type')->default('standard');
+            $table->decimal('shipping_cost')->default(50);
             $table->date('delivered_date');
             $table->timestamps();
         });

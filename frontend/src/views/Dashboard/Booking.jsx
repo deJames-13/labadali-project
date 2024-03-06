@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation, useParams } from "react-router-dom";
 import axiosClient from "../../axios-client";
 import BookingConfirmationForm from "../../components/Booking/BookingConfirmationForm";
 import BookingDetails from "../../components/Booking/BookingDetails";
@@ -10,17 +10,24 @@ import BookingSelection from "../../components/Booking/BookingSelection";
 import { useStateContext } from "../../contexts/ContextProvider";
 
 export default function Booking() {
+  const { user } = useStateContext();
+  if (user && !user.customer) {
+    return <Navigate to="/profile" />;
+  }
   const [laundries, setLaundries] = useState([]);
   const [selected, setSelected] = useState([]);
   const [payload, setPayload] = useState({});
   const [steps, setSteps] = useState(1);
-  const { user } = useStateContext();
-
-  if (user && !user.customer) {
-    return <Navigate to="/profile" />;
-  }
+  const loc = useLocation();
+  const state = loc.state ?? null;
 
   useEffect(() => {
+    if (state && state.book_again) {
+      setSelected(state.booking.laundries);
+    }
+    if (state && state.book_now) {
+      setSelected([state.laundry]);
+    }
     const getLaundries = () => {
       axiosClient
         .get("/laundries")
@@ -32,7 +39,7 @@ export default function Booking() {
         });
     };
     getLaundries();
-  }, [user]);
+  }, [user, state]);
 
   const onConfirm = (e) => {
     e.preventDefault();
@@ -85,18 +92,6 @@ export default function Booking() {
         </ul>
 
         <div className="my-6 py-6 pb-12 bg-lightPink border border-cbrown rounded-lg flex flex-col space-y-6">
-          {/* BRANCH */}
-          <div className="p-6 flex flex-col space-y-3">
-            <h2 className="text-xl font-bold uppercase">Branch</h2>
-            <select
-              name="branch"
-              id="branch"
-              className="select select-cbrown w-full rounded-sm"
-            >
-              <option disabled>Pick your location</option>
-            </select>
-          </div>
-
           <div className="flex flex-col space-y-3 ">
             {/* Actions */}
             {selected.length > 0 && steps > 0 && steps < 4 && (

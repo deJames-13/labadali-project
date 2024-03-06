@@ -13,7 +13,14 @@ import Subtitle from "../../Typography/Subtitle";
 
 ChartJS.register(ArcElement, Tooltip, Legend, Tooltip, Filler, Legend);
 
-function PieChart() {
+import PropTypes from "prop-types";
+PieChart.propTypes = {
+  customData: PropTypes.any,
+};
+function PieChart({ customData }) {
+  const l = customData && customData.labels && customData.labels;
+  const d = customData && customData.dataSets && [customData.dataSets];
+
   const options = {
     responsive: true,
     plugins: {
@@ -23,44 +30,47 @@ function PieChart() {
     },
   };
 
-  const labels = [
-    "India",
-    "Middle East",
-    "Europe",
-    "US",
-    "Latin America",
-    "Asia(non-india)",
-  ];
+  const labels = l
+    ? l
+    : [
+        "India",
+        "Middle East",
+        "Europe",
+        "US",
+        "Latin America",
+        "Asia(non-india)",
+      ];
 
   const data = {
     labels,
-    datasets: [
-      {
-        label: "# of Orders",
-        data: [122, 219, 30, 51, 82, 13],
-        backgroundColor: [
-          "rgba(255, 99, 255, 0.8)",
-          "rgba(54, 162, 235, 0.8)",
-          "rgba(255, 206, 255, 0.8)",
-          "rgba(75, 192, 255, 0.8)",
-          "rgba(153, 102, 255, 0.8)",
-          "rgba(255, 159, 255, 0.8)",
+    datasets: d
+      ? d
+      : [
+          {
+            label: "# of Orders",
+            data: [122, 219, 30, 51, 82, 13],
+            backgroundColor: [
+              "rgba(255, 99, 255, 0.8)",
+              "rgba(54, 162, 235, 0.8)",
+              "rgba(255, 206, 255, 0.8)",
+              "rgba(75, 192, 255, 0.8)",
+              "rgba(153, 102, 255, 0.8)",
+              "rgba(255, 159, 255, 0.8)",
+            ],
+            borderColor: [
+              "rgba(255, 99, 255, 1)",
+              "rgba(54, 162, 235, 1)",
+              "rgba(255, 206, 255, 1)",
+              "rgba(75, 192, 255, 1)",
+              "rgba(153, 102, 255, 1)",
+              "rgba(255, 159, 255, 1)",
+            ],
+            borderWidth: 1,
+          },
         ],
-        borderColor: [
-          "rgba(255, 99, 255, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 255, 1)",
-          "rgba(75, 192, 255, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 255, 1)",
-        ],
-        borderWidth: 1,
-      },
-    ],
   };
-
   return (
-    <TitleCard title={"Orders by country"}>
+    <TitleCard title={"Top Laundries"}>
       <Pie options={options} data={data} />
     </TitleCard>
   );

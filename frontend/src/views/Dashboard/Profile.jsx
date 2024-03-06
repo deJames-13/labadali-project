@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axiosClient from "../../axios-client";
 import Modal from "../../components/Modal";
 import { useStateContext } from "../../contexts/ContextProvider";
@@ -21,29 +21,32 @@ export default function Profile() {
     id: user.id,
     username: user.username,
     image: null,
-    role: "customer",
+    _role: "customer",
   });
   const [prevData, setPrevData] = useState(userData);
+
+  useEffect(() => {
+    setData(user.customer);
+    return () => {};
+  }, [user]);
 
   const onSaveProfile = (e) => {
     e.preventDefault();
     setLoading(true);
-
-    // console.log("Sending: ", userData);
-    // FORM OBJECT
+    setPrevData(userData);
     let reqForm = new FormData();
     const config = {
       headers: {
         "Content-type": "multipart/form-data",
       },
     };
-    const path = `/users/${userData.id}/`;
+    const path = `/users${userData.data ? "/" + userData.id : ""}`;
     Object.keys(userData).forEach((key) => {
       reqForm.append(key, userData[key]);
     });
     userData.data && reqForm.append("_method", "PUT");
-    // END FORM OBJECT
 
+    // console.log("Sending: ", userData);
     axiosClient
       .post(path, reqForm, config)
       .then((response) => {
@@ -60,13 +63,12 @@ export default function Profile() {
           const errors =
             e.data.message ?? Object.values(e.data.errors).join("\n");
           setNotification(e.data.message, 5000, "red-400");
-          setIsEdit(!isEdit);
-          setUserData(prevData);
-          setLoading(false);
         }
+        setUserData(prevData);
+        setLoading(false);
       });
   };
-
+  console.log(user);
   const onSaveAddress = (e) => {
     e.preventDefault();
     country.current.value =

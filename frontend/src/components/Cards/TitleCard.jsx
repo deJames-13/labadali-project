@@ -30,7 +30,7 @@ function TitleCard({ title, children, topMargin, TopSideButtons }) {
 TitleCard.propTypes = {
   title: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
-  topMargin: PropTypes.bool,
+  topMargin: PropTypes.string,
   TopSideButtons: PropTypes.node,
 };
 export default TitleCard;

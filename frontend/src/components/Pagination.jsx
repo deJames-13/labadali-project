@@ -57,7 +57,7 @@ export default function Pagination({ setPage, ...links }) {
         </button>
         <button
           onClick={handleClick_last}
-          disabled={!last}
+          disabled={!last && last !== first}
           className="join-item btn-sm bg-primary hover:bg-secondary hover:bg-opacity-69 btn "
         >
           {last}

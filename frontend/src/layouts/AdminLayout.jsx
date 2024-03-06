@@ -5,6 +5,7 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import axiosClient from "../axios-client";
 import DashboardTop from "../components/Admin/DashboardTop";
 import Sidebar from "../components/Admin/Sidebar";
+import Alert from "../components/Alert";
 import { useStateContext } from "../contexts/ContextProvider";
 
 export default function AdminLayout() {
@@ -48,38 +49,27 @@ export default function AdminLayout() {
       });
   };
   return user ? (
-    <div key="adminLayout" id="adminLayout" className="relative">
-      {notification && (
-        <div key={notification.time} className="z-99">
-          <div className="toast">
-            {notification.message.split("\n").map((m, i) => (
-              <div
-                key={i}
-                className={`alert bg-${notification.bg} animate__animated animate__fadeInRight`}
-              >
-                <span>{m}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-      <div
-        className={`max-h-screen overflow-auto drawer ${
-          page && "lg:drawer-open"
-        }`}
-      >
-        <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content flex flex-col items-center ">
-          <DashboardTop />
+    <>
+      <div key="adminLayout" id="adminLayout" className="relative">
+        <div
+          className={`max-h-screen overflow-auto drawer ${
+            page && "lg:drawer-open"
+          }`}
+        >
+          <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
+          <div className="drawer-content flex flex-col items-center ">
+            <DashboardTop />
 
-          <div className="main-section w-full p-6">
-            <Outlet />
+            <div className="main-section w-full p-6">
+              <Outlet />
+            </div>
           </div>
-        </div>
 
-        <Sidebar page={page} onLogout={onLogout} />
+          <Sidebar page={page} onLogout={onLogout} />
+        </div>
       </div>
-    </div>
+      {notification && <Alert alert={notification} />}
+    </>
   ) : (
     <div className="min-w-screen h-screen flex items-center justify-center space-x-3 bg-primary bg-opacity-40 ">
       <span className="font-bold animate-pulse">Please wait</span>
