@@ -41,6 +41,15 @@ export default function ViewLaundry({ data, setLaundries, setShowLaundry }) {
     setShowLaundry(false);
   };
 
+  const onImageChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      setLaundry({
+        ...laundry,
+        image: event.target.files[0],
+        image_path: URL.createObjectURL(event.target.files[0]),
+      });
+    }
+  };
   let modal = document.getElementById("view-laundry-modal");
   document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
@@ -60,125 +69,156 @@ export default function ViewLaundry({ data, setLaundries, setShowLaundry }) {
         </h1>
       }
       main={
-        <div className="relative flex flex-col space-y-3 w-full">
-          {/* Name */}
-          <div className="w-full flex space-x-3 text-sm items-center">
-            <label htmlFor="title" className="font-light uppercase w-1/3">
-              Title:
-            </label>
-            {!edit && <p className="font-bold">{laundry.title}</p>}
-            {edit && (
-              <input
-                onChange={(e) =>
-                  setLaundry({ ...laundry, title: e.target.value })
-                }
-                value={laundry.title}
-                name="title"
-                id="title"
-                type="text"
-                className="input input-sm input-bordered w-2/3 focus:outline-none"
-                placeholder="Enter the laundry service name"
-              />
-            )}
-          </div>
-          {/* Description */}
-          <div className="w-full flex space-x-3 text-sm items-center">
-            <label htmlFor="title" className="font-light uppercase w-1/3">
-              Description:
-            </label>
-            {!edit && <p className="font-bold">{laundry.description}</p>}
-            {edit && (
-              <textarea
-                onChange={(e) =>
-                  setLaundry({ ...laundry, description: e.target.value })
-                }
-                value={laundry.description}
-                name="description"
-                id="description"
-                className="textarea textarea-bordered w-2/3 focus:outline-none max-h-24"
-                placeholder="Describe the laundry service"
-              ></textarea>
-            )}
-          </div>
+        <div className="flex items-start gap-4 ">
+          <div className="w-1/2 avatar flex flex-col space-y-2 rounded-lg border-2 p-1 border-primary aspect-square shadow-xl">
+            <img
+              src={laundry.image_path ?? "/img/nouser.jpeg"}
+              alt={laundry.title}
+              className="aspect-square w-full"
+            />
 
-          {/* Price */}
-          <div className="w-full flex space-x-3 text-sm items-center">
-            <label htmlFor="title" className="font-light uppercase w-1/3">
-              Price:
-            </label>
-            {!edit && <p className="font-bold">P {laundry.price}</p>}
             {edit && (
-              <input
-                onChange={(e) =>
-                  setLaundry({ ...laundry, price: e.target.value })
-                }
-                value={laundry.price}
-                name="price"
-                id="price"
-                type="number"
-                className="input input-sm input-bordered w-2/3 focus:outline-none"
-              />
+              <>
+                <label
+                  htmlFor="profile_image"
+                  className="btn btn-primary btn-xs font-bold text-cbrown"
+                >
+                  Change Picture
+                </label>
+                <input
+                  required
+                  name="profile_image"
+                  id="profile_image"
+                  type="file"
+                  onChange={onImageChange}
+                  className="filetype hidden"
+                  accept="images/*"
+                />
+              </>
             )}
           </div>
+          <div className=" relative flex flex-col space-y-3 w-full">
+            {/* Name */}
+            <div className="w-full flex space-x-3 text-sm items-center">
+              <label htmlFor="title" className="font-light uppercase w-1/3">
+                Title:
+              </label>
+              {!edit && <p className="font-bold">{laundry.title}</p>}
+              {edit && (
+                <input
+                  onChange={(e) =>
+                    setLaundry({ ...laundry, title: e.target.value })
+                  }
+                  value={laundry.title}
+                  name="title"
+                  id="title"
+                  type="text"
+                  className="input input-sm input-bordered w-2/3 focus:outline-none"
+                  placeholder="Enter the laundry service name"
+                />
+              )}
+            </div>
+            {/* Description */}
+            <div className="w-full flex space-x-3 text-sm items-center">
+              <label htmlFor="title" className="font-light uppercase w-1/3">
+                Description:
+              </label>
+              {!edit && (
+                <p className="w-1/2 font-bold">{laundry.description}</p>
+              )}
+              {edit && (
+                <textarea
+                  onChange={(e) =>
+                    setLaundry({ ...laundry, description: e.target.value })
+                  }
+                  value={laundry.description}
+                  name="description"
+                  id="description"
+                  className="textarea textarea-bordered w-2/3 focus:outline-none max-h-24"
+                  placeholder="Describe the laundry service"
+                ></textarea>
+              )}
+            </div>
 
-          {/* Max Kilo */}
-          <div className="w-full flex space-x-3 text-sm items-center">
-            <label htmlFor="title" className="font-light uppercase w-1/3">
-              Max Kilo:
-            </label>
-            {!edit && <p className="font-bold">{laundry.max_kilo}kg</p>}
-            {edit && (
-              <input
-                onChange={(e) =>
-                  setLaundry({ ...laundry, max_kilo: e.target.value })
-                }
-                value={laundry.max_kilo}
-                name="max_kilo"
-                id="max_kilo"
-                type="number"
-                className="input input-sm input-bordered w-2/3 focus:outline-none"
-              />
-            )}
-          </div>
-          {/* Max Items */}
-          <div className="w-full flex space-x-3 text-sm items-center">
-            <label htmlFor="title" className="font-light uppercase w-1/3">
-              Max Items:
-            </label>
-            {!edit && <p className="font-bold">x{laundry.max_items}</p>}
-            {edit && (
-              <input
-                onChange={(e) =>
-                  setLaundry({ ...laundry, max_items: e.target.value })
-                }
-                value={laundry.max_items}
-                name="max_items"
-                id="max_items"
-                type="number"
-                className="input input-sm input-bordered w-2/3 focus:outline-none"
-              />
-            )}
-          </div>
-          {/* Turn Around Days */}
-          <div className="w-full flex space-x-3 text-sm items-center">
-            <label htmlFor="title" className="font-light uppercase w-1/3">
-              Turn Around Days:
-            </label>
-            {!edit && (
-              <p className="font-bold">{laundry.turnaround_day} days</p>
-            )}
-            {edit && (
-              <input
-                onChange={(e) =>
-                  setLaundry({ ...laundry, turnaround_day: e.target.value })
-                }
-                value={laundry.turnaround_day}
-                name="turnaround_day"
-                id="turnaround_day"
-                type="number"
-                className="input input-sm input-bordered w-2/3 focus:outline-none"
-              />
-            )}
+            {/* Price */}
+            <div className="w-full flex space-x-3 text-sm items-center">
+              <label htmlFor="title" className="font-light uppercase w-1/3">
+                Price:
+              </label>
+              {!edit && <p className="font-bold">P {laundry.price}</p>}
+              {edit && (
+                <input
+                  onChange={(e) =>
+                    setLaundry({ ...laundry, price: e.target.value })
+                  }
+                  value={laundry.price}
+                  name="price"
+                  id="price"
+                  type="number"
+                  className="input input-sm input-bordered w-2/3 focus:outline-none"
+                />
+              )}
+            </div>
+
+            {/* Max Kilo */}
+            <div className="w-full flex space-x-3 text-sm items-center">
+              <label htmlFor="title" className="font-light uppercase w-1/3">
+                Max Kilo:
+              </label>
+              {!edit && <p className="font-bold">{laundry.max_kilo}kg</p>}
+              {edit && (
+                <input
+                  onChange={(e) =>
+                    setLaundry({ ...laundry, max_kilo: e.target.value })
+                  }
+                  value={laundry.max_kilo}
+                  name="max_kilo"
+                  id="max_kilo"
+                  type="number"
+                  className="input input-sm input-bordered w-2/3 focus:outline-none"
+                />
+              )}
+            </div>
+            {/* Max Items */}
+            <div className="w-full flex space-x-3 text-sm items-center">
+              <label htmlFor="title" className="font-light uppercase w-1/3">
+                Max Items:
+              </label>
+              {!edit && <p className="font-bold">x{laundry.max_items}</p>}
+              {edit && (
+                <input
+                  onChange={(e) =>
+                    setLaundry({ ...laundry, max_items: e.target.value })
+                  }
+                  value={laundry.max_items}
+                  name="max_items"
+                  id="max_items"
+                  type="number"
+                  className="input input-sm input-bordered w-2/3 focus:outline-none"
+                />
+              )}
+            </div>
+            {/* Turn Around Days */}
+            <div className="w-full flex space-x-3 text-sm items-center">
+              <label htmlFor="title" className="font-light uppercase w-1/3">
+                Turn Around Days:
+              </label>
+              {!edit && (
+                <p className="font-bold">{laundry.turnaround_day} days</p>
+              )}
+              {edit && (
+                <input
+                  onChange={(e) =>
+                    setLaundry({ ...laundry, turnaround_day: e.target.value })
+                  }
+                  value={laundry.turnaround_day}
+                  name="turnaround_day"
+                  id="turnaround_day"
+                  type="number"
+                  className="input input-sm input-bordered w-2/3 focus:outline-none"
+                />
+              )}
+            </div>
           </div>
         </div>
       }

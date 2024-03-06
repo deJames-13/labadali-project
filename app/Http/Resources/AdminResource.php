@@ -14,6 +14,8 @@ class AdminResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $serverUrl = config('app.url');
+        $serverUrl .= $request->server('SERVER_PORT') == 80 ? '' : ':' . $request->server('SERVER_PORT');
         return [
             'id' => $this->id,
             'first_name' => $this->first_name,
@@ -23,7 +25,7 @@ class AdminResource extends JsonResource
             'city' => $this->city,
             'region' => $this->region,
             'zip_code' => $this->zip_code,
-            'image_path' => $this->image_path,
+            'image_path' =>  $serverUrl . '/storage/' . $this->image_path,
             'phone_number' => $this->phone_number,
             'birthdate' => $this->birthdate,
             'age' => $this->age,

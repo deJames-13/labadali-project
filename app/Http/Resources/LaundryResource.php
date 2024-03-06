@@ -14,7 +14,8 @@ class LaundryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-
+        $serverUrl = config('app.url');
+        $serverUrl .= $request->server('SERVER_PORT') == 80 ? '' : ':' . $request->server('SERVER_PORT');
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -26,7 +27,7 @@ class LaundryResource extends JsonResource
             'max_kilo' => $this->max_kilo,
             'max_items' => $this->max_items,
             'turnaround_day' => $this->turnaround_day,
-            'image_path' => $this->image_path,
+            'image_path' =>    $serverUrl . '/storage/' . $this->image_path,
         ];
     }
 }

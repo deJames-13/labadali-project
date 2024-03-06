@@ -40,13 +40,14 @@ export default function Profile() {
         "Content-type": "multipart/form-data",
       },
     };
-    const path = `/users${userData.data ? "/" + userData.id : ""}`;
+    const path = `/users${user.customer ? "/" + userData.id : ""}`;
     Object.keys(userData).forEach((key) => {
       reqForm.append(key, userData[key]);
     });
-    userData.data && reqForm.append("_method", "PUT");
+    user.customer && reqForm.append("_method", "PUT");
 
-    // console.log("Sending: ", userData);
+    console.log("Sending: ", userData);
+    ``;
     axiosClient
       .post(path, reqForm, config)
       .then((response) => {
@@ -68,7 +69,6 @@ export default function Profile() {
         setLoading(false);
       });
   };
-  console.log(user);
   const onSaveAddress = (e) => {
     e.preventDefault();
     country.current.value =

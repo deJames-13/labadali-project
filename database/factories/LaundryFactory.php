@@ -23,7 +23,7 @@ class LaundryFactory extends Factory
             'max_kilo' => fake()->numberBetween(1, 100),
             'max_items' => fake()->numberBetween(1, 100),
             'turnaround_day' => fake()->numberBetween(1, 100),
-            'image_path' => 'https://picsum.photos/640/480?random=' . fake()->numberBetween(1, 1000),
+            // 'image_path' => 'https://picsum.photos/640/480?random=' . fake()->numberBetween(1, 1000),
         ];
     }
 }

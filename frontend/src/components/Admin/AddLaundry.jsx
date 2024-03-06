@@ -76,7 +76,7 @@ export default function AddLaundry({ setLaundries }) {
               ref={description}
               name="description"
               id="description"
-              className="textarea textarea-bordered w-2/3 focus:outline-none max-h-24"
+              className="textarea textarea-bordered focus:outline-none max-h-24"
               placeholder="Describe the laundry service"
             ></textarea>
           </div>

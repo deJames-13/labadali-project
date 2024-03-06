@@ -47,6 +47,15 @@ class LaundryController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $fileName =   'laundries' . date('His')  . $image->getClientOriginalExtension();
+
+            $path = $image->storeAs('laundries', $fileName, 'public');
+            $data['image_path'] = $path;
+        }
+
+
         $laundry = Laundry::create($data);
         return response()->json(new LaundryResource($laundry), 201, ['message' => 'Laundry created successfully!']);
     }
@@ -65,6 +74,13 @@ class LaundryController extends Controller
     public function update(UpdateRequest $request, Laundry $laundry)
     {
         $data = $request->validated();
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $fileName =   'laundries' . date('His');
+
+            $path = $image->storeAs('laundries', $fileName, 'public');
+            $data['image_path'] = $path;
+        }
         $laundry->update($data);
         return response(new LaundryResource($laundry), 200, ['message' => 'Laundry updated successfully!']);
     }

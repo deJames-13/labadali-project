@@ -31,6 +31,7 @@ class UserController extends Controller
      */
     public function store(StoreRequest $request)
     {
+
         $_role = request('_role') ??  $request['_role'] ?? 'admin';
 
         if ($_role == 'customer') {
@@ -64,7 +65,7 @@ class UserController extends Controller
             $fileName =   date('His') . '_' . $image->getClientOriginalName() .  $image->getClientOriginalExtension();
 
             $path = $image->storeAs('customers', $fileName, 'public');
-            $customerData['image_path'] = "http://localhost:8000/storage/" . $path;
+            $customerData['image_path'] =  $path;
         }
 
         $user->customer()->create($customerData);
@@ -109,7 +110,7 @@ class UserController extends Controller
             $fileName =   date('His') . '_' . $image->getClientOriginalName() .  $image->getClientOriginalExtension();
 
             $path = $image->storeAs('admin', $fileName, 'public');
-            $adminData['image_path'] = "http://localhost:8000/storage/" . $path;
+            $adminData['image_path'] = $path;
         }
         $user->admin()->create($adminData);
         $user->load('admin');
@@ -134,7 +135,6 @@ class UserController extends Controller
      */
     public function update(UpdateRequest $request, User $user)
     {
-
         $_role = request('_role') ??  $request['_role'] ?? 'admin';
 
         $userData = $request->only('username', 'email');
@@ -157,11 +157,12 @@ class UserController extends Controller
             $fileName = $image->getClientOriginalName();
             $fileName =   date('His') . '_' . $fileName;
             $path = $image->storeAs($user->isCustomer() ? 'customers' : 'admins', $fileName, 'public');
-            $data['image_path'] = "http://localhost:8000/storage/" . $path;
+            $data['image_path'] =  $path;
         }
 
         if ($_role === 'customer') {
             $user->load('customer');
+            $user->customer()->update($data);
         } else {
             $user->load('admin');
             $user->admin()->update($data);

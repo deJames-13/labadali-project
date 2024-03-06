@@ -28,7 +28,7 @@ class AdminFactory extends Factory
             'phone_number' => fake()->phoneNumber(),
             'birthdate' => fake()->date(max: '2003-01-01'),
             'age' => fake()->numberBetween(18, 40),
-            'image_path' => 'https://picsum.photos/640/480?random=' . fake()->numberBetween(1, 1000),
+            // 'image_path' => 'https://picsum.photos/640/480?random=' . fake()->numberBetween(1, 1000),
 
         ];
     }
