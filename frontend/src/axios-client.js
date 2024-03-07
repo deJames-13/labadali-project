@@ -2,6 +2,14 @@ import axios from "axios";
 
 const axiosClient = axios.create({
   baseURL: `${import.meta.env.VITE_API_BASE_URL}/api`,
+  proxy: {
+    host: "https://labadali.vercel.app",
+  },
+  headers: {
+    "Content-Type": "application/json",
+  },
+
+  withCredentials: false,
 });
 
 // Interceptors
