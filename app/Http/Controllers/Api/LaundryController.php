@@ -49,12 +49,11 @@ class LaundryController extends Controller
         $data = $request->validated();
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $fileName =   'laundries' . date('His')  . $image->getClientOriginalExtension();
-
+            $fileName = $image->getClientOriginalName();
+            $fileName =   date('His') . '_' . $fileName;
             $path = $image->storeAs('laundries', $fileName, 'public');
-            $data['image_path'] = $path;
+            $data['image_path'] =  $path;
         }
-
 
         $laundry = Laundry::create($data);
         return response()->json(new LaundryResource($laundry), 201, ['message' => 'Laundry created successfully!']);
@@ -74,12 +73,13 @@ class LaundryController extends Controller
     public function update(UpdateRequest $request, Laundry $laundry)
     {
         $data = $request->validated();
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $fileName =   'laundries' . date('His');
-
+            $fileName = $image->getClientOriginalName();
+            $fileName =   date('His') . '_' . $fileName;
             $path = $image->storeAs('laundries', $fileName, 'public');
-            $data['image_path'] = $path;
+            $data['image_path'] =  $path;
         }
         $laundry->update($data);
         return response(new LaundryResource($laundry), 200, ['message' => 'Laundry updated successfully!']);

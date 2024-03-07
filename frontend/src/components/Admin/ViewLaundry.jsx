@@ -18,13 +18,24 @@ export default function ViewLaundry({ data, setLaundries, setShowLaundry }) {
   const handleSave = (e) => {
     e.preventDefault();
     setLoading(true);
-    const payload = {
-      ...laundry,
-      updated_at: new Date().toISOString,
+
+    // FORM OBJECT
+    let reqForm = new FormData();
+    const config = {
+      headers: {
+        "Content-type": "multipart/form-data",
+      },
     };
-    // console.log("Received", payload);
+    const path = `/laundries${"/" + laundry.id}`;
+    Object.keys(laundry).forEach((key) => {
+      reqForm.append(key, laundry[key]);
+    });
+    reqForm.append("_method", "PUT");
+    // END FORM OBJECT
+
+    // console.log("Sending: ", userData);
     axiosClient
-      .put("/laundries/" + laundry.id, payload)
+      .post(path, reqForm, config)
       .then(({ data }) => {
         // console.log("Received", data);
         setLaundry(data);

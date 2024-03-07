@@ -27,6 +27,7 @@ export default function Profile() {
 
   useEffect(() => {
     setData(user.customer);
+
     return () => {};
   }, [user]);
 
@@ -47,7 +48,6 @@ export default function Profile() {
     user.customer && reqForm.append("_method", "PUT");
 
     console.log("Sending: ", userData);
-    ``;
     axiosClient
       .post(path, reqForm, config)
       .then((response) => {
@@ -117,6 +117,8 @@ export default function Profile() {
       birthdate: e.target.value,
     });
   };
+
+  console.log(user);
 
   return (
     <>

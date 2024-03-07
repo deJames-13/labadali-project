@@ -15,8 +15,10 @@ export default function LaundryCard({ ...laundry }) {
       <div className="card card-compact w-[90%] max-w-72 bg-base-100 shadow-xl border border-gray-200 hover:bg-secondary hover:bg-opacity-35">
         <figure>
           <img
-            src={laundry.image_path ?? "/img/samplelaundry.jpg"}
-            alt="Shoes"
+            src={
+              laundry.image_path ? laundry.image_path : "/img/samplelaundry.jpg"
+            }
+            alt={laundry.title}
           />
         </figure>
         <div className="card-body">

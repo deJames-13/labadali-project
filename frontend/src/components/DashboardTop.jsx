@@ -30,8 +30,9 @@ export default function DashboardTop() {
                 <div className="w-10 rounded-full ring ring-secondary ring-offset-base-100 ring-offset-2">
                   <img
                     src={
-                      (user && user.customer && user.customer.image_path) ??
-                      "/img/nouser.jpeg"
+                      user && user.customer && user.customer.image_path
+                        ? user.customer.image_path
+                        : "/img/nouser.jpeg"
                     }
                   />
                 </div>

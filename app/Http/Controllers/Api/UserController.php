@@ -156,7 +156,7 @@ class UserController extends Controller
             $image = $request->file('image');
             $fileName = $image->getClientOriginalName();
             $fileName =   date('His') . '_' . $fileName;
-            $path = $image->storeAs($user->isCustomer() ? 'customers' : 'admins', $fileName, 'public');
+            $path = $image->storeAs($_role === 'customer' ? 'customers' : 'admins', $fileName, 'public');
             $data['image_path'] =  $path;
         }
 
