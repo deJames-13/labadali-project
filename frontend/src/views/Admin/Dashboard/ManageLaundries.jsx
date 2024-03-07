@@ -127,18 +127,21 @@ export default function ManageLaundries() {
                     <th>{laundry.id}</th>
                     <td>
                       <div className="flex space-x-2">
-                        <div className="mask mask-squircle min-w-12 w-12 h-12 hidden sm:block">
-                          <img
-                            src={
-                              laundry.image_path ??
-                              "https://picsum.photos/640/480?random=" +
-                                new Date().getTime() +
-                                "&text=" +
-                                laundry.title
-                            }
-                            alt={laundry.title}
-                            className="object-cover aspect-square rounded-lg"
-                          />
+                        <div
+                          className={`avatar ${
+                            !laundry.image_path ? "placeholder" : ""
+                          }`}
+                        >
+                          <div className="bg-neutral text-neutral-content text-center mask mask-squircle w-12 h-12">
+                            {laundry.image_path ? (
+                              <img
+                                src={laundry.image_path}
+                                alt={laundry.title}
+                              />
+                            ) : (
+                              <span>{laundry.title[0]}</span>
+                            )}
+                          </div>
                         </div>
                         <div className="flex flex-col">
                           <h3 className="font-bold">{laundry.title}</h3>

@@ -16,6 +16,7 @@ class LaundryResource extends JsonResource
     {
         $serverUrl = config('app.url');
         $serverUrl .= $request->server('SERVER_PORT') == 80 ? '' : ':' . $request->server('SERVER_PORT');
+        $image =  $this->image_path ? ($serverUrl . '/storage/' . $this->image_path) : '';
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -27,7 +28,7 @@ class LaundryResource extends JsonResource
             'max_kilo' => $this->max_kilo,
             'max_items' => $this->max_items,
             'turnaround_day' => $this->turnaround_day,
-            'image_path' =>    $serverUrl . '/storage/' . $this->image_path,
+            'image_path' => $image,
         ];
     }
 }

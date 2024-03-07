@@ -118,7 +118,6 @@ class LaundrySeeder extends Seeder
         foreach (self::laundries as $laundry) {
             $laundry['created_at'] = now();
             $laundry['updated_at'] = now();
-            $laundry['image_path'] = 'https://picsum.photos/640/480?random=' . fake()->numberBetween(1, 1000);
             \App\Models\Laundry::create($laundry);
         }
     }

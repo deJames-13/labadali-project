@@ -70,13 +70,13 @@ export default function Sidebar({ page, onLogout }) {
             </div>
 
             <div className="w-full flex flex-col space-y-3 items-center">
-              <Button
+              {/* <Button
                 text="My Profile"
                 icon={<i className="fas fa-user"></i>}
                 isLink={true}
                 link={"/profile"}
                 isActive={page === "profile"}
-              />
+              /> */}
               {/* <Button
                 text="Settings"
                 icon={<i className="fa fa-gear"></i>}

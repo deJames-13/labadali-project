@@ -94,12 +94,20 @@ export default function ManageUsers() {
                         <th> {u.admin.id}</th>
                         <td>
                           <div className="flex items-center gap-3">
-                            <div className="avatar">
-                              <div className="mask mask-squircle w-12 h-12">
-                                <img
-                                  src={u.admin.image_path}
-                                  alt={u.username}
-                                />
+                            <div
+                              className={`avatar ${
+                                !u.admin.image_path ? "placeholder" : ""
+                              }`}
+                            >
+                              <div className="bg-neutral text-neutral-content text-center mask mask-squircle w-12 h-12">
+                                {u.admin.image_path ? (
+                                  <img
+                                    src={u.admin.image_path}
+                                    alt={u.username}
+                                  />
+                                ) : (
+                                  <span>{u.username[0]}</span>
+                                )}
                               </div>
                             </div>
                             <div>

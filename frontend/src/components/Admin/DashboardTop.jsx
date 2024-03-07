@@ -39,7 +39,7 @@ export default function DashboardTop() {
             </div>
             <label
               htmlFor="my-drawer-2"
-              className={`btn btn-xs sm:btn-md btn-primary drawer-button ${
+              className={`btn sm:btn-md btn-primary drawer-button ${
                 page === "dashboard" ? "" : "lg:hidden"
               }`}
             >

@@ -16,6 +16,7 @@ class AdminResource extends JsonResource
     {
         $serverUrl = config('app.url');
         $serverUrl .= $request->server('SERVER_PORT') == 80 ? '' : ':' . $request->server('SERVER_PORT');
+        $image =  $this->image_path ? ($serverUrl . '/storage/' . $this->image_path) : '';
         return [
             'id' => $this->id,
             'first_name' => $this->first_name,
@@ -25,7 +26,7 @@ class AdminResource extends JsonResource
             'city' => $this->city,
             'region' => $this->region,
             'zip_code' => $this->zip_code,
-            'image_path' =>  $serverUrl . '/storage/' . $this->image_path,
+            'image_path' => $image,
             'phone_number' => $this->phone_number,
             'birthdate' => $this->birthdate,
             'age' => $this->age,
