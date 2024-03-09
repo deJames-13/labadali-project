@@ -71,7 +71,9 @@ function DoughnutChart({ customData }) {
 
   return (
     <TitleCard title={"Booking Statuses"}>
-      <Doughnut options={options} data={data} />
+      <div className="w-full flex justify-center items-center">
+        <Doughnut options={options} data={data} />
+      </div>
     </TitleCard>
   );
 }

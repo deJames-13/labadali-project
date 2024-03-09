@@ -71,7 +71,9 @@ function PieChart({ customData }) {
   };
   return (
     <TitleCard title={"Top Laundries"}>
-      <Pie options={options} data={data} />
+      <div className="w-full flex justify-center items-center">
+        <Pie options={options} data={data} />
+      </div>
     </TitleCard>
   );
 }

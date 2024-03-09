@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {
   BarElement,
   CategoryScale,
@@ -7,6 +8,7 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
+import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import TitleCard from "../../Cards/TitleCard";
 
@@ -20,6 +22,7 @@ ChartJS.register(
 );
 
 import PropTypes from "prop-types";
+import PreviewPrint from "../../PreviewPrint";
 StackBarChart.propTypes = {
   customData: PropTypes.any,
 };
@@ -57,10 +60,15 @@ function StackBarChart({ customData }) {
           },
         ],
   };
+
   return (
-    <TitleCard title={"Revenue"} topMargin="mt-2">
-      <Bar options={options} data={data} />
-    </TitleCard>
+    <>
+      <TitleCard title={"Revenue"} topMargin="mt-2">
+        <div className=" flex w-full h-full justify-center items-center">
+          <Bar options={options} data={data} />
+        </div>
+      </TitleCard>
+    </>
   );
 }
 
