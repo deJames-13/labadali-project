@@ -16,8 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->longText('description');
             $table->decimal('price');
-            $table->string('kilos_per_basket');
-            $table->integer('max_qty')->default(3);
+            $table->string('kilos_per_load');
             $table->integer('turnaround_day');
             $table->string('image_path')->nullable();
             $table->timestamps();
