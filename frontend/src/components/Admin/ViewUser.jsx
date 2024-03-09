@@ -173,6 +173,12 @@ export default function ViewUser({ isAdd, setIsAdd, setShowUser, ...u }) {
       });
   };
 
+  let modal = document.getElementById("view-user-modal");
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+      setShowUser(false);
+    }
+  });
   return (
     <>
       <Modal

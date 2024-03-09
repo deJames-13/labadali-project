@@ -46,7 +46,7 @@ Button.defaultProps = {
   icon: "",
   extendClass: "text-cbrown font-medium",
   customClass:
-    "w-full btn btn-ghost flex justify-start items-center hover:text-cbrown ease-in-out transition-all ",
+    "w-full btn btn-ghost flex justify-start items-center hover:ml-4 hover:font-bold hover:text-cbrown  transition-all ease-in-out duration-300 ",
   text: "Button Name",
   link: "#",
   isLink: false,

@@ -228,6 +228,9 @@ export default function HistoryItem({ booking, setBooking, setStatus }) {
                       selected={booking.laundries}
                       isHistory={true && !isEdit}
                       setIsChanged={setIsChanged}
+                      max_items={laundry.max_items}
+                      max_qty={laundry.max_qty}
+                      max_kilo={laundry.max_kilo}
                     />
                   );
                 })}
