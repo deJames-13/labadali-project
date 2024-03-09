@@ -6,7 +6,7 @@ export default function BookingSelection({ selected }) {
       <div className="flex justify-between items-center w-full text-center bg-secondary">
         <span className="w-full text-lg font-bold uppercase">Services</span>
         <span className="hidden lg:block w-full text-lg font-bold uppercase">
-          Qty
+          Baskets
         </span>
         <span className="hidden lg:block w-full text-lg font-bold uppercase">
           Price
@@ -21,13 +21,8 @@ export default function BookingSelection({ selected }) {
               <BookingItem
                 key={laundry.id}
                 id={laundry.id}
-                title={laundry.title}
-                price={parseFloat(laundry.price)}
-                description={laundry.description}
+                item={laundry}
                 selected={selected}
-                max_items={laundry.max_items}
-                max_qty={laundry.max_qty}
-                max_kilo={laundry.max_kilo}
               />
             );
           })}

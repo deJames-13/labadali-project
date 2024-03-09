@@ -221,16 +221,11 @@ export default function HistoryItem({ booking, setBooking, setStatus }) {
                     <BookingItem
                       key={laundry.id}
                       id={laundry.id}
-                      title={laundry.title}
-                      price={parseFloat(laundry.price)}
+                      item={laundry}
                       qty={laundry.quantity}
-                      description={laundry.description}
                       selected={booking.laundries}
                       isHistory={true && !isEdit}
                       setIsChanged={setIsChanged}
-                      max_items={laundry.max_items}
-                      max_qty={laundry.max_qty}
-                      max_kilo={laundry.max_kilo}
                     />
                   );
                 })}

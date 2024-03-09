@@ -4,23 +4,18 @@ import { useEffect, useState } from "react";
 
 export default function BookingItem({
   id,
-  title,
-  price,
-  description,
   qty = 1,
+  item,
   selected,
   isHistory,
-  max_items,
-  max_qty,
-  max_kilo,
   setIsChanged = () => {},
 }) {
-  const [unitPrice, setUnitPrice] = useState(price * qty);
+  const [unitPrice, setUnitPrice] = useState(parseFloat(item.price) * qty);
   const [quantity, setQuantity] = useState(qty);
 
   useEffect(() => {
     if (!isHistory && selected) {
-      setUnitPrice(quantity * price);
+      setUnitPrice(quantity * parseFloat(item.price));
       const idx = selected.findIndex((laundry) => laundry.id == id);
       if (idx > -1) {
         // max is max_qty
@@ -32,27 +27,21 @@ export default function BookingItem({
           setQuantity(1);
         }
         selected[idx].quantity = quantity;
-        selected[idx].item_total = quantity * price;
+        selected[idx].item_total = quantity * parseFloat(item.price);
       }
       setIsChanged(true);
     }
-  }, [quantity, price, selected, id, isHistory, setIsChanged]);
+  }, [quantity, selected, id, isHistory, setIsChanged, item.price]);
   return (
     <>
       <div className="w-full flex flex-col-reverse space-y-3 items-center md:flex-row md:space-y-0 md:justify-between  animate__animated animate__fadeInDown">
         <div className="w-full flex lg:justify-center items-center">
           <div className="w-full px-6 flex flex-col space-y-1 text-left">
-            <span className="font-bold text-sm">{title}</span>
+            <span className="font-bold text-sm">{item.title}</span>
             <span className="font-medium text-xs">
-              P {price}
+              P {item.price}
               <br />
-              {description}
-              <br />
-              Max Items: {max_items}
-              <br />
-              Max Qty: {max_qty}
-              <br />
-              Max Kilo: {max_kilo}
+              {item.description}
             </span>
           </div>
         </div>
@@ -80,7 +69,7 @@ export default function BookingItem({
 
         <div className="px-6 w-full flex md:justify-center items-center">
           <span className="text-2xl font-bold">
-            P {unitPrice ? unitPrice : price}
+            P {unitPrice ? unitPrice : item.price}
           </span>
         </div>
       </div>
@@ -106,7 +95,7 @@ export default function BookingItem({
             type="hidden"
             name="unit_price"
             id={"unit_price_" + id}
-            value={unitPrice ? unitPrice : price}
+            value={unitPrice ? unitPrice : item.price}
           />
         </>
       )}
@@ -115,13 +104,8 @@ export default function BookingItem({
 }
 BookingItem.propTypes = {
   id: PropTypes.number.isRequired,
-  title: PropTypes.string,
-  price: PropTypes.number,
+  item: PropTypes.any.isRequired,
   qty: PropTypes.number,
-  max_items: PropTypes.number,
-  max_qty: PropTypes.number,
-  max_kilo: PropTypes.number,
-  description: PropTypes.string,
   selected: PropTypes.array,
   isHistory: PropTypes.bool,
   isChanged: PropTypes.bool,
