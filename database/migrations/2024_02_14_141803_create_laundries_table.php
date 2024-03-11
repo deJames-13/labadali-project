@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->longText('description');
             $table->decimal('price');
-            $table->string('kilos_per_load');
+            $table->integer('detergent_per_kilo')->nullable(); //in ml
+            $table->integer('min_kilos')->nullable();
             $table->integer('turnaround_day');
             $table->string('image_path')->nullable();
             $table->timestamps();

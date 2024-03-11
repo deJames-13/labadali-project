@@ -59,7 +59,6 @@ function LineChart({ customData }) {
           },
         ],
   };
-  console.log(customData);
   return (
     <TitleCard title={"Daily Revenue"}>
       <Line data={data} options={options} />

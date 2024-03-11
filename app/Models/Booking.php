@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Inventory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -24,6 +25,11 @@ class Booking extends Model
     {
         return $this->belongsToMany(Laundry::class, 'booking_laundry')
             ->withPivot('quantity', 'item_total', 'booking_id', 'laundry_id');
+    }
+    public function inventories()
+    {
+        return $this->belongsToMany(Inventory::class, 'booking_inventory')
+            ->withPivot('booking_id', 'inventory_id', 'quantity_used');
     }
     public function feedback()
     {
@@ -91,5 +97,11 @@ class Booking extends Model
                     ->orWhere('last_name', 'LIKE', "%{$searchTerm}%")
                     ->orWhere('address', 'LIKE', "%{$searchTerm}%");
             });
+    }
+
+    // scopeHasDateRange
+    public function scopeHasDateRange($query, $startDate, $endDate)
+    {
+        return $query->whereBetween('created_at', [$startDate, $endDate]);
     }
 }

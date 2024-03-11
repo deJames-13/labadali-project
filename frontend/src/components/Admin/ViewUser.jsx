@@ -48,6 +48,7 @@ export default function ViewUser({ isAdd, setIsAdd, setShowUser, ...u }) {
           id: u.id,
           username: u.username,
           image: u.image_path ?? null,
+          password: u.password,
           role: "admin",
         }
   );
@@ -172,11 +173,11 @@ export default function ViewUser({ isAdd, setIsAdd, setShowUser, ...u }) {
         console.log(err);
       });
   };
-
   let modal = document.getElementById("view-user-modal");
   document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
       setShowUser(false);
+      modal.close();
     }
   });
   return (
@@ -199,13 +200,17 @@ export default function ViewUser({ isAdd, setIsAdd, setShowUser, ...u }) {
           <>
             {loading && (
               <div className="fixed inset-0 w-full h-full z-99 bg-gray-700 bg-opacity-50 grid place-items-center">
-                <div className="loading loading-lg"></div>!isAdd &&
+                <div className="loading loading-lg"></div>
               </div>
             )}
             <div className="w-full flex flex-col space-y-3 items-center sm:flex-row  sm:space-y-0 sm:space-x-6 sm:items-start">
               <div className="avatar flex flex-col space-y-2 rounded-lg border-2 p-1 border-primary aspect-square w-1/3 shadow-xl">
                 <img
-                  src={userData.image_path ?? "/img/nouser.jpeg"}
+                  src={
+                    userData.image_path
+                      ? userData.image_path
+                      : "/img/nouser.jpeg"
+                  }
                   alt={userData.username}
                   className="aspect-square w-full"
                 />
@@ -251,7 +256,7 @@ export default function ViewUser({ isAdd, setIsAdd, setShowUser, ...u }) {
                     id="username"
                     placeholder="Username"
                     className="input input-xs rounded-none border-b-2 border-0 border-gray-400 my-1 focus:outline-none  text-left w-full"
-                    defaultValue={userData.username}
+                    value={userData.username}
                   />
                 )}
 
@@ -280,7 +285,7 @@ export default function ViewUser({ isAdd, setIsAdd, setShowUser, ...u }) {
                       id="first_name"
                       placeholder="First Name"
                       className="input input-xs rounded-none border-b-2 border-0 border-gray-400 my-1 focus:outline-none  text-left w-full"
-                      defaultValue={userData.first_name}
+                      value={userData.first_name}
                     />
                     <input
                       ref={userRefs.last_name}
@@ -293,7 +298,7 @@ export default function ViewUser({ isAdd, setIsAdd, setShowUser, ...u }) {
                       id="last_name"
                       placeholder="Last Name"
                       className="input input-xs rounded-none border-b-2 border-0 border-gray-400 my-1 focus:outline-none  text-left w-full"
-                      defaultValue={userData.last_name}
+                      value={userData.last_name}
                     />
                   </div>
                 )}
@@ -319,7 +324,7 @@ export default function ViewUser({ isAdd, setIsAdd, setShowUser, ...u }) {
                     id="email"
                     placeholder="Email"
                     className="input input-xs rounded-none border-b-2 border-0 border-gray-400 my-1 focus:outline-none  text-left w-full"
-                    defaultValue={userData.email}
+                    value={userData.email}
                   />
                 )}
                 {/* Phone Number */}
@@ -352,7 +357,7 @@ export default function ViewUser({ isAdd, setIsAdd, setShowUser, ...u }) {
                         id="phone_number"
                         placeholder="Phone Number"
                         className="input input-xs rounded-none border-b-2 border-0 border-gray-400 my-1 focus:outline-none  text-left w-full"
-                        defaultValue={userData.phone_number}
+                        value={userData.phone_number}
                       />
                     )}
                   </>
@@ -379,7 +384,7 @@ export default function ViewUser({ isAdd, setIsAdd, setShowUser, ...u }) {
                     id="position"
                     placeholder="Position"
                     className="input input-xs rounded-none border-b-2 border-0 border-gray-400 my-1 focus:outline-none  text-left w-full"
-                    defaultValue={userData.position}
+                    value={userData.position}
                   />
                 )}
               </div>
@@ -387,7 +392,7 @@ export default function ViewUser({ isAdd, setIsAdd, setShowUser, ...u }) {
             <div className="divider"></div>
 
             {/* Password */}
-            {isAdd && (
+            {(isAdd || edit) && (
               <>
                 <div className="sm:col-span-2 p-3 flex flex-col px-6">
                   <h3 className="font-light uppercase text-opacity-50">
@@ -401,7 +406,7 @@ export default function ViewUser({ isAdd, setIsAdd, setShowUser, ...u }) {
                     }
                     type="password"
                     className="font-bold input input-sm input-bordered  w-full   rounded-lg bg-transparent"
-                    defaultValue={userData.password_confirmation}
+                    value={userData.password_confirmation}
                   />
                 </div>
                 <div className="sm:col-span-2 p-3 flex flex-col px-6">
@@ -419,7 +424,7 @@ export default function ViewUser({ isAdd, setIsAdd, setShowUser, ...u }) {
                     }
                     type="password"
                     className="font-bold input input-sm input-bordered  w-full   rounded-lg bg-transparent"
-                    defaultValue={userData.password_confirmation}
+                    value={userData.password_confirmation}
                   />
                 </div>
               </>
@@ -474,7 +479,7 @@ export default function ViewUser({ isAdd, setIsAdd, setShowUser, ...u }) {
                     }
                     type="text"
                     className="font-bold input input-sm input-bordered  w-full   rounded-lg bg-transparent"
-                    defaultValue={userData.phone_number}
+                    value={userData.phone_number}
                   />
                 )}
               </div>
@@ -492,7 +497,7 @@ export default function ViewUser({ isAdd, setIsAdd, setShowUser, ...u }) {
                     onChange={onDateChange}
                     type="date"
                     className="font-bold input input-sm input-bordered  w-full   rounded-lg bg-transparent"
-                    defaultValue={userData.birthdate}
+                    value={userData.birthdate}
                   />
                 )}
               </div>
@@ -532,7 +537,7 @@ export default function ViewUser({ isAdd, setIsAdd, setShowUser, ...u }) {
                         })
                       }
                       ref={city}
-                      defaultValue={userData.city}
+                      value={userData.city}
                       type="text"
                       className="input input-sm input-bordered"
                     />
@@ -568,7 +573,7 @@ export default function ViewUser({ isAdd, setIsAdd, setShowUser, ...u }) {
                         })
                       }
                       ref={zipcode}
-                      defaultValue={userData.zip_code}
+                      value={userData.zip_code}
                       type="text"
                       className="input input-sm input-bordered"
                     />

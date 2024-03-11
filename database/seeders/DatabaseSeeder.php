@@ -16,8 +16,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Laundry::factory(10)->create();
-        \App\Models\Admin::factory(5)->create();
 
         $user = \App\Models\User::factory()->create([
             'username' => 'jdoe',
@@ -36,6 +34,14 @@ class DatabaseSeeder extends Seeder
             'last_name' => 'Doe',
         ]);
 
-        \App\Models\Customer::factory(100)->create();
+        // create more customer
+        \App\Models\Customer::factory()->count(100)->create();
+
+
+        // $this->call([
+        //     LaundrySeeder::class,
+        //     InventorySeeder::class,
+        //     BookingSeeder::class,
+        // ]);
     }
 }

@@ -5,18 +5,17 @@ import { Navigate, useLocation, useParams } from "react-router-dom";
 import axiosClient from "../../axios-client";
 import BookingConfirmationForm from "../../components/Booking/BookingConfirmationForm";
 import BookingDetails from "../../components/Booking/BookingDetails";
+import BookingDetergent from "../../components/Booking/BookingDetergent";
 import BookingItemList from "../../components/Booking/BookingItemList";
 import BookingSelection from "../../components/Booking/BookingSelection";
 import { useStateContext } from "../../contexts/ContextProvider";
 
 export default function Booking() {
   const { user } = useStateContext();
-  if (user && !user.customer) {
-    return <Navigate to="/profile" />;
-  }
   const [laundries, setLaundries] = useState([]);
   const [selected, setSelected] = useState([]);
   const [payload, setPayload] = useState({});
+  const [detergent, setDetergent] = useState({});
   const [steps, setSteps] = useState(1);
   const loc = useLocation();
   const state = loc.state ?? null;
@@ -44,21 +43,36 @@ export default function Booking() {
   const onConfirm = (e) => {
     e.preventDefault();
     let total = 0;
+    let quantity_used = 0;
+
+    // Laundries
+    const laundries = selected.reduce((acc, laundry) => {
+      const itemId = laundry.id;
+      const itemTotal = parseFloat(laundry.item_total);
+      const quantity = parseInt(laundry.quantity);
+
+      quantity_used += quantity * laundry.detergent_per_kilo;
+      total += parseFloat(itemTotal);
+      acc[itemId] = { item_total: itemTotal, quantity: quantity };
+      return acc;
+    }, {});
+
+    // Inventory
+    const inventories = {};
+    inventories[detergent.id] = { quantity_used: quantity_used };
+
     const data = {
-      laundries: selected.reduce((acc, laundry) => {
-        const itemId = laundry.id;
-        const itemTotal = laundry.item_total;
-        const quantity = laundry.quantity;
-        total += parseInt(itemTotal);
-
-        acc[itemId] = { item_total: itemTotal, quantity: quantity };
-
-        return acc;
-      }, {}),
+      laundries: laundries,
+      inventories: inventories,
       total_price: total,
     };
     setPayload(data);
     document.getElementById("bookingConfirmModal").showModal();
+  };
+
+  const onSelectDetergent = (e) => {
+    e.preventDefault();
+    document.getElementById("bookingDetergent").showModal();
   };
 
   return (
@@ -97,7 +111,7 @@ export default function Booking() {
             {selected.length > 0 && steps > 0 && steps < 4 && (
               <div className="w-full flex items-center justify-end">
                 {steps > 1 && (
-                  <div className="px-0-3 text-right">
+                  <div className="px-3 text-right">
                     <button
                       onClick={(e) => {
                         setSteps(steps - 1);
@@ -106,6 +120,23 @@ export default function Booking() {
                     >
                       Back
                     </button>
+                  </div>
+                )}
+                {steps < 2 && (
+                  <div className="flex flex-wrap px-3 text-left w-full">
+                    <button
+                      onClick={onSelectDetergent}
+                      className="btn btn-primary text-cbrown font-bold px-6"
+                    >
+                      Choose Detergent
+                    </button>
+                    <span className="px-3 flex flex-wrap items-center">
+                      Selected Detergent:{" "}
+                      <span className="px-1 font-bold">
+                        {" "}
+                        {detergent.item_name}
+                      </span>
+                    </span>
                   </div>
                 )}
                 <div className="px-3 text-right">
@@ -146,6 +177,8 @@ export default function Booking() {
           setStep={setSteps}
         />
       }
+      {/* Show Detergent Modal */}
+      <BookingDetergent setDetergent={setDetergent} />
     </>
   );
 }

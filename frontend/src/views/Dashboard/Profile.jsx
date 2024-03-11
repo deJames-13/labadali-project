@@ -5,8 +5,8 @@ import Modal from "../../components/Modal";
 import { useStateContext } from "../../contexts/ContextProvider";
 export default function Profile() {
   const { user, setUser, setNotification } = useStateContext();
-  const [isEdit, setIsEdit] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
   const [data, setData] = useState(user.customer);
 
   const street1 = useRef();
@@ -118,8 +118,6 @@ export default function Profile() {
     });
   };
 
-  console.log(user);
-
   return (
     <>
       {loading && (
@@ -144,7 +142,9 @@ export default function Profile() {
             <h1 className="text-xl font-extrabold uppercase">Your Profile</h1>
             <div className="max-w-[120px] aspect-square p-2 border border-primary rounded-full">
               <img
-                src={userData.image_path ?? "/img/nouser.jpeg"}
+                src={
+                  userData.image_path ? userData.image_path : "/img/nouser.jpeg"
+                }
                 alt=""
                 className="w-full min-w-[90px] object-cover aspect-square rounded-full "
               />

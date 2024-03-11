@@ -32,7 +32,7 @@ class ChartsController extends Controller
     public function topLaundries()
     {
 
-        $laundries = Booking::with('laundries')->get()
+        $laundries = Booking::where('status', 'delivered')->with('laundries')->get()
             ->pluck('laundries')
             ->flatten()
             ->groupBy('title')
@@ -65,7 +65,7 @@ class ChartsController extends Controller
     */
     public function topCustomers()
     {
-        $customers = Booking::with('customer')->get()->groupBy('customer_id')->map(function ($customer) {
+        $customers = Booking::where('status', 'delivered')->with('customer')->get()->groupBy('customer_id')->map(function ($customer) {
             return $customer->count();
         })->sortDesc()->take(10);
 
@@ -189,7 +189,7 @@ class ChartsController extends Controller
     */
     public function monthlyBookings()
     {
-        $bookings = Booking::all();
+        $bookings = Booking::where('status', 'delivered')->get();
         $monthlyBookings = $bookings->groupBy(function ($booking) {
             return $booking->created_at->format('F');
         })->map(function ($booking) {
@@ -200,7 +200,8 @@ class ChartsController extends Controller
             'labels' => $monthlyBookings->keys(),
             'dataSets' => [
                 'label' => 'Monthly Bookings',
-                'data' => $monthlyBookings->values(), 'backgroundColor' => "rgb(" . fake()->rgbColor() . ")",
+                'data' => $monthlyBookings->values(),
+                'backgroundColor' => "rgb(" . fake()->rgbColor() . ")",
             ]
         ]);
     }

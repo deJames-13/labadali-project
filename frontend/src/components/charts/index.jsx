@@ -66,6 +66,9 @@ export default function Charts() {
   }, []);
   return (
     <>
+      <div className="flex space-x-2 font-bold text-3xl uppercase">
+        <h1>Charts</h1>
+      </div>
       <Datepicker
         containerClassName="w-72"
         value={dateValue}

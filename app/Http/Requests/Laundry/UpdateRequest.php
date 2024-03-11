@@ -26,8 +26,8 @@ class UpdateRequest extends FormRequest
             "title" => 'string',
             "description" => 'string',
             "price" => 'numeric',
-            "max_kilo" => 'numeric',
-            "max_items" => 'numeric',
+            "min_kilos" => 'numeric',
+            "detergent_per_kilo" => 'numeric',
             "turnaround_day" => 'numeric',
             "image_path" => 'nullable|string',
         ];

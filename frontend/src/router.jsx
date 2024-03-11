@@ -20,6 +20,7 @@ import ManageBookings from "./views/Admin/Dashboard/ManageBookings.jsx";
 import ManageInventories from "./views/Admin/Dashboard/ManageInventories.jsx";
 import ManageUsers from "./views/Admin/Dashboard/ManageUsers.jsx";
 import Messages from "./views/Admin/Dashboard/Messages.jsx";
+import { Profile as AdminProfile } from "./views/Admin/Dashboard/Profile";
 
 // GUEST
 import ManageLaundries from "./views/Admin/Dashboard/ManageLaundries.jsx";
@@ -138,6 +139,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/manage/reports",
         element: <ManageReports />,
+      },
+      {
+        path: "/admin/profile",
+        element: <AdminProfile />,
       },
       {
         path: "/admin/messages",

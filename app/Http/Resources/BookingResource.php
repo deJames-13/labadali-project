@@ -4,7 +4,8 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\CustomerResource;
-use App\Models\Delivery;
+use App\Http\Resources\DeliveryResource;
+use App\Http\Resources\InventoryResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class BookingResource extends JsonResource
@@ -23,7 +24,8 @@ class BookingResource extends JsonResource
             'total_price' => $this->total_price,
             'customer' => new CustomerResource($this->whenLoaded('customer')),
             'laundries' => LaundryResource::collection($this->whenLoaded('laundries')),
-            'delivery' => new DeliveryResource(optional($this->whenLoaded('laundries'))),
+            'inventories' => InventoryResource::collection($this->whenLoaded('inventories')),
+            // 'delivery' => new DeliveryResource(optional($this->whenLoaded('deliveries'))),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

@@ -39,13 +39,13 @@ export default function Sidebar({ page, onLogout }) {
                 link={"/admin/manage/users"}
                 isActive={page === "manage/users"}
               />
-              {/* <Button
+              <Button
                 text="Manage Inventory"
                 icon={<i className="fas fa-boxes"></i>}
                 isLink={true}
                 link={"/admin/manage/inventories"}
                 isActive={page === "manage/inventories"}
-              /> */}
+              />
               <Button
                 text="Manage Laundries"
                 icon={<i className="fas fa-boxes"></i>}
@@ -54,7 +54,7 @@ export default function Sidebar({ page, onLogout }) {
                 isActive={page === "manage/laundries"}
               />
               <Button
-                text="Charts"
+                text="Reports"
                 icon={<i className="fas fa-file-signature"></i>}
                 isLink={true}
                 link={"/admin/manage/reports"}
@@ -70,13 +70,13 @@ export default function Sidebar({ page, onLogout }) {
             </div>
 
             <div className="w-full flex flex-col space-y-3 items-center">
-              {/* <Button
+              <Button
                 text="My Profile"
                 icon={<i className="fas fa-user"></i>}
                 isLink={true}
-                link={"/profile"}
+                link={"/admin/profile"}
                 isActive={page === "profile"}
-              /> */}
+              />
               {/* <Button
                 text="Settings"
                 icon={<i className="fa fa-gear"></i>}

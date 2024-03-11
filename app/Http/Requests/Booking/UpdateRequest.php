@@ -23,11 +23,18 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            // Laundries attach
             'laundries' => 'array',
-            'laundries[*]' => ['array', Rule::exists('laundries', 'id')],
             'laundries.*.item_total' => 'numeric|min:0',
             'laundries.*.quantity' => 'integer|min:1',
-            'laundries.*.laundry_id' => 'integer|min:1',
+            'laundries.*.id' => Rule::exists('laundries', 'id'),
+
+            // Inventories attach
+            'inventories' => 'array',
+            'inventories.*.quantity_used' => 'numeric',
+            'inventories.*.id' => Rule::exists('inventories', 'id'),
+
+
             'total_price' => 'numeric',
             'status' => 'string'
         ];

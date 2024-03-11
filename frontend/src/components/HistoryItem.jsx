@@ -230,17 +230,6 @@ export default function HistoryItem({ booking, setBooking, setStatus }) {
                   );
                 })}
             </div>
-            {isEdit && (
-              <>
-                <div className="divider"></div>
-                <div className="p-6 flex space-x-4 items-center justify-center">
-                  <button className="btn aspect-square btn-primary rounded-lg">
-                    <i className="fas fa-plus"></i>
-                  </button>
-                  <h3 className="font-bold text-lg">Add Laundry</h3>
-                </div>
-              </>
-            )}
           </div>
         )}
       </div>

@@ -107,8 +107,8 @@ export default function ManageLaundries() {
               <th>ID</th>
               <td>Title</td>
               <td>Price</td>
-              <td>Max Kilos</td>
-              <td>Max Items</td>
+              <td>Min Kilos</td>
+              <td>Detergent (in mL)</td>
               <td>Turn Around</td>
               <th></th>
             </tr>
@@ -150,8 +150,8 @@ export default function ManageLaundries() {
                       </div>
                     </td>
                     <td>{laundry.price}</td>
-                    <td>{laundry.max_kilo}</td>
-                    <td>{laundry.max_items}</td>
+                    <td>{laundry.min_kilos ?? 1}</td>
+                    <td>{laundry.detergent_per_kilo ?? "n/a"}</td>
                     <td>{laundry.turnaround_day}</td>
                     <th className="h-12 flex justify-center items-center space-x-3">
                       <button

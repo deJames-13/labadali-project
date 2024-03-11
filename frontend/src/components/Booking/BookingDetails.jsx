@@ -5,13 +5,14 @@ import { useStateContext } from "../../contexts/ContextProvider";
 export default function BookingDetails({ selected }) {
   const { user } = useStateContext();
   const dateNow = new Date().toISOString().split("T")[0];
+  const data = user.customer ?? user.admin;
 
   const [details, setDetails] = useState({
-    name: user.customer.first_name + " " + user.customer.last_name,
-    user_address: user.customer.address,
-    phone_number: user.customer.phone_number,
+    name: data.first_name + " " + data.last_name,
+    user_address: data.address,
+    phone_number: data.phone_number,
     email: user.email,
-    preferred_address: user.customer.address,
+    preferred_address: data.address,
     pick_up_date: dateNow,
     pick_up_time: "09:00",
   });
@@ -159,6 +160,7 @@ export default function BookingDetails({ selected }) {
           <div className="form-control space-x-2">
             <label className="label cursor-pointer">
               <input
+                onChange={() => {}}
                 type="radio"
                 name="radio-10"
                 className="radio border border-cbrown checked:bg-red-500"

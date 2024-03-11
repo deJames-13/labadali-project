@@ -20,8 +20,6 @@ class LaundryFactory extends Factory
             'title' => fake()->word(),
             'description' => fake()->sentence(),
             'price' => fake()->numberBetween(1, 1000),
-            'max_kilo' => fake()->numberBetween(1, 100),
-            'max_items' => fake()->numberBetween(1, 100),
             'turnaround_day' => fake()->numberBetween(1, 100),
         ];
     }

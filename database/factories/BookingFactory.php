@@ -6,6 +6,8 @@ use App\Models\Booking;
 use App\Models\Laundry;
 use App\Models\Customer;
 use App\Models\Delivery;
+use App\Models\Inventory;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -37,11 +39,16 @@ class BookingFactory extends Factory
     {
         return $this->afterCreating(function (Booking $booking) {
             $laundries = Laundry::all();
-            $randomLaundries = $laundries->random(rand(1, 3));
+            $inventories = Inventory::hasTag('detergent')->get();
 
+            $randomLaundries = $laundries->random(rand(1, 3));
+            $randomInventory = $inventories->random();
+
+            $quantity_used = 0;
             foreach ($randomLaundries as $laundry) {
-                $quantity = $this->faker->numberBetween(1, $laundry->max_qty);
+                $quantity = $this->faker->numberBetween($laundry->min_kilos ?? 1, 20);
                 $item_total = $quantity * $laundry->price;
+                $quantity_used += $quantity * $laundry->detergent_per_kilo;
 
                 $booking->laundries()->attach($laundry->id, [
                     'item_total' => $item_total,
@@ -50,9 +57,16 @@ class BookingFactory extends Factory
             }
 
             $booking->total_price = $booking->laundries()->sum('item_total');
+            $booking->inventories()->attach($randomInventory->id, [
+                'quantity_used' => $quantity_used,
+            ]);
+
+
             $booking->save();
 
-            // create a delivery if the status of booking is delivered
+            // Log the created booking
+            Log::info('Created booking:', ['booking' => $booking->toArray()]);
+
 
             // create a delivery if the status of booking is delivered
             if ($booking->status === 'delivered') {

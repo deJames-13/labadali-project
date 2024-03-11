@@ -27,6 +27,11 @@ class StoreRequest extends FormRequest
             'laundries.*.item_total' => 'required|numeric|min:0',
             'laundries.*.quantity' => 'required|integer|min:1',
             'laundries.*.id' => Rule::exists('laundries', 'id'),
+            'inventories' => 'required|array',
+            'inventories.*.quantity_used' => 'required|numeric',
+            'inventories.*.id' => Rule::exists('inventories', 'id'),
+
+
             'total_price' => 'required|numeric',
         ];
     }

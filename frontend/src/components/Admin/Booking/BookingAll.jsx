@@ -1,12 +1,14 @@
 /* eslint-disable no-unused-vars */
 import { debounce } from "lodash";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axiosClient from "../../../axios-client";
 import { useStateContext } from "../../../contexts/ContextProvider";
 import Pagination from "../../Pagination";
 import ViewBooking from "../ViewBooking";
 
 export default function BookingAll() {
+  const navTo = useNavigate();
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("all");
@@ -63,6 +65,7 @@ export default function BookingAll() {
     const q = e.target.value;
     setSearch(q);
   }, 500);
+
   return (
     <>
       <div className=" min-h-screen flex flex-col space-y-2">
@@ -125,6 +128,7 @@ le-pin-rows table-pin-cols"
                 <td>Total</td>
                 <td>Status</td>
                 <td>Order Date</td>
+                <td>Update Date</td>
                 <th></th>
               </tr>
             </thead>
@@ -140,9 +144,18 @@ le-pin-rows table-pin-cols"
                       day: "2-digit",
                     }
                   );
+                  const update = new Date(book.updated_at).toLocaleDateString(
+                    "en-US",
+                    {
+                      year: "numeric",
+                      month: "long",
+                      day: "2-digit",
+                    }
+                  );
                   const full_name =
                     book.customer &&
                     `${book.customer.first_name} ${book.customer.last_name}`;
+                  1;
                   return (
                     <tr
                       key={index}
@@ -159,6 +172,7 @@ le-pin-rows table-pin-cols"
                       <td>{book.total_price}</td>
                       <td>{book.status}</td>
                       <td>{date}</td>
+                      <td>{update}</td>
                       <th className="flex justify-center items-center space-x-3">
                         <button
                           onClick={selected.id && viewBooking}
@@ -174,21 +188,25 @@ le-pin-rows table-pin-cols"
           </table>
           {!bookings.length && !loading > 0 && (
             <div className="py-6 w-full space-x-4 flex justify-center items-center">
-              <button
-                id="addfirst"
-                className="aspect-square btn btn-sm btn-primary rounded-lg"
-              >
-                <i className="fas fa-plus"></i>
-              </button>
+              {status === "pending" && (
+                <button
+                  onClick={(e) =>
+                    navTo("/admin/manage/bookings?page=addBooking")
+                  }
+                  className="aspect-square btn btn-sm btn-primary rounded-lg"
+                >
+                  <i className="fas fa-plus"></i>
+                </button>
+              )}
               <label htmlFor="addfirst" className="label">
-                No bookings found. Click + to create new booking.
+                <strong>No {status} bookings found. </strong>
+                {status === "pending" && "Click + to create new booking."}
               </label>
             </div>
           )}
         </div>
 
         {
-          /*MODALS*/
           <>
             {selected.id && (
               <ViewBooking data={selected} newStatus={setStatus} />

@@ -15,14 +15,13 @@ class BookingController extends Controller
 {
 
     public function index()
-
     {
 
         $user_id = request('user');
         $role = request('_role');
         // query params
-        $order = request('_order') ?? 'asc';
-        $sort = request('_sort') ?? 'created_at';
+        $order = request('_order') ?? 'desc';
+        $sort = request('_sort') ?? 'updated_at';
         $status = request('_status') ?? 'all';
         $page = request('_page') ?? 1;
         $search = request('_search') ?? '';
@@ -56,23 +55,21 @@ class BookingController extends Controller
             }
 
 
-            $bookings = $bookings->with(['customer', 'laundries'])->paginate($MAX_PAGES);
+            $bookings = $bookings->with([
+                'customer',
+                'laundries',
+                'inventories' => function ($query) {
+                    $query->withPivot('quantity_used');
+                }
+            ])->paginate($MAX_PAGES);
 
             return BookingResource::collection($bookings);
         }
     }
 
-
-
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
-
-        if (!Customer::where('id', auth()->user()->id)->exists()) {
-            return response()->json([
-                'message' => 'Please set your profile',
-            ], 400);
-        }
 
         $booking = Booking::create(
             [
@@ -80,13 +77,13 @@ class BookingController extends Controller
                 'status' => 'pending',
                 'total_price' => $data['total_price'],
             ]
-
         );
-        $booking->laundries()->attach($data['laundries']);
+        if ($data['laundries']) $booking->laundries()->attach($data['laundries']);
+        if ($data['inventories']) $booking->inventories()->attach($data['inventories']);
         $booking->load('laundries');
+        $booking->load('inventories');
         return response(new BookingResource($booking), 201);
     }
-
 
     public function show(Booking $booking)
     {
@@ -99,9 +96,12 @@ class BookingController extends Controller
         $data = $request->validated();
         $booking->update($data);
         if ($data['laundries']) {
-
-            $laundryIds = array_column($data['laundries'], 'laundry_id');
-            $laundryData = array_combine($laundryIds, $data['laundries']);
+            $laundryData = [];
+            foreach ($data['laundries'] as $laundry) {
+                if (isset($laundry['laundry_id'])) {
+                    $laundryData[$laundry['laundry_id']] = $laundry;
+                }
+            }
             $booking->laundries()->sync($laundryData);
         }
         $booking->load('laundries');

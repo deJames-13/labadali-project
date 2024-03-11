@@ -1,13 +1,14 @@
 /* eslint-disable no-unused-vars */
+import { useLocation } from "react-router-dom";
+import Reports from "../../../components/Admin/Reports/index";
 import Charts from "../../../components/charts/index";
 export default function ManageReports() {
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const page = query.get("page");
   return (
     <div className="min-h-screen flex flex-col space-y-4 bg-secondary bg-opacity-30 p-6 rounded-lg shadow-xl">
-      <div className="flex space-x-2 font-bold text-3xl uppercase">
-        <h1>Charts</h1>
-      </div>
-
-      <Charts />
+      {page === "charts" ? <Charts /> : <Reports />}
     </div>
   );
 }

@@ -6,7 +6,7 @@ export default function BookingSelection({ selected }) {
       <div className="flex justify-between items-center w-full text-center bg-secondary">
         <span className="w-full text-lg font-bold uppercase">Services</span>
         <span className="hidden lg:block w-full text-lg font-bold uppercase">
-          Baskets
+          Kilos
         </span>
         <span className="hidden lg:block w-full text-lg font-bold uppercase">
           Price

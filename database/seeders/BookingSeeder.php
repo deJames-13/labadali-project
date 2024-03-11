@@ -12,10 +12,10 @@ class BookingSeeder extends Seeder
     {
         // clear wuthout constraints error
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
-        // \App\Models\Booking::truncate();
+        \App\Models\Booking::truncate();
 
         \App\Models\Booking::factory()
-            ->count(2000)
+            ->count(1000)
             ->create();
     }
 }

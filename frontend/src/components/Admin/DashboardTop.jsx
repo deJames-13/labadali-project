@@ -9,7 +9,7 @@ export default function DashboardTop() {
     <>
       <div className="w-full p-9 bg-primary">
         <div
-          className={`w-full px-3 h-full flex space-x-6 justify-end md:justify-between items-center ${
+          className={`w-full px-3 h-full flex space-x-6 justify-end sm:justify-between items-center ${
             page && "lg:justify-end"
           }`}
         >
@@ -30,8 +30,9 @@ export default function DashboardTop() {
                 <div className="w-10 rounded-full ring ring-secondary ring-offset-base-100 ring-offset-2">
                   <img
                     src={
-                      (user.admin && user.admin.image_path) ??
-                      "/img/nouser.jpeg"
+                      user.admin && user.admin.image_path
+                        ? user.admin.image_path
+                        : "/img/nouser.jpeg"
                     }
                   />
                 </div>
@@ -40,7 +41,7 @@ export default function DashboardTop() {
             <label
               htmlFor="my-drawer-2"
               className={`btn sm:btn-md btn-primary drawer-button ${
-                page === "dashboard" ? "" : "lg:hidden"
+                page === "/" ? "" : "lg:hidden"
               }`}
             >
               <i className="fa-solid fa-bars"></i>

@@ -24,9 +24,8 @@ class LaundryResource extends JsonResource
             'price' => $this->price,
             'item_total' => $this->pivot->item_total ?? null,
             'quantity' => $this->pivot->quantity ?? null,
-            'max_qty' => $this->max_qty,
-            'max_kilo' => $this->max_kilo,
-            'max_items' => $this->max_items,
+            'min_kilos' => $this->min_kilos,
+            'detergent_per_kilo' => $this->detergent_per_kilo,
             'turnaround_day' => $this->turnaround_day,
             'image_path' => $image,
         ];

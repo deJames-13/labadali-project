@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { PropTypes } from "prop-types";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import axiosClient from "../../axios-client";
 import Modal from "../Modal";
+import LaundryInventory from "./Booking/LaundryInventory";
 
 ViewBooking.propTypes = {
   data: PropTypes.object.isRequired,
@@ -14,14 +15,27 @@ const statuses = ["pending", "ongoing", "finished", "delivered", "cancelled"];
 export default function ViewBooking({ data, newStatus }) {
   const [status, setStatus] = useState("");
   const [booking, setBooking] = useState(data);
+  const prev = useRef(status);
+
   useEffect(() => {
     setBooking(data);
     booking.status && setStatus(booking.status);
+    prev.current = booking.status;
+
     return () => {};
   }, [booking, data]);
-  const handleClose = (e) => {
+
+  const handleClose = () => {
+    document.getElementById("view-booking").close();
     setStatus(booking.status);
   };
+
+  const onStatusSet = (e) => {
+    e.preventDefault();
+
+    setStatus(e.target.value);
+  };
+
   const handleSave = (e) => {
     const data = {
       ...booking,
@@ -37,15 +51,49 @@ export default function ViewBooking({ data, newStatus }) {
       .then(({ data }) => {
         setBooking(data);
         newStatus(data.status);
+        document.getElementById("view-booking").close();
+
+        if (
+          statuses.indexOf(prev.current) < 2 &&
+          !(statuses.indexOf(data.status) < 2)
+        ) {
+          updateStock(1);
+        }
+        if (
+          statuses.indexOf(prev.current) > 1 &&
+          !(statuses.indexOf(data.status) > 1)
+        ) {
+          updateStock(0);
+        }
       })
       .catch(({ err }) => {
-        console.log(err.data);
+        // console.log(err);
       });
   };
 
-  const onStatusSet = (e) => {
-    e.preventDefault();
-    setStatus(e.target.value);
+  const updateStock = (isSub) => {
+    const inv = { ...booking.inventories[0] };
+
+    const curr = parseFloat(inv.quantity_used);
+    let stock = parseFloat(inv.stock);
+    let quantity_used = parseFloat(curr / 1000); //mL to L
+
+    if (isSub) {
+      quantity_used = -quantity_used;
+    }
+
+    stock += quantity_used;
+
+    axiosClient
+      .put("/items/" + inv.id, {
+        stock: stock,
+      })
+      .then(({ data }) => {
+        console.log(data);
+      })
+      .catch(({ err }) => {
+        // console.log(err);
+      });
   };
 
   return (
@@ -99,13 +147,8 @@ export default function ViewBooking({ data, newStatus }) {
                   })}
               </div>
             </div>
-          </>
-        )
-      }
-      action={
-        <>
-          <form method="dialog" className="w-full flex flex-col gap-3">
-            <div>
+
+            <div className="py-4">
               <h4 className="mx-2 font-extrabold uppercase">Set Status</h4>
               <div
                 role="tablist"
@@ -122,6 +165,9 @@ export default function ViewBooking({ data, newStatus }) {
                         className={`tab font-bold uppercase ${
                           status === s ? "border border-cbrown" : ""
                         }`}
+                        // disabled={
+                        //   prev.current === "finished" && statuses.indexOf(s) < 2
+                        // }
                       >
                         {s}
                       </button>
@@ -129,7 +175,20 @@ export default function ViewBooking({ data, newStatus }) {
                   );
                 })}
               </div>
+
+              {statuses.indexOf(status) < 2 && (
+                <LaundryInventory
+                  bookingId={booking.id}
+                  inventories={booking.inventories}
+                />
+              )}
             </div>
+          </>
+        )
+      }
+      action={
+        <>
+          <div className="w-full flex flex-col gap-3">
             <div className="flex space-x-2 items-end justify-end">
               <button onClick={handleClose} className="btn btn-sm ">
                 Close
@@ -142,7 +201,7 @@ export default function ViewBooking({ data, newStatus }) {
                 Save
               </button>
             </div>
-          </form>
+          </div>
         </>
       }
     />

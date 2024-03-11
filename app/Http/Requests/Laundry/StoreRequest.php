@@ -25,8 +25,8 @@ class StoreRequest extends FormRequest
             "title" => 'required|string',
             "description" => 'required|string',
             "price" => 'required|numeric',
-            "max_kilo" => 'required|numeric',
-            "max_items" => 'required|numeric',
+            "min_kilos" => 'required|numeric',
+            "detergent_per_kilo" => 'required|numeric',
             "turnaround_day" => 'required|numeric',
             "image_path" => 'string',
         ];

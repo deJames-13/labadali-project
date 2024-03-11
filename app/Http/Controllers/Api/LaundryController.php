@@ -47,14 +47,6 @@ class LaundryController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $fileName = $image->getClientOriginalName();
-            $fileName =   date('His') . '_' . $fileName;
-            $path = $image->storeAs('laundries', $fileName, 'public');
-            $data['image_path'] =  $path;
-        }
-
         $laundry = Laundry::create($data);
         return response()->json(new LaundryResource($laundry), 201, ['message' => 'Laundry created successfully!']);
     }

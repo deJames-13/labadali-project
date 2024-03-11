@@ -25,10 +25,20 @@ class DeliveryController extends Controller
             [
                 'booking_id' => 'required|integer',
                 'shipping_type' => 'required|string',
-                'shipping_cost' => 'required|numeric',
+                'shipping_cost' => 'sometimes|numeric',
                 'delivered_date' => 'required|date',
             ]
         );
+
+        $shipping = [
+            'standard' => 50,
+            'express' => 100,
+            'priority' => 150,
+        ];
+        $data['shipping_cost'] = $shipping[strtolower($data['shipping_type'] ?? 'standard')];
+
+
+
         $delivery = Delivery::create($data);
         return response($delivery, 201);
     }
@@ -51,7 +61,7 @@ class DeliveryController extends Controller
             [
                 'booking_id' => 'required|integer',
                 'shipping_type' => 'required|string',
-                'shipping_cost' => 'required|numeric',
+                'shipping_cost' => 'sometimes|numeric',
                 'delivered_date' => 'required|date',
             ]
         );

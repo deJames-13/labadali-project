@@ -14,6 +14,7 @@ export default function BookingConfirmationForm({
 }) {
   const { user } = useStateContext();
   const navigate = useNavigate();
+  const data = user.customer ?? user.admin;
   const handleBooking = (e) => {
     e.preventDefault();
     if (payload) {
@@ -24,7 +25,7 @@ export default function BookingConfirmationForm({
           console.log(err);
         });
     }
-    navigate("/history");
+    user.customer && navigate("/history");
   };
   return (
     <Modal
@@ -41,17 +42,15 @@ export default function BookingConfirmationForm({
             <label htmlFor="name" className="font-medium">
               Name:
             </label>
-            <span>
-              {user.customer.first_name + " " + user.customer.last_name}
-            </span>
+            <span>{data.first_name + " " + data.last_name}</span>
             <label htmlFor="name" className="font-medium">
               Phone Number:
             </label>
-            <span>{user.customer.phone_number}</span>
+            <span>{data.phone_number}</span>
             <label htmlFor="name" className="font-medium">
               Adress:
             </label>
-            <span>{user.customer.address}</span>
+            <span>{data.address}</span>
           </div>
           <div className="divider"></div>
           <div className="flex flex-col space-y-3 border border-cbrown p-3 rounded-lg">

@@ -9,8 +9,8 @@ export default function AddLaundry({ setLaundries }) {
   const title = useRef();
   const description = useRef();
   const price = useRef();
-  const max_kilo = useRef();
-  const max_items = useRef();
+  const min_kilos = useRef();
+  const detergent_per_kilo = useRef();
   const turnaround_day = useRef();
 
   const handleSave = (e) => {
@@ -19,8 +19,8 @@ export default function AddLaundry({ setLaundries }) {
       title: title.current.value,
       description: description.current.value,
       price: price.current.value,
-      max_kilo: max_kilo.current.value,
-      max_items: max_items.current.value,
+      min_kilos: min_kilos.current.value,
+      detergent_per_kilo: detergent_per_kilo.current.value,
       turnaround_day: turnaround_day.current.value,
     };
     axiosClient
@@ -37,8 +37,8 @@ export default function AddLaundry({ setLaundries }) {
     title.current.value = "";
     description.current.value = "";
     price.current.value = "";
-    max_kilo.current.value = "";
-    max_items.current.value = "";
+    min_kilos.current.value = "";
+    detergent_per_kilo.current.value = "";
     turnaround_day.current.value = "";
   };
 
@@ -76,7 +76,7 @@ export default function AddLaundry({ setLaundries }) {
               ref={description}
               name="description"
               id="description"
-              className="textarea textarea-bordered focus:outline-none max-h-24"
+              className="textarea textarea-bordered focus:outline-none max-h-24 w-2/3"
               placeholder="Describe the laundry service"
             ></textarea>
           </div>
@@ -95,33 +95,31 @@ export default function AddLaundry({ setLaundries }) {
             />
           </div>
 
-          {/* Max Kilo */}
+          {/* Min Kilo */}
           <div className="w-full flex space-x-3 text-sm items-center">
             <label htmlFor="title" className="font-bold uppercase w-1/3">
-              Max Kilo:
+              Minimum kilo:
             </label>
             <input
-              ref={max_kilo}
-              name="max_kilo"
-              id="max_kilo"
+              ref={min_kilos}
+              name="min_kilos"
+              id="min_kilos"
               type="number"
               className="input input-sm input-bordered w-2/3 focus:outline-none"
             />
           </div>
-          {/* Max Items */}
           <div className="w-full flex space-x-3 text-sm items-center">
             <label htmlFor="title" className="font-bold uppercase w-1/3">
-              Max Items:
+              Cups of detergent to use (in ml):
             </label>
             <input
-              ref={max_items}
-              name="max_items"
-              id="max_items"
+              ref={detergent_per_kilo}
+              name="detergent_per_kilo"
+              id="detergent_per_kilo"
               type="number"
               className="input input-sm input-bordered w-2/3 focus:outline-none"
             />
           </div>
-          {/* Turn Around Days */}
           <div className="w-full flex space-x-3 text-sm items-center">
             <label htmlFor="title" className="font-bold uppercase w-1/3">
               Turn Around Days:

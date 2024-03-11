@@ -11,6 +11,9 @@ export default {
 
   theme: {
     extend: {
+      maxWidth: {
+        a4: "210mm",
+      },
       transformOrigin: {
         0: "0%",
       },

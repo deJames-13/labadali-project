@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Inventory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Laundry extends Model
 {
@@ -13,9 +14,8 @@ class Laundry extends Model
         'title',
         'description',
         'price',
-        'max_kilo',
-        'max_items',
-        'max_qty',
+        'min_kilos',
+        'detergent_per_kilo',
         'turnaround_day',
         'image_path'
     ];

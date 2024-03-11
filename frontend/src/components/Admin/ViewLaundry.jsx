@@ -83,7 +83,11 @@ export default function ViewLaundry({ data, setLaundries, setShowLaundry }) {
         <div className="flex items-start gap-4 ">
           <div className="w-1/2 avatar flex flex-col space-y-2 rounded-lg border-2 p-1 border-primary aspect-square shadow-xl">
             <img
-              src={laundry.image_path ?? "/img/nouser.jpeg"}
+              src={
+                laundry.image_path
+                  ? laundry.image_path
+                  : "/img/samplelaundry.jpg"
+              }
               alt={laundry.title}
               className="aspect-square w-full"
             />
@@ -171,18 +175,20 @@ export default function ViewLaundry({ data, setLaundries, setShowLaundry }) {
               )}
             </div>
 
-            {/* Max Kilo */}
+            {/* Min Kilo */}
             <div className="w-full flex space-x-3 text-sm items-center">
               <label htmlFor="title" className="font-light uppercase w-1/3">
-                Max Kilo:
+                Min Kilo:
               </label>
-              {!edit && <p className="font-bold">{laundry.max_kilo}kg</p>}
+              {!edit && (
+                <p className="font-bold">{laundry.min_kilos ?? 1} kg</p>
+              )}
               {edit && (
                 <input
                   onChange={(e) =>
-                    setLaundry({ ...laundry, max_kilo: e.target.value })
+                    setLaundry({ ...laundry, min_kilos: e.target.value })
                   }
-                  value={laundry.max_kilo}
+                  value={laundry.min_kilos ?? 1}
                   name="max_kilo"
                   id="max_kilo"
                   type="number"
@@ -190,20 +196,27 @@ export default function ViewLaundry({ data, setLaundries, setShowLaundry }) {
                 />
               )}
             </div>
-            {/* Max Items */}
+            {/* Cups */}
             <div className="w-full flex space-x-3 text-sm items-center">
               <label htmlFor="title" className="font-light uppercase w-1/3">
-                Max Items:
+                Cups used per kilo:
               </label>
-              {!edit && <p className="font-bold">x{laundry.max_items}</p>}
+              {!edit && (
+                <p className="font-bold">
+                  {laundry.detergent_per_kilo ?? 1} ml
+                </p>
+              )}
               {edit && (
                 <input
                   onChange={(e) =>
-                    setLaundry({ ...laundry, max_items: e.target.value })
+                    setLaundry({
+                      ...laundry,
+                      detergent_per_kilo: e.target.value,
+                    })
                   }
-                  value={laundry.max_items}
-                  name="max_items"
-                  id="max_items"
+                  value={laundry.detergent_per_kilo ?? 1}
+                  name="max_kilo"
+                  id="max_kilo"
                   type="number"
                   className="input input-sm input-bordered w-2/3 focus:outline-none"
                 />
