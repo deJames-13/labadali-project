@@ -8,12 +8,16 @@ import Sidebar from "../components/Admin/Sidebar";
 import Alert from "../components/Alert";
 import { useStateContext } from "../contexts/ContextProvider";
 
+// hardcoded page access
+const employee = ["manage/users", "manage/inventory", "manage/laundries"];
+const staff = ["manage/users", "manage/reports", "messages"];
+
 export default function AdminLayout() {
   const { user, token, setUser, setToken, notification, setNotification } =
     useStateContext();
   const location = useLocation();
   const page = location.pathname.split("/admin/")[1];
-
+  console.log(page);
   if (!token) {
     return <Navigate to={"/admin/login"} />;
   }
@@ -48,6 +52,17 @@ export default function AdminLayout() {
         console.log(err);
       });
   };
+
+  if (!(user && user.admin)) {
+    //
+  } else if (user.admin.position === "Employee" && employee.includes(page)) {
+    return <Navigate to="/admin/" />;
+  } else if (
+    user.admin.position === "Inventory Staff" &&
+    staff.includes(page)
+  ) {
+    return <Navigate to="/admin/" />;
+  }
   return user ? (
     <>
       <div key="adminLayout" id="adminLayout" className="relative">

@@ -26,7 +26,6 @@ export default function MonthlyBookings() {
       )
       .then(({ data }) => {
         setBookings(data);
-        console.log(data);
       })
       .catch((err) => {
         console.log(err);

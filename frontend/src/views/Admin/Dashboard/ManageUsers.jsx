@@ -119,7 +119,7 @@ export default function ManageUsers() {
                         <td>
                           {u.email}
                           <br />
-                          <span className="badge badge-ghost badge-sm">
+                          <span className="badge badge-primary badge-sm">
                             {u.admin.position}
                           </span>
                         </td>

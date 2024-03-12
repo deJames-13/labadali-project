@@ -11,6 +11,8 @@ const StateContext = createContext({
   setToken: () => {},
   setNotification: () => {},
   setErrors: () => {},
+  // hardcode position
+  positions: ["Employee", "Inventory Staff", "Administrator"],
 });
 
 // eslint-disable-next-line react/prop-types
@@ -20,6 +22,7 @@ export const ContextProvider = ({ children }) => {
   const [notification, _setNotification] = useState(null);
   const [errors, _setErrors] = useState(null);
   const [token, _setToken] = useState(localStorage.getItem("ACCESS_TOKEN"));
+  const positions = ["Employee", "Inventory Staff", "Administrator"];
 
   const setToken = (token) => {
     _setToken(token);
@@ -58,6 +61,7 @@ export const ContextProvider = ({ children }) => {
         setToken,
         setNotification,
         setErrors,
+        positions,
       }}
     >
       {children}

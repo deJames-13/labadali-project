@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
+import { useStateContext } from "../../contexts/ContextProvider";
 import Button from "../Button";
 import Logo from "../Logo";
 
 export default function Sidebar({ page, onLogout }) {
+  const { user, positions } = useStateContext();
   return (
     <>
       <div className="h-screen drawer-side scrollbar-hide animate__animated animate__fadeInLeft ">
@@ -32,41 +35,51 @@ export default function Sidebar({ page, onLogout }) {
                 link={"/admin/manage/bookings"}
                 isActive={page === "manage/bookings"}
               />
-              <Button
-                text="Manage Users"
-                icon={<i className="fas fa-users"></i>}
-                isLink={true}
-                link={"/admin/manage/users"}
-                isActive={page === "manage/users"}
-              />
-              <Button
-                text="Manage Inventory"
-                icon={<i className="fas fa-boxes"></i>}
-                isLink={true}
-                link={"/admin/manage/inventories"}
-                isActive={page === "manage/inventories"}
-              />
-              <Button
-                text="Manage Laundries"
-                icon={<i className="fas fa-boxes"></i>}
-                isLink={true}
-                link={"/admin/manage/laundries"}
-                isActive={page === "manage/laundries"}
-              />
-              <Button
-                text="Reports"
-                icon={<i className="fas fa-file-signature"></i>}
-                isLink={true}
-                link={"/admin/manage/reports"}
-                isActive={page === "manage/reports"}
-              />
-              <Button
-                text="Messages"
-                icon={<i className="fas fa-message"></i>}
-                isLink={true}
-                link={"/admin/messages"}
-                isActive={page === "messages"}
-              />
+              {positions.indexOf(user.admin.position) > 0 && (
+                <>
+                  <Button
+                    text="Manage Laundries"
+                    icon={<i className="fas fa-boxes"></i>}
+                    isLink={true}
+                    link={"/admin/manage/laundries"}
+                    isActive={page === "manage/laundries"}
+                  />
+                  <Button
+                    text="Manage Inventory"
+                    icon={<i className="fas fa-boxes"></i>}
+                    isLink={true}
+                    link={"/admin/manage/inventories"}
+                    isActive={page === "manage/inventories"}
+                  />
+                </>
+              )}
+              {positions.indexOf(user.admin.position) > 1 && (
+                <Button
+                  text="Manage Users"
+                  icon={<i className="fas fa-users"></i>}
+                  isLink={true}
+                  link={"/admin/manage/users"}
+                  isActive={page === "manage/users"}
+                />
+              )}
+              {positions.indexOf(user.admin.position) != 1 && (
+                <>
+                  <Button
+                    text="Reports"
+                    icon={<i className="fas fa-file-signature"></i>}
+                    isLink={true}
+                    link={"/admin/manage/reports"}
+                    isActive={page === "manage/reports"}
+                  />
+                  <Button
+                    text="Messages"
+                    icon={<i className="fas fa-message"></i>}
+                    isLink={true}
+                    link={"/admin/messages"}
+                    isActive={page === "messages"}
+                  />
+                </>
+              )}
             </div>
 
             <div className="w-full flex flex-col space-y-3 items-center">

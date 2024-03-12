@@ -49,25 +49,38 @@ export default function Tab({
         <div id={reportId} ref={componentRef} className="print:p-6">
           <div className="divider"></div>
           <div className="w-full flex justify-between items-center">
-            <h1 className="font-bold text-2xl uppercase">{title}</h1>
-
-            <div className="flex space-x-2 items-center justify-center">
-              <label htmlFor="date" className="text-lg font-bold">
-                Date:
-              </label>
-              <Datepicker
-                containerClassName=""
-                value={dateValue}
-                theme={"cupcake"}
-                inputClassName="input input-sm rounded-none input-bordered"
-                popoverDirection={"left"}
-                toggleClassName="invisible"
-                onChange={handleDatePickerValueChange}
-                showShortcuts={true}
-                primaryColor={"white"}
-              />
+            <div className="w-full">
+              <div className="w-full text-center">
+                <h1 className="font-extrabold text-3xl uppercase text-secondary">
+                  LabaDali: Laundry Shop
+                </h1>
+                <p>East Service Road, Taguig 1630, Philippines</p>
+              </div>
+              <div className="divider"></div>
+              <h1 className="font-extrabold text-xl uppercase">{title}</h1>
+              <div className="w-full flex justify-between">
+                <div>
+                  <div className="flex space-x-2 items-center justify-center">
+                    <label htmlFor="date" className="text-lg font-bold">
+                      Date:
+                    </label>
+                    <Datepicker
+                      containerClassName=""
+                      value={dateValue}
+                      theme={"cupcake"}
+                      inputClassName="input input-sm rounded-none input-bordered"
+                      popoverDirection={"left"}
+                      toggleClassName="invisible"
+                      onChange={handleDatePickerValueChange}
+                      showShortcuts={true}
+                      primaryColor={"white"}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+
           <div className="divider"></div>
           {children}
         </div>

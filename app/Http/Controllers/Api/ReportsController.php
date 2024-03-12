@@ -24,16 +24,18 @@ class ReportsController extends Controller
 
         return BookingResource::collection($bookings);
     }
+    public function revenueByLaundryType()
+    {
+        $startDate = request('start_date');
+        $endDate = request('end_date');
+    }
+
+
+
+
     public function monthlyRevenue()
     {
     }
-    public function revenueByLaundryType()
-    {
-    }
-
-
-
-
 
     public function topLaundries()
     {

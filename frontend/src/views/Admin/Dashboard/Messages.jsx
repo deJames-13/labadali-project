@@ -16,7 +16,6 @@ export default function Messages() {
     axiosClient
       .get("/messages")
       .then((res) => {
-        console.log(res.data);
         setMessages(res.data ?? []);
       })
       .catch((err) => {

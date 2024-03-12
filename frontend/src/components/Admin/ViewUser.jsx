@@ -36,7 +36,7 @@ const emptyUser = {
 
 export default function ViewUser({ isAdd, setIsAdd, setShowUser, ...u }) {
   const userRefs = useRef(emptyUser);
-  const { setNotification, setErrors, errors } = useStateContext();
+  const { setNotification, setErrors, errors, positions } = useStateContext();
   const [edit, setEdit] = useState(isAdd);
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState(
@@ -373,19 +373,23 @@ export default function ViewUser({ isAdd, setIsAdd, setShowUser, ...u }) {
                   </h1>
                 )}
                 {edit && (
-                  <input
+                  <select
                     ref={userRefs.position}
                     required
                     onChange={(e) =>
                       setUserData({ ...userData, position: e.target.value })
                     }
-                    type="text"
                     name="position"
                     id="position"
-                    placeholder="Position"
                     className="input input-xs rounded-none border-b-2 border-0 border-gray-400 my-1 focus:outline-none  text-left w-full"
-                    value={userData.position}
-                  />
+                    value={userData.position || "Employee"}
+                  >
+                    {positions.map((position, index) => (
+                      <option key={index} value={position}>
+                        {position}
+                      </option>
+                    ))}
+                  </select>
                 )}
               </div>
             </div>
