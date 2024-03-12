@@ -22,7 +22,7 @@ class BookingFactory extends Factory
     {
         // $statuses = ['ongoing', 'finished', 'delivered'];
         $statuses = ['pending', 'ongoing', 'finished', 'delivered', 'cancelled'];
-        $createDate = $this->faker->dateTimeBetween('-1 year', 'now');
+        $createDate = $this->faker->dateTimeBetween('-5 months', 'now');
         $updateDate = $this->faker->dateTimeBetween($createDate, 'now');
         $customers = Customer::all();
         return [

@@ -46,8 +46,8 @@ class InventoryController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $fileName = $image->getClientOriginalName();
-            $fileName =   date('His') . '_' . $fileName;
+            $fileName = $image->getClientOriginalExtension();
+            $fileName =  'inventoryitem_' . date('His') . $fileName;
             $path = $image->storeAs('inventories', $fileName, 'public');
             $data['image_path'] =  $path;
         }
@@ -81,8 +81,8 @@ class InventoryController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $fileName = $image->getClientOriginalName();
-            $fileName =   date('His') . '_' . $fileName;
+            $fileName = $image->getClientOriginalExtension();
+            $fileName =  'inventoryitem_' . date('His');
             $path = $image->storeAs('inventories', $fileName, 'public');
             $data['image_path'] =  $path;
         }

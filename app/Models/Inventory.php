@@ -12,8 +12,10 @@ class Inventory extends Model
     protected $fillable = [
         "item_name",
         "stock",
+
         "tags",
         "instructions",
+        "cost_per_stock",
         "image_path",
     ];
     public function bookings()

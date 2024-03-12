@@ -15,7 +15,7 @@ class BookingSeeder extends Seeder
         \App\Models\Booking::truncate();
 
         \App\Models\Booking::factory()
-            ->count(1000)
+            ->count(200)
             ->create();
     }
 }

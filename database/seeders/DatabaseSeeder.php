@@ -32,16 +32,17 @@ class DatabaseSeeder extends Seeder
             'id' => $user->id,
             'first_name' => 'John',
             'last_name' => 'Doe',
+            'position' => 'Administrator',
         ]);
 
         // create more customer
         \App\Models\Customer::factory()->count(100)->create();
 
 
-        // $this->call([
-        //     LaundrySeeder::class,
-        //     InventorySeeder::class,
-        //     BookingSeeder::class,
-        // ]);
+        $this->call([
+            LaundrySeeder::class,
+            InventorySeeder::class,
+            BookingSeeder::class,
+        ]);
     }
 }

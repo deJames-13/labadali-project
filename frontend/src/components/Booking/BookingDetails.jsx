@@ -26,7 +26,7 @@ export default function BookingDetails({ selected }) {
         <h2 className="font-bold text-lg">Personal Information</h2>
         <button
           onClick={(e) => setEditPersonal(!editPersonal)}
-          className="fas fa-pen btn btn-sm bg-primary aspect-square hover:border hover:border-cbrown"
+          className="hidden fas fa-pen btn btn-sm bg-primary aspect-square hover:border hover:border-cbrown"
         ></button>
       </div>
       <div className="lg:px-16 grid grid-cols-1 sm:grid-cols-2 gap-2 lg:grid-cols-3">
@@ -59,7 +59,7 @@ export default function BookingDetails({ selected }) {
         )}
 
         {/* Contact Number */}
-        <span className="font-medium">Email: </span>
+        <span className="font-medium">Contact Info: </span>
         {!editPersonal && (
           <p className="lg:col-span-2">{details.phone_number}</p>
         )}
@@ -75,7 +75,7 @@ export default function BookingDetails({ selected }) {
         )}
 
         {/* Email */}
-        <span className="font-medium">Contact Info: </span>
+        <span className="font-medium">Email: </span>
         {!editPersonal && <p className="lg:col-span-2">{details.email}</p>}
         {editPersonal && (
           <input

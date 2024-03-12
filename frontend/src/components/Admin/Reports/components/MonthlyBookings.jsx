@@ -43,7 +43,6 @@ export default function MonthlyBookings() {
     setDateValue(newDateRange);
     getBookings(newDateRange);
   };
-  const onPrint = () => {};
   return (
     <Tab
       id={"monthlybookings-report"}

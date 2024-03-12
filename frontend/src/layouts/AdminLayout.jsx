@@ -17,7 +17,6 @@ export default function AdminLayout() {
     useStateContext();
   const location = useLocation();
   const page = location.pathname.split("/admin/")[1];
-  console.log(page);
   if (!token) {
     return <Navigate to={"/admin/login"} />;
   }

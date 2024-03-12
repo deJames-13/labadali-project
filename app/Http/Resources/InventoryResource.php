@@ -11,11 +11,12 @@ class InventoryResource extends JsonResource
     {
         $serverUrl = config('app.url');
         $serverUrl .= $request->server('SERVER_PORT') == 80 ? '' : ':' . $request->server('SERVER_PORT');
-        $image =  $this->image_path ? ($serverUrl . '/storage/' . $this->image_path) : '';
+        $image =  $this->image_path ? '' : ($serverUrl . '/storage/' . ($this->image_path));
         return [
             "id" => $this->id,
             "item_name" => $this->item_name,
             "stock" => $this->stock,
+            "cost_per_stock" => $this->cost_per_stock,
             "tags" => $this->tags,
             "instructions" => $this->instructions,
             "image_path" => $image,

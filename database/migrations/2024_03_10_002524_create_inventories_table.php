@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('item_name');
             $table->decimal('stock');
+            $table->decimal('cost_per_stock');
             $table->string('tags')->nullable();
             $table->string('instructions')->nullable();
             $table->string('image_path')->nullable();

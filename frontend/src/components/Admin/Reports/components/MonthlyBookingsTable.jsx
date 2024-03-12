@@ -8,7 +8,7 @@ export default function MonthlyBookingsTable({ bookings }) {
   return (
     <div className="overflow-x-auto  print:min-w-a4 print:w-full print:max-w-a4">
       <table className="table table-xs table-zebra ">
-        <thead>
+        <thead className="border-y-2">
           <tr>
             <th className="print:pt-6 w-1/12"></th>
             <th className="print:pt-6 w-2/12">Customer</th>
@@ -34,7 +34,7 @@ export default function MonthlyBookingsTable({ bookings }) {
                   <thead>
                     <tr>
                       <th className="w-1/4 whitespace-normal">Name</th>
-                      <th className="w-1/4 whitespace-normal">Price</th>
+                      <th className="w-1/4 whitespace-normal">Quantity</th>
                       <th className="w-1/4 whitespace-normal">Kilo</th>
                       <th className="w-1/4 whitespace-normal">Item Total</th>
                     </tr>

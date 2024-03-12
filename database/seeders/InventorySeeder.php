@@ -12,40 +12,45 @@ class InventorySeeder extends Seeder
         [
             "item_name" => 'Ariel Power Gel Liquid Detergent',
             "stock" => 20,
+            "cost_per_stock" => 150,
             "tags" => 'detergent,1L,sunfresh',
             "instructions" => "Stock Update",
         ],
         [
             "item_name" => 'Tide Plus Downy Liquid Detergent',
             "stock" => 20,
+            "cost_per_stock" => 180,
             "tags" => 'detergent,1L,Sweet Dreams',
             "instructions" => "Stock Update",
         ],
         [
             "item_name" => 'Breeze Liquid Detergent',
             "stock" => 20,
+            "cost_per_stock" => 120,
             "tags" => 'detergent,1L,Sun Fresh',
             "instructions" => "Stock Update",
         ],
         [
             "item_name" => 'Surf Liquid Detergent',
             "stock" => 20,
+            "cost_per_stock" => 130,
             "tags" => 'detergent,1L,Blossom Fresh',
             "instructions" => "Stock Update",
         ],
         [
             "item_name" => 'Pride Powerwash Liquid Detergent',
             "stock" => 20,
+            "cost_per_stock" => 140,
             "tags" => 'detergent,1L,Anti-Bacterial',
             "instructions" => "Stock Update",
         ],
         [
             "item_name" => 'Human Nature 100% Natural Liquid Detergent',
             "stock" => 20,
+            "cost_per_stock" => 160,
             "tags" => 'detergent,1L,Natural',
             "instructions" => "Stock Update",
         ],
-
     ];
     public function run(): void
     {

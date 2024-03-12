@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Datepicker from "react-tailwindcss-datepicker";
 import axiosClient from "../../axios-client";
 import PreviewPrint from "../PreviewPrint";
@@ -66,8 +67,14 @@ export default function Charts() {
   }, []);
   return (
     <>
-      <div className="flex space-x-2 font-bold text-3xl uppercase">
+      <div className="flex space-x-2 justify-between font-bold text-3xl uppercase">
         <h1>Charts</h1>
+        <Link
+          to={"/admin/manage/reports"}
+          className="font-bold uppercase btn rounded-sm btn-ghost"
+        >
+          View Reports
+        </Link>
       </div>
       <Datepicker
         containerClassName="w-72"

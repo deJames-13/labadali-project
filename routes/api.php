@@ -29,6 +29,7 @@ use App\Http\Controllers\FeedbackController;
 // CHARTS
 Route::prefix('charts')->group(function () {
     Route::get('topLaundries', [ChartsController::class, 'topLaundries']);
+    Route::get('dashstats', [ChartsController::class, 'dashstats']);
     Route::get('topCustomers', [ChartsController::class, 'topCustomers']);
     Route::get('monthlyRevenue', [ChartsController::class, 'monthlyRevenue']);
     Route::get('weeklyRevenue', [ChartsController::class, 'weeklyRevenue']);
@@ -42,6 +43,7 @@ Route::prefix('charts')->group(function () {
 Route::prefix('reports')->group(function () {
     Route::get('topLaundries', [ReportsController::class, 'topLaundries']);
     Route::get('topCustomers', [ReportsController::class, 'topCustomers']);
+    Route::get('yearlyRevenue', [ReportsController::class, 'yearlyRevenue']);
     Route::get('monthlyRevenue', [ReportsController::class, 'monthlyRevenue']);
     Route::get('weeklyRevenue', [ReportsController::class, 'weeklyRevenue']);
     Route::get('bookingStatus', [ReportsController::class, 'bookingStatus']);

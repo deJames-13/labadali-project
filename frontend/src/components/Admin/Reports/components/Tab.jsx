@@ -50,16 +50,23 @@ export default function Tab({
           <div className="divider"></div>
           <div className="w-full flex justify-between items-center">
             <div className="w-full">
-              <div className="w-full text-center">
+              <div className="w-full text-center hidden print:block">
                 <h1 className="font-extrabold text-3xl uppercase text-secondary">
                   LabaDali: Laundry Shop
                 </h1>
                 <p>East Service Road, Taguig 1630, Philippines</p>
+                <div className="divider"></div>
               </div>
-              <div className="divider"></div>
-              <h1 className="font-extrabold text-xl uppercase">{title}</h1>
+              <h1 className="font-extrabold text-xl uppercase flex">
+                {title}
+                <span className="print:block hidden">
+                  {dateValue.startDate
+                    ? ": " + format(new Date(dateValue.startDate), "MMMM")
+                    : ""}{" "}
+                </span>
+              </h1>
               <div className="w-full flex justify-between">
-                <div>
+                <div className="w-full flex justify-between items-center">
                   <div className="flex space-x-2 items-center justify-center">
                     <label htmlFor="date" className="text-lg font-bold">
                       Date:
@@ -67,14 +74,22 @@ export default function Tab({
                     <Datepicker
                       containerClassName=""
                       value={dateValue}
-                      theme={"cupcake"}
+                      theme={"light"}
                       inputClassName="input input-sm rounded-none input-bordered"
                       popoverDirection={"left"}
                       toggleClassName="invisible"
                       onChange={handleDatePickerValueChange}
                       showShortcuts={true}
-                      primaryColor={"white"}
+                      primaryColor={"pink"}
                     />
+                  </div>
+                  <div className="print:flex hidden w-1/2 justify-end  space-x-2 items-center ">
+                    <label htmlFor="date" className="text-lg font-bold">
+                      Print Date:
+                    </label>
+                    <div>
+                      <p>{format(new Date(), "yyyy-MM-dd")}</p>
+                    </div>
                   </div>
                 </div>
               </div>

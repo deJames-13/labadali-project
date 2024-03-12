@@ -14,45 +14,52 @@ import DoughnutChart from "./components/DoughnutChart";
 import LineChart from "./components/LineChart";
 import UserChannels from "./components/UserChannels";
 
-const statsData = [
-  {
-    title: "New Users",
-    value: "34.7k",
-    icon: <UserGroupIcon className="w-8 h-8" />,
-    description: "↗︎ 2300 (22%)",
-  },
-  {
-    title: "Total Sales",
-    value: "$34,545",
-    icon: <CreditCardIcon className="w-8 h-8" />,
-    description: "Current month",
-  },
-  {
-    title: "Pending Leads",
-    value: "450",
-    icon: <CircleStackIcon className="w-8 h-8" />,
-    description: "50 in hot leads",
-  },
-  {
-    title: "Active Users",
-    value: "5.6k",
-    icon: <UsersIcon className="w-8 h-8" />,
-    description: "↙ 300 (18%)",
-  },
-];
-
 function Dashboard() {
+  const icons = {
+    UserGroupIcon: <UserGroupIcon className="w-8 h-8" />,
+    CreditCardIcon: <CreditCardIcon className="w-8 h-8" />,
+    CircleStackIcon: <CircleStackIcon className="w-8 h-8" />,
+    UsersIcon: <UsersIcon className="w-8 h-8" />,
+  };
   const [charts, setCharts] = useState({
     weeklyRevenue: null,
     topCustomers: null,
     revenueByLaundryType: null,
     bookingStatus: null,
   });
+  const [statsData, setStatsData] = useState([
+    {
+      title: "New Users",
+      value: "34.7k",
+      icon: <UserGroupIcon className="w-8 h-8" />,
+      description: "↗︎ 2300 (22%)",
+    },
+    {
+      title: "Total Sales",
+      value: "$34,545",
+      icon: <CreditCardIcon className="w-8 h-8" />,
+      description: "Current month",
+    },
+    {
+      title: "Pending Leads",
+      value: "450",
+      icon: <CircleStackIcon className="w-8 h-8" />,
+      description: "50 in hot leads",
+    },
+    {
+      title: "Active Users",
+      value: "5.6k",
+      icon: <UsersIcon className="w-8 h-8" />,
+      description: "↙ 300 (18%)",
+    },
+  ]);
+
   useEffect(() => {
     getChart("weeklyRevenue");
     getChart("topCustomers");
     getChart("revenueByLaundryType");
     getChart("bookingStatus");
+    getStats();
   }, []);
   const getChart = (path) => {
     axiosClient
@@ -62,6 +69,21 @@ function Dashboard() {
       })
       .catch((err) => {
         console.error(`Error fetching data from ${path}: `, err);
+      });
+  };
+  const getStats = () => {
+    axiosClient
+      .get(`/charts/dashstats`)
+      .then(({ data }) => {
+        // change icons based on icons
+        setStatsData(
+          data.map((d) => {
+            return { ...d, icon: icons[d.icon] };
+          })
+        );
+      })
+      .catch((err) => {
+        console.error(`Error fetching data from stats: `, err);
       });
   };
   return (
