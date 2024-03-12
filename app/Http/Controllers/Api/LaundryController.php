@@ -69,7 +69,7 @@ class LaundryController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $fileName = $image->getClientOriginalExtension();
-            $fileName =  'laundryitem_' . date('His') . $fileName;
+            $fileName =  'laundryitem_' . date('His');
             $path = $image->storeAs('laundries', $fileName, 'public');
             $data['image_path'] =  $path;
         }

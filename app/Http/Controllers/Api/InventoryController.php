@@ -47,7 +47,7 @@ class InventoryController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $fileName = $image->getClientOriginalExtension();
-            $fileName =  'inventoryitem_' . date('His') . $fileName;
+            $fileName =  'inventoryitem_' . date('His');
             $path = $image->storeAs('inventories', $fileName, 'public');
             $data['image_path'] =  $path;
         }
