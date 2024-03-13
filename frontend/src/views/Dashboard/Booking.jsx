@@ -19,6 +19,9 @@ export default function Booking() {
   const [steps, setSteps] = useState(1);
   const loc = useLocation();
   const state = loc.state ?? null;
+  if (!user.customer) {
+    return <Navigate to="/profile" />;
+  }
 
   useEffect(() => {
     if (state && state.book_again) {

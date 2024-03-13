@@ -18,7 +18,7 @@ class LaundryController extends Controller
     public function index()
     {
         // query params
-        $order = request('_order') ?? 'asc';
+        $order = request('_order') ?? 'desc';
         $sort = request('_sort') ?? 'updated_at';
         $search = request('_search') ?? null;
         $searchBy = request('_searchBy') ?? null;

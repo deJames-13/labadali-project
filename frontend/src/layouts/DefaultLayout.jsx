@@ -10,6 +10,7 @@ import Dashboard from "../views/Dashboard/index";
 export default function DefaultLayout() {
   const { user, token, notification, setUser, setToken, setNotification } =
     useStateContext();
+
   const location = useLocation();
   const page = location.pathname.split("/")[1];
   if (!token) {

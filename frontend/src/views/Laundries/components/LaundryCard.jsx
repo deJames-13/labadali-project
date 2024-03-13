@@ -23,7 +23,8 @@ export default function LaundryCard({ ...laundry }) {
         </figure>
         <div className="card-body">
           <h2 className="card-title">{laundry.title}</h2>
-          <p className="font-bold">{laundry.price}</p>
+          <p className="font-bold">{laundry.price} per kilo</p>
+          <p className="font-bold">{laundry.min_kilos} min. kilos</p>
           <p>{laundry.description}</p>
           <div className="card-actions justify-end">
             <button onClick={onBookNow} className="font-bold btn btn-primary">

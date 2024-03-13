@@ -15,6 +15,7 @@ export default function BookingConfirmationForm({
   const { user } = useStateContext();
   const navigate = useNavigate();
   const data = user.customer ?? user.admin;
+
   const handleBooking = (e) => {
     e.preventDefault();
     if (payload) {
@@ -27,6 +28,7 @@ export default function BookingConfirmationForm({
     }
     user.customer && navigate("/history");
   };
+  console.log(data);
   return (
     <Modal
       id={id}
