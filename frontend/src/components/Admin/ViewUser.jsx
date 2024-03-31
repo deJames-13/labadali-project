@@ -612,7 +612,7 @@ export default function ViewUser({ isAdd, setIsAdd, setShowUser, ...u }) {
                     }}
                     className="btn btn-error"
                   >
-                    Remove User
+                    Deactivate User
                   </button>
                   <div className="">
                     <button

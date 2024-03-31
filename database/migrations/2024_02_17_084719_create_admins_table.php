@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('phone_number');
             $table->date('birthdate');
             $table->integer('age');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

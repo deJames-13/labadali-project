@@ -5,10 +5,12 @@ namespace App\Models;
 use App\Models\Booking;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Inventory extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     protected $fillable = [
         "item_name",
         "stock",

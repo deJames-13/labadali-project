@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('shipping_type')->default('standard');
             $table->decimal('shipping_cost')->default(50);
             $table->date('delivered_date');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('body');
             $table->integer('rating')->nullable();
             $table->boolean('is_published')->default(false);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

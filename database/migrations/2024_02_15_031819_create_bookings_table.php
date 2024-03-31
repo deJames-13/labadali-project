@@ -21,6 +21,7 @@ return new class extends Migration
             // TODO delivered by
 
 
+            $table->softDeletes();
 
             $table->timestamps();
         });

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('min_kilos')->nullable();
             $table->integer('turnaround_day');
             $table->string('image_path')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

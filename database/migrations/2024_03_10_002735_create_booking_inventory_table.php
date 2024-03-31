@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('booking_id')->constrained()->onDelete('cascade');
             $table->foreignId('inventory_id')->constrained()->onDelete('cascade');
             $table->decimal('quantity_used');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

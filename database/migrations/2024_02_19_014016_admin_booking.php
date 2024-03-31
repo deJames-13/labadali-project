@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('admin_id')->constrained('admins')->onDelete('cascade');
             $table->foreignId('booking_id')->constrained('bookings')->onDelete('cascade');
             $table->primary(['admin_id', 'booking_id']);
+            $table->softDeletes();
         });
     }
 

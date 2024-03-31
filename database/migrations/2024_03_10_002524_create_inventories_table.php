@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('tags')->nullable();
             $table->string('instructions')->nullable();
             $table->string('image_path')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

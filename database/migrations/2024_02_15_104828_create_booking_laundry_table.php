@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('laundry_id')->constrained('laundries')->onDelete('cascade');
             $table->decimal('item_total');
             $table->integer('quantity');
+            $table->softDeletes();
         });
     }
 
