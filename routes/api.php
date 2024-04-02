@@ -67,10 +67,14 @@ Route::middleware('jwt.auth')->group(function () {
     Route::apiResource('users', UserController::class);
     Route::apiResource('laundries', LaundryController::class);
     Route::apiResource('bookings', BookingController::class);
-    Route::apiResource('bookings', BookingController::class);
     Route::apiResource('messages', MessageController::class);
     Route::apiResource('feedbacks', FeedbackController::class);
     Route::apiResource('items', InventoryController::class);
+
+
+    // only trashed laundries
+    Route::get('trashed/laundries', [LaundryController::class, 'trashed']);
+    Route::post('trashed/laundries/restore/{id}', [LaundryController::class, 'restore']);
 });
 Route::post('signup', [AuthController::class, 'signup']);
 Route::post('login', [AuthController::class, 'login']);

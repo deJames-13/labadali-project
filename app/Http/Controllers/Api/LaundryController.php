@@ -85,4 +85,28 @@ class LaundryController extends Controller
         $laundry->delete();
         return response()->json(['message' => 'Laundry deleted successfully!'], 200);
     }
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function restore($id)
+    {
+        $laundry = Laundry::withTrashed()->find($id);
+
+        if (!$laundry) {
+            return response()->json(['message' => 'Laundry not found!'], 404);
+        }
+
+        if ($laundry->trashed()) {
+            $laundry->restore();
+            return response()->json(['message' => 'Laundry restored successfully!'], 200);
+        }
+
+        return response()->json(['message' => 'Laundry is not deleted!'], 404);
+    }
+    // all trashed laundries
+    public function trashed()
+    {
+        $laundries = Laundry::onlyTrashed()->get();
+        return LaundryResource::collection($laundries);
+    }
 }

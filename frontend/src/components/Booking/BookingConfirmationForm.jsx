@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axiosClient from "../../axios-client";
 import { useStateContext } from "../../contexts/ContextProvider";
 import Modal from "../Modal";
+import { default as PreviewPrint } from '../PreviewPrint';
 export default function BookingConfirmationForm({
   id,
   selected,
@@ -39,7 +40,9 @@ export default function BookingConfirmationForm({
         </>
       }
       main={
-        <div className="flex flex-col space-y-3 ">
+      <>
+
+<div className="flex flex-col space-y-3 ">
           <div className="grid grid-cols-2">
             <label htmlFor="name" className="font-medium">
               Name:
@@ -77,6 +80,64 @@ export default function BookingConfirmationForm({
               })}
           </div>
         </div>
+        <PreviewPrint
+          id="printable-preview-receipt"
+          title={"Confirm Receipt"}
+          toPrint={
+            <div className="print:p-12">
+              
+        <div className=" flex flex-col space-y-3 ">
+          <div className="grid grid-cols-2">
+            <label htmlFor="name" className="font-medium">
+              Name:
+            </label>
+            <span>{data.first_name + " " + data.last_name}</span>
+            <label htmlFor="name" className="font-medium">
+              Phone Number:
+            </label>
+            <span>{data.phone_number}</span>
+            <label htmlFor="name" className="font-medium">
+              Adress:
+            </label>
+            <span>{data.address}</span>
+          </div>
+          <div className="divider"></div>
+          <div className="flex flex-col space-y-3 border border-cbrown p-3 rounded-lg">
+            <div className="flex justify-between items-center">
+              <span className="font-bold text-md">Total Cost</span>
+              <span className="font-medium">P {payload.total_price}</span>
+            </div>
+            <div className="divider"></div>
+            {payload.laundries &&
+              selected.map((laundry) => {
+                return (
+                  <div
+                    key={laundry.id}
+                    className="flex justify-between items-center"
+                  >
+                    <span>
+                      {laundry.title} x{payload.laundries[laundry.id].quantity}
+                    </span>
+                    <span>P {payload.laundries[laundry.id].item_total}</span>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+            </div>
+          }
+        />
+        <div className="w-full text-right">
+        <button
+          onClick={(e) =>
+            document.getElementById("printable-preview-receipt").showModal()
+          }
+          className="btn btn-ghost btn-sm"
+        >
+          Print Preview
+        </button>
+      </div>
+      </>
       }
       action={
         <>

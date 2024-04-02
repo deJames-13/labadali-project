@@ -23,6 +23,7 @@ import Messages from "./views/Admin/Dashboard/Messages.jsx";
 import { Profile as AdminProfile } from "./views/Admin/Dashboard/Profile";
 
 // GUEST
+import LaundriesTrash from "./views/Admin/Dashboard/LaundriesTrash.jsx";
 import ManageLaundries from "./views/Admin/Dashboard/ManageLaundries.jsx";
 import ManageReports from "./views/Admin/Dashboard/ManageReports.jsx";
 import { Login as AdminLogin } from "./views/Admin/Login";
@@ -135,6 +136,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/manage/laundries",
         element: <ManageLaundries />,
+      },
+      {
+        path: "/admin/manage/laundries/trash",
+        element: <LaundriesTrash />,
       },
       {
         path: "/admin/manage/reports",

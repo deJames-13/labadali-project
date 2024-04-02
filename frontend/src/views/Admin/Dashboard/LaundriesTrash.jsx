@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { debounce } from "lodash";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axiosClient from "../../../axios-client";
 import AddLaundry from "../../../components/Admin/AddLaundry";
 import ViewLaundry from "../../../components/Admin/ViewLaundry";
@@ -16,8 +15,6 @@ export default function ManageLaundries() {
   const [search, setSearch] = useState(null);
   const { user } = useStateContext();
 
-  const nav = useNavigate();
-
   useEffect(() => {
     const s = search ? `_search=${search}` : "";
     const query = `${s}`;
@@ -29,7 +26,7 @@ export default function ManageLaundries() {
   const getLaundries = (query) => {
     setLoading(true);
     axiosClient
-      .get("/laundries" + `${"?" + query ?? ""}`)
+      .get("/trashed/laundries" + `${"?" + query ?? ""}`)
       .then(({ data }) => {
         setLaundries(data.reverse());
         setLoading(false);
@@ -51,24 +48,27 @@ export default function ManageLaundries() {
     setShowLaundry(true);
   };
 
-  const handleDelete = (id) => {
-    document.getElementById("delete-laundry-modal").showModal();
+  const handleRestore = (id) => {
+    document.getElementById("restore-laundry-modal").showModal();
   };
-  const onDelete = () => {
+  const onRestore = () => {
+    restoreLaundry(selected.id);
+  };
+
+  const restoreLaundry = (id) => {
     setLoading(true);
     axiosClient
-      .delete("/laundries/" + selected.id)
+      .post("/trashed/laundries/restore/" + id)
       .then(({ data }) => {
         getLaundries();
         setLoading(false);
-        document.getElementById("delete-laundry-modal").close();
+        document.getElementById("restore-laundry-modal").close();
         setSelected({});
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
   const onSearch = debounce((e) => {
     e.preventDefault();
     const q = e.target.value;
@@ -95,15 +95,11 @@ export default function ManageLaundries() {
         </div>
       </div>
 
-      <div className="flex space-x-3 justify-end gap-2 font-bold items-center">
+      <div className="flex space-x-3 justify-between font-bold items-center">
         <h2>Selected Item: {selected.id ?? "_"}</h2>
         <button onClick={toggleAddLaundry} className="btn btn-sm bg-green-400">
           <i className="fas fa-plus"></i>
           Add New
-        </button>
-        <button onClick={e=>nav('/admin/manage/laundries/trash')} className="btn btn-sm bg-red-400">
-          <i className="fas fa-trash"></i>
-          Trash
         </button>
       </div>
 
@@ -168,10 +164,10 @@ export default function ManageLaundries() {
                         <i className="fas fa-pen"></i>
                       </button>
                       <button
-                        onClick={handleDelete}
-                        className="btn btn-xs btn-error"
+                        onClick={handleRestore}
+                        className="btn btn-xs btn-success"
                       >
-                        <i className="fas fa-trash"></i>
+                        <i className="fas fa-heart"></i>
                       </button>
                     </th>
                   </tr>
@@ -180,18 +176,12 @@ export default function ManageLaundries() {
           </tbody>
         </table>
         {!laundries.length > 0 && !loading && !search && (
-          <div className="py-6 w-full space-x-4 flex justify-center items-center">
-            <button
-              onClick={toggleAddLaundry}
-              id="addfirst"
-              className="aspect-square btn btn-sm btn-primary rounded-lg"
-            >
-              <i className="fas fa-plus"></i>
-            </button>
-            <label htmlFor="addfirst" className="label">
-              No laundries found. Click + to add new laundry.
-            </label>
-          </div>
+        <div className="py-6 w-full space-x-4 flex justify-center items-center">
+          
+        <label htmlFor="addfirst" className="label">
+          No laundries found in trash.
+        </label>
+      </div>
         )}
       </div>
 
@@ -208,19 +198,19 @@ export default function ManageLaundries() {
           )}
 
           <Modal
-            id="delete-laundry-modal"
+            id="restore-laundry-modal"
             title={
               <h1 className="font-bold text-lg w-full text-left flex items-center space-x-3">
                 <i className="fas fa-shirt"></i>
                 <span>
-                  Delete Laundry {selected.id ?? "_ "}
+                  Restore Laundry {selected.id ?? "_ "}
                   {loading && <span className="loading loading-ring"></span>}
                 </span>
               </h1>
             }
             main={
               <h2 className="font-medium">
-                Are you sure you want to delete laundry with title:{" "}
+                Do you want to restore this laundry? {" "}
                 <span className="font-bold italic">{selected.title}</span> ?
               </h2>
             }
@@ -229,7 +219,7 @@ export default function ManageLaundries() {
                 <form method="dialog">
                   <div className="flex items-center space-x-3">
                     <button className="btn">Cancel</button>
-                    <button onClick={onDelete} className="btn btn-error">
+                    <button onClick={onRestore} className="btn btn-success">
                       Confirm
                     </button>
                   </div>

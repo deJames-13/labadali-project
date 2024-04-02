@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axiosClient from "../axios-client";
 import { useStateContext } from "../contexts/ContextProvider";
 
@@ -10,6 +10,7 @@ export default function Signup() {
   const email = useRef();
   const password = useRef();
   const password_confirmation = useRef();
+  const nav = useNavigate();
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -24,6 +25,7 @@ export default function Signup() {
       .then(({ data }) => {
         setUser(data.user);
         setToken(data.token);
+        nav("/profile");
       })
       .catch((error) => {
         const e = error.response;
