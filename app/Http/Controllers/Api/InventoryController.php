@@ -102,4 +102,31 @@ class InventoryController extends Controller
         $inventory->delete();
         return response()->json(['message' => 'Inventory deleted successfully']);
     }
+    /**
+     * Restore the specified resource from storage.
+     */
+    public function restore(string $id)
+    {
+        $inventory = Inventory::withTrashed()->find($id);
+
+        if (!$inventory) {
+            return response()->json(['message' => 'Inventory not found!'], 404);
+        }
+
+        if ($inventory->trashed()) {
+            $inventory->restore();
+            return response()->json(['message' => 'Inventory restored successfully!'], 200);
+        }
+
+        return response()->json(['message' => 'Inventory is not deleted!'], 404);
+    }
+    /**
+     * Display a listing of the trashed resources.
+     */
+    public function trashed()
+    {
+        $trashedItems = Inventory::onlyTrashed()->get();
+
+        return response()->json($trashedItems);
+    }
 }
